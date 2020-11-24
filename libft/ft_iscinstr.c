@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_iscinstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/24 14:21:20 by valentin         ###   ########.fr       */
+/*   Created: 2020/01/06 17:28:09 by vlageard          #+#    #+#             */
+/*   Updated: 2020/01/06 23:37:11 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv)
+#include <stdio.h>
+
+int		ft_iscinstr(char c, const char *str)
 {
-	// Initialize the shell
-	// Launch the repl
-	// Exit the program
+	int i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if (c == str[i])
+			return (1);
+		i++;
+	}
+	return (0);
 }

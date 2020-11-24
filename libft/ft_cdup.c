@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_cdup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/24 14:21:20 by valentin         ###   ########.fr       */
+/*   Created: 2020/01/07 15:40:48 by vlageard          #+#    #+#             */
+/*   Updated: 2020/01/07 15:40:55 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv)
+#include <stdlib.h>
+
+char	*ft_cdup(char c)
 {
-	// Initialize the shell
-	// Launch the repl
-	// Exit the program
+	char	*str;
+	
+	if (!(str = (char *)malloc(sizeof(char) * 2)))
+		return (NULL);
+	str[0] = c;
+	str[1] = 0;
+	return (str);
 }

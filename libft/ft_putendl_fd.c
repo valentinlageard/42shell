@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/24 14:21:20 by valentin         ###   ########.fr       */
+/*   Created: 2019/11/07 17:25:44 by vlageard          #+#    #+#             */
+/*   Updated: 2019/11/07 17:35:27 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int main(int argc, char **argv)
+#include "libft.h"
+
+void	ft_putendl_fd(char *s, int fd)
 {
-	// Initialize the shell
-	// Launch the repl
-	// Exit the program
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
 }
