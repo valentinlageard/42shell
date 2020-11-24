@@ -6,7 +6,7 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 16:54:43 by vlageard          #+#    #+#             */
-/*   Updated: 2020/01/11 15:42:12 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/07/29 19:45:27 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static int		is_base_valid(const char *base)
 {
 	int i;
-	
+
 	i = 0;
 	if (ft_strlen(base) < 2)
 		return (0);
@@ -28,7 +28,7 @@ static int		is_base_valid(const char *base)
 				return (0);
 		}
 		else
-			break;
+			break ;
 		i++;
 	}
 	return (1);
@@ -37,7 +37,7 @@ static int		is_base_valid(const char *base)
 static int		get_str_size(unsigned int n, int base_len)
 {
 	int	str_size;
-	
+
 	str_size = 0;
 	while (n >= (unsigned int)base_len)
 	{
@@ -50,11 +50,11 @@ static int		get_str_size(unsigned int n, int base_len)
 
 char			*ft_utoabase(unsigned int n, const char *base)
 {
-	char *str;
-	int	base_len;
-	int	str_size;
-	int	i;
-	
+	char	*str;
+	int		base_len;
+	int		str_size;
+	int		i;
+
 	if (!is_base_valid(base))
 		return (NULL);
 	base_len = ft_strlen(base);

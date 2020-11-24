@@ -6,11 +6,12 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 17:57:41 by vlageard          #+#    #+#             */
-/*   Updated: 2019/11/11 04:39:53 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/03/06 15:45:28 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "libft.h"
 
 static void	free_words(int n_word, char **words)
 {
@@ -25,7 +26,7 @@ static void	free_words(int n_word, char **words)
 	free(words);
 }
 
-static int	count_words(const char *str, char sep)
+static int	count_words(const char *str, char *sep)
 {
 	int i;
 	int word_count;
@@ -36,7 +37,7 @@ static int	count_words(const char *str, char sep)
 	in_word = 0;
 	while (str[i])
 	{
-		if (str[i] != sep)
+		if (!ft_iscinstr(str[i], sep))
 		{
 			if (!in_word)
 				word_count++;
@@ -49,7 +50,7 @@ static int	count_words(const char *str, char sep)
 	return (word_count);
 }
 
-static int	new_word_pos(const char *str, int n_word, char sep)
+static int	new_word_pos(const char *str, int n_word, char *sep)
 {
 	int i;
 	int word_count;
@@ -60,7 +61,7 @@ static int	new_word_pos(const char *str, int n_word, char sep)
 	word_count = 0;
 	while (str[i])
 	{
-		if (str[i] != sep)
+		if (!ft_iscinstr(str[i], sep))
 		{
 			if (!in_word)
 			{
@@ -77,7 +78,7 @@ static int	new_word_pos(const char *str, int n_word, char sep)
 	return (i);
 }
 
-static char	*n_word(const char *str, int n_word, char sep, char **words)
+static char	*n_word(const char *str, int n_word, char *sep, char **words)
 {
 	int		i;
 	int		j;
@@ -86,7 +87,7 @@ static char	*n_word(const char *str, int n_word, char sep, char **words)
 
 	i = new_word_pos(str, n_word, sep);
 	k = i;
-	while (str[k] && str[k] != sep)
+	while (str[k] && !ft_iscinstr(str[k], sep))
 		k++;
 	if (!(word = (char *)malloc((k - i + 1) * sizeof(char))))
 	{
@@ -94,7 +95,7 @@ static char	*n_word(const char *str, int n_word, char sep, char **words)
 		return (0);
 	}
 	j = 0;
-	while (str[i] && str[i] != sep)
+	while (str[i] && !ft_iscinstr(str[i], sep))
 	{
 		word[j] = str[i];
 		i++;
@@ -104,7 +105,7 @@ static char	*n_word(const char *str, int n_word, char sep, char **words)
 	return (word);
 }
 
-char		**ft_split(char const *s, char c)
+char		**ft_split(char const *s, char *c)
 {
 	char	**words;
 	int		word_count;

@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_rtputstr_fd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 16:08:03 by vlageard          #+#    #+#             */
-/*   Updated: 2020/07/29 19:43:27 by vlageard         ###   ########.fr       */
+/*   Created: 2020/01/15 23:55:27 by vlageard          #+#    #+#             */
+/*   Updated: 2020/01/20 18:28:50 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_abs(int n)
+#include "libft.h"
+
+int	ft_rtputstr_fd(char *s, int fd)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	int	i;
+	int	error;
+
+	i = 0;
+	while (s[i])
+	{
+		error = ft_rtputchar_fd(s[i], fd);
+		i++;
+		if (error < 0)
+			break ;
+	}
+	return (error);
 }

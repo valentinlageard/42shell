@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_free_words.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 16:08:03 by vlageard          #+#    #+#             */
-/*   Updated: 2020/07/29 19:43:27 by vlageard         ###   ########.fr       */
+/*   Created: 2020/06/15 19:35:53 by vlageard          #+#    #+#             */
+/*   Updated: 2020/06/15 19:39:19 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_abs(int n)
+#include <stdlib.h>
+
+void	ft_free_words(char **words)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	int i;
+
+	i = 0;
+	while (words[i])
+	{
+		free(words[i]);
+		i++;
+	}
+	free(words);
 }

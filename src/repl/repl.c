@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   repl.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 16:08:03 by vlageard          #+#    #+#             */
-/*   Updated: 2020/07/29 19:43:27 by vlageard         ###   ########.fr       */
+/*   Created: 2020/11/24 16:55:58 by valentin          #+#    #+#             */
+/*   Updated: 2020/11/24 17:29:14 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_abs(int n)
+void	repl(void)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	// Read the line with dynamic allocation
+	// Parse the line
+	// Evaluate the line
 }

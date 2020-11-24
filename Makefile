@@ -1,10 +1,12 @@
 LIBFT		=	libft/libft.a
 NAME		=	minishell
-SRC			=	src/minishell.c	
+SRC			=	src/minishell.c \
+				src/repl/repl.c \
+				src/utils/error.c
 
 OBJS		=	$(SRC:.c=.o)
 
-FLAGS		=	-Wall -Wextra -Werror
+FLAGS		=	#-Wall -Wextra -Werror
 CC			=	gcc $(FLAGS)
 
 all:		$(NAME)

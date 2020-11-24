@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 16:08:03 by vlageard          #+#    #+#             */
-/*   Updated: 2020/07/29 19:43:27 by vlageard         ###   ########.fr       */
+/*   Created: 2020/11/24 17:11:00 by valentin          #+#    #+#             */
+/*   Updated: 2020/11/24 17:29:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_abs(int n)
+#include "minishell.h"
+
+void	perror_exit(void)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	ft_printf(strerror(errno));
+	exit(EXIT_FAILURE);
 }

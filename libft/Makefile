@@ -51,7 +51,23 @@ SRC			=	ft_atoi.c \
 				ft_utoabase.c \
 				ft_ultoabase.c \
 				ft_abs.c \
-				ft_get_next_line.c
+				ft_get_next_line.c \
+				ft_atof.c \
+				ft_free_words.c \
+				ft_rtputchar_fd.c \
+				ft_rtputstr_fd.c \
+				ft_printf.c \
+				ft_printf/format.c \
+				ft_printf/parse_format.c \
+				ft_printf/parse_format_utils.c \
+				ft_printf/format_char.c \
+				ft_printf/format_hex.c \
+				ft_printf/format_int.c \
+				ft_printf/format_pointer.c \
+				ft_printf/format_str.c \
+				ft_printf/format_uint.c \
+				ft_printf/format_percent.c \
+				ft_printf/format_validity.c
 
 OBJS		=	$(SRC:.c=.o)
 

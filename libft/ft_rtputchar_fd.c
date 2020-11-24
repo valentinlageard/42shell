@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_abs.c                                           :+:      :+:    :+:   */
+/*   ft_rtputchar_fd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/13 16:08:03 by vlageard          #+#    #+#             */
-/*   Updated: 2020/07/29 19:43:27 by vlageard         ###   ########.fr       */
+/*   Created: 2020/01/15 23:54:10 by vlageard          #+#    #+#             */
+/*   Updated: 2020/01/16 00:00:27 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_abs(int n)
+#include <unistd.h>
+
+int	ft_rtputchar_fd(char c, int fd)
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+	return (write(fd, &c, 1));
 }

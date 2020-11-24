@@ -6,7 +6,7 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 21:08:46 by vlageard          #+#    #+#             */
-/*   Updated: 2020/03/05 19:04:27 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/07/24 17:40:40 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define LIBFT_H
 
 # include <string.h>
+# include "ft_printf/ft_printf.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 64
 # endif
-
 
 typedef struct	s_list
 {
@@ -26,7 +26,7 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
-char			**ft_split(char const *s, char c);
+char			**ft_split(char const *s, char *c);
 char			*ft_cdup(char c);
 char			*ft_itoa(int n);
 char			*ft_strchr(const char *s, int c);
@@ -40,6 +40,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_ultoabase(unsigned long n, const char *base);
 char			*ft_utoa(unsigned int n);
 char			*ft_utoabase(unsigned int n, const char *base);
+double			ft_atof(const char *str);
 int				ft_abs(int n);
 int				ft_atoi(const char *nptr);
 int				ft_get_next_line(int fd, char **line);
@@ -61,7 +62,7 @@ size_t			ft_strlcat(char *dst, const char *src, size_t size);
 size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlen(const char *str);
 t_list			*ft_lstlast(t_list *lst);
-t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*d)(void *));
 t_list			*ft_lstnew(void *content);
 unsigned int	ft_randr(unsigned int min, unsigned int max);
 void			*ft_calloc(size_t nmemb, size_t size);
@@ -80,6 +81,9 @@ void			ft_putchar_fd(char c, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_putstr_fd(char *s, int fd);
-
+void			ft_free_words(char **words);
+int				ft_rtputchar_fd(char c, int fd);
+int				ft_rtputstr_fd(char *s, int fd);
+int				ft_printf(const char *fstr, ...);
 
 #endif

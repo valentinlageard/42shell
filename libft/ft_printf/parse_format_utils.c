@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_iscinstr.c                                      :+:      :+:    :+:   */
+/*   parse_format_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/06 17:28:09 by vlageard          #+#    #+#             */
-/*   Updated: 2020/07/29 19:46:01 by vlageard         ###   ########.fr       */
+/*   Created: 2020/01/08 16:03:48 by vlageard          #+#    #+#             */
+/*   Updated: 2020/07/24 17:42:04 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <stdlib.h>
+#include "ft_printf.h"
+#include "../libft.h"
 
-int		ft_iscinstr(char c, const char *str)
+t_format	*create_format(void)
 {
-	int i;
+	t_format *new_format;
 
-	i = 0;
-	while (str[i])
-	{
-		if (c == str[i])
-			return (1);
-		i++;
-	}
-	return (0);
+	if (!(new_format = (t_format *)malloc(sizeof(t_format))))
+		return (NULL);
+	new_format->conversion = 0;
+	new_format->fieldwidth = 0;
+	new_format->fieldwidth_mode = 0;
+	new_format->precision = -1;
+	return (new_format);
+}
+
+int			is_conversion(char c)
+{
+	return (ft_iscinstr(c, "cspdiuxX%"));
 }
