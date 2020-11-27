@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/24 17:34:37 by valentin         ###   ########.fr       */
+/*   Updated: 2020/11/24 19:08:12 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <errno.h>
 # include <string.h>
+# include <unistd.h>
 # include "../libft/libft.h"
 
 /*typedef struct s_shell {

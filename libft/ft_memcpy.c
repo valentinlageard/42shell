@@ -6,7 +6,7 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 16:06:22 by vlageard          #+#    #+#             */
-/*   Updated: 2019/11/13 17:33:50 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/11/27 16:41:11 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	ptr_dest = (unsigned char *)dest;
 	ptr_src = (unsigned char *)src;
 	if (!dest && !src)
-		return (0);
+		return (NULL);
 	if (!n || dest == src)
 		return (dest);
 	while (i < n)
