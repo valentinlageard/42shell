@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:34 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/27 18:20:49 by valentin         ###   ########.fr       */
+/*   Updated: 2020/11/27 18:25:48 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 ** 		allocates BUFFER_SIZE by BUFFER_SIZE.
 ** 		- It returns whenever a \n or a EOF is encountered.
 */
+
+// TODO : TO NORME !
 
 int	ft_read_line(int fd, char **line_ptr)
 {
