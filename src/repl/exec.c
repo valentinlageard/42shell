@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   repl.c                                             :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/24 16:55:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/28 17:28:16 by valentin         ###   ########.fr       */
+/*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
+/*   Updated: 2020/11/28 17:28:03 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	repl(void)
+void	exec_cmd(char **cmd)
 {
-	int		read_error;
-	char	*line;
-	char	**args; // To be replaced by a command list ?
+	pid_t	pid;
+	int		status;
 
-	line = NULL;
-	ft_printf("$> ");
-	while ((read_error = ft_read_line(0, &line)) >= 0)
+	pid = fork();
+	if (pid == 0) // In the child process
 	{
-		args = ft_split(line, " "); // Split by space
-		exec_cmd(args);
-		free(line);
-		ft_free_words(args);
-		ft_printf("$> ");
+		// Get the binary path
+		// Execute the command
+		execve(cmd[0], cmd, NULL);
 	}
-	// If read_error == -1
-	// Exits properly
+	else if (pid > 0) // In the parent process
+	{
+		// Wait for the whild process to finish and kill it
+		waitpid(pid, &status, WUNTRACED);
+		kill(pid, SIGTERM);
+	}
 }

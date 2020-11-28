@@ -2,6 +2,7 @@ LIBFT		=	libft/libft.a
 NAME		=	minishell
 SRC			=	src/minishell.c \
 				src/repl/repl.c \
+				src/repl/exec.c \
 				src/utils/error.c
 
 OBJS		=	$(SRC:.c=.o)

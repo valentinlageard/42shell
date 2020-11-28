@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:34 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/27 18:25:48 by valentin         ###   ########.fr       */
+/*   Updated: 2020/11/28 16:24:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 int	ft_read_line(int fd, char **line_ptr)
 {
 	char	*line;
-	char	read_buffer[1];
+	char	read_buffer;
 	int		chunk_num;
 	int		i;
 	int		read_error;
@@ -48,7 +48,7 @@ int	ft_read_line(int fd, char **line_ptr)
 	read_error = 0;
 	if (!(line = (char *)malloc(BUFFER_SIZE)))
 		return (-1);
-	while ((read_error = read(fd, read_buffer, 1)) >= 0)
+	while ((read_error = read(fd, &read_buffer, 1)) >= 0)
 	{
 		if (i > chunk_num * BUFFER_SIZE - 1)
 		{
@@ -59,13 +59,13 @@ int	ft_read_line(int fd, char **line_ptr)
 				return (-1);
 			}
 		}
-		if (*read_buffer == '\n' || read_error == 0)
+		if (read_buffer == '\n' || read_error == 0)
 		{
 			line[i] = '\0';
 			break ;
 		}
 		else
-			line[i] = *read_buffer;
+			line[i] = read_buffer;
 		i++;
 	}
 	if (read_error == -1)
