@@ -2,11 +2,9 @@
 
 ## TODO
 
-- Gérer les variables d'environnement. Les stocker qqpart ?
-- Dans `exec_cmd` utiliser $PATH pour exécuter des commandes en chemin relatif :
-	- Tester si la commande existe dans les dossiers stockés dans $PATH
-	- Si oui, concaténer avec le path pertinent.
-	- Gérer `.` et `..` ?
+- Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
+- Implémenter `change_env(key, new_value, env)` qui change la valeur d'une variable d'environnement.
+- Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
 - Faire une fonction `exec` qui sélectionne l'exécution d'un builtin ou d'une commande.
 - Séparation des commandes avec ``;`` :
 	- Splitter la ligne selon `;`
@@ -17,7 +15,7 @@
 	- `<` utilise un fichier comme stdin
 	- `>` écrit stdout dans un fichier
 	- `>>` ajoute stdout à la fin d'un fichier
-- Gestion des pipes `|`
+- Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
 - Gestion des variables d'environnement `$FOO`
 - Gestion de `$?` : donne le statut de ?
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
@@ -28,6 +26,11 @@
 - builtin : unset
 - builtin : env
 - builtin : exit
+
+### DONE
+- [x] Implémenter `select_binpath` et `get_binpath` qui cherchent et remplacent le chemin du binaire.
+- [x] Récupérer les variables d'environnement et les stocker.
+- [x] Implémenter une fonction `get_envval(key, env)`.
 
 ## Architecture
 
@@ -52,9 +55,21 @@ Pour l'instant, le programme ne fait que splitter la ligne et transmettre une li
 
 Idéalement le parsing construit des structures de données qui stockent les commandes. La fonction d'éxécution prend cette commande en entrée. Les commandes ont , dossier local, ...une structure de données.
 
-struct command :
-- char *main_command
-- char **parameters
+struct s_cmd (t_cmd):
+- char *main : contient le bpath de la commande ou le nom du builtin
+- char **parameters : contient les paramètres de la commande.
+- int is_builtin : 1 si la commande est un builtin, sinon 0.
+- int is_valid : 1 si la commande est valide, sinon 0.
+- int is_piped : 1 si la commande est pipée dans la prochaine, sinon 0.
+
+### Parsing
+1. Traiter `""` et `''`
+2. Découper la ligne selon `;` (et `|` ?)
+3. Découper les commandes selon whitespaces.
+4. Détecter si la commande est un builtin ou un binaire.
+	1. Si c'est un binaire, sélectionner le path et stocker dans main
+5. Remplacer les appels aux variables par leur valeur dans args.
+6. Répéter pour chaque commande et transmettre une liste de commande à exec qui exécutera ces commandes.
 
 ### Exécution
 
@@ -97,7 +112,7 @@ Procédure de génération de processus enfants.
 
 Récupérées par le main comme troisième argument :
 ```c
-int main (int argc, char **argv, char **env)
+int main (int argc, char **argv, char **envp)
 {
 	// ...
 }

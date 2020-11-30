@@ -6,7 +6,7 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 17:57:41 by vlageard          #+#    #+#             */
-/*   Updated: 2020/03/06 15:45:28 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/11/30 16:45:47 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ char		**ft_split(char const *s, char *c)
 
 	word_count = count_words(s, c);
 	if (!(words = (char **)malloc((word_count + 1) * sizeof(char *))))
-		return (0);
+		return (NULL);
 	words[word_count] = NULL;
 	i = 0;
 	while (i < word_count)

@@ -5,7 +5,8 @@ SRC			=	src/minishell.c \
 				src/repl/exec.c \
 				src/utils/error.c \
 				src/utils/init.c \
-				src/utils/environ.c
+				src/utils/environ.c \
+				src/utils/binpath.c
 
 OBJS		=	$(SRC:.c=.o)
 

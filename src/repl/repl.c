@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 16:55:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/30 15:55:31 by valentin         ###   ########.fr       */
+/*   Updated: 2020/11/30 17:30:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ void	repl(t_shell *shell)
 		ft_printf("%s\n", shell->env[i]);
 		i++;
 	}
-	ft_printf("TEST KEY : SHELL : %s\n", get_envval("SHELL", shell));
+	ft_printf("GETVAL TEST | KEY = PATH : %s\n", get_envval("PATH", shell));
 	ft_printf("$> ");
 	while ((read_error = ft_read_line(0, &line)) >= 0)
 	{
 		args = ft_split(line, " "); // Split by space
+		// DEBUG : Print binpath
+		ft_printf("selected bpath : %s\n", select_binpath(args[0], shell));
 		exec_cmd(args);
 		free(line);
 		ft_free_words(args);
