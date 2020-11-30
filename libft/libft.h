@@ -6,7 +6,7 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 21:08:46 by vlageard          #+#    #+#             */
-/*   Updated: 2020/11/27 17:52:32 by valentin         ###   ########.fr       */
+/*   Updated: 2020/11/30 15:25:42 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ int				ft_rtputstr_fd(char *s, int fd);
 int				ft_printf(const char *fstr, ...);
 void			*ft_realloc(void *ptr, size_t size);
 int				ft_read_line(int fd, char **line_ptr);
+int				ft_wordslen(char **words);
 
 #endif

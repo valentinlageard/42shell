@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/28 17:23:05 by valentin         ###   ########.fr       */
+/*   Updated: 2020/11/30 15:56:29 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-/*typedef struct s_shell {
-	TODO
-} t_shell;*/
+typedef struct	s_shell {
+	char	**env;
+}				t_shell;
 
-void	repl(void);
+t_shell	*init_shell(char **envp);
+void	repl(t_shell *shell);
 void	exec_cmd(char **cmd);
+
+// Environ utils
+char	*get_envval(char *key, t_shell *shell);
 
 #endif

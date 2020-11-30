@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/28 17:28:03 by valentin         ###   ########.fr       */
+/*   Updated: 2020/11/30 14:49:23 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	exec_cmd(char **cmd)
 	pid = fork();
 	if (pid == 0) // In the child process
 	{
-		// Get the binary path
+		// Get the binary absolute path if it exists
 		// Execute the command
 		execve(cmd[0], cmd, NULL);
 	}

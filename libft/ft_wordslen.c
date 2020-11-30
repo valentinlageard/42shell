@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_wordslen.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/30 15:14:03 by valentin         ###   ########.fr       */
+/*   Created: 2020/11/30 15:24:50 by valentin          #+#    #+#             */
+/*   Updated: 2020/11/30 15:30:09 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int		ft_wordslen(char **words)
 {
-	t_shell	*shell;
+	int	i;
 
-	shell = init_shell(envp); // TODO : Check error and exit if any
-	repl(shell);
-	// Exit the program
+	i = 0;
+	while (words[i])
+		i++;
+	return (i);
 }
