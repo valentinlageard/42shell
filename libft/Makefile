@@ -56,7 +56,7 @@ SRC			=	ft_atoi.c \
 				ft_get_next_line.c \
 				ft_atof.c \
 				ft_free_words.c \
-				ft_wordslen.c \
+				ft_wlen.c \
 				ft_rtputchar_fd.c \
 				ft_rtputstr_fd.c \
 				ft_printf.c \

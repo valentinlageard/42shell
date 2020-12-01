@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:05:34 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/30 15:40:12 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/01 15:15:34 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**envdup(char **envp)
 	int		i;
 
 	i = 0;
-	if (!(env = (char **)malloc((ft_wordslen(envp) + 1) * sizeof(char *))))
+	if (!(env = (char **)malloc((ft_wlen(envp) + 1) * sizeof(char *))))
 		return (NULL);
 	while (envp[i])
 	{

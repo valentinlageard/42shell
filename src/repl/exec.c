@@ -6,28 +6,36 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/30 14:49:23 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/01 16:34:19 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_cmd(char **cmd)
+void	exec(t_cmd **cmds, t_shell *shell)
 {
+	int		i;
 	pid_t	pid;
 	int		status;
 
-	pid = fork();
-	if (pid == 0) // In the child process
+	i = 0;
+	while (cmds[i])
 	{
-		// Get the binary absolute path if it exists
-		// Execute the command
-		execve(cmd[0], cmd, NULL);
+		pid = fork();
+		if (pid == 0) // In the child process
+		{
+			// Get the binary absolute path if it exists
+			// Execute the command
+			ft_printf("-> Executing : %s\n", cmds[i]->cmd);
+			execve(cmds[i]->cmd, cmds[i]->args, shell->env);
+		}
+		else if (pid > 0) // In the parent process
+		{
+			// Wait for the whild process to finish and kill it
+			waitpid(pid, &status, WUNTRACED);
+			kill(pid, SIGTERM);
+		}
+		i++;
 	}
-	else if (pid > 0) // In the parent process
-	{
-		// Wait for the whild process to finish and kill it
-		waitpid(pid, &status, WUNTRACED);
-		kill(pid, SIGTERM);
-	}
+	// TODO : free cmds and everything it contains !
 }

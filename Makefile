@@ -3,10 +3,12 @@ NAME		=	minishell
 SRC			=	src/minishell.c \
 				src/repl/repl.c \
 				src/repl/exec.c \
+				src/parsing/parse.c \
 				src/utils/error.c \
 				src/utils/init.c \
 				src/utils/environ.c \
-				src/utils/binpath.c
+				src/utils/binpath.c \
+				src/utils/cmd.c
 
 OBJS		=	$(SRC:.c=.o)
 

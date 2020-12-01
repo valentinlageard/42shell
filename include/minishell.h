@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/30 17:16:34 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/01 16:14:59 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,25 @@ typedef struct	s_shell {
 	char	**env;
 }				t_shell;
 
+typedef struct	s_cmd {
+	char	*cmd;
+	char	**args;
+	int		is_valid;
+	int		is_builtin;
+	//int		is_piped;
+}				t_cmd;
+
 t_shell	*init_shell(char **envp);
 void	repl(t_shell *shell);
-void	exec_cmd(char **cmd);
+t_cmd	**parse(char *line, t_shell *shell);
+void	exec(t_cmd **cmds, t_shell *shell);
 char	*select_binpath(char *cmd, t_shell *shell);
+
+// Cmd utils
+t_cmd	*new_cmd(void);
+void	free_cmd(t_cmd *cmd);
+void	print_cmd(t_cmd *cmd);
+void	print_cmds(t_cmd **cmds);
 
 // Environ utils
 char	*get_envval(char *key, t_shell *shell);

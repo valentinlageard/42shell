@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:44:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/30 17:29:17 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/01 16:19:50 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ char	*get_binpath(char *cmd, t_shell *shell)
 	while (bpaths[i])
 	{
 		bpath = ft_strjoin(bpaths[i], slash_cmd);
-		ft_printf("bpath : %s\n", bpath);
 		if (file_exists(bpath))
 		{
-			ft_printf("%s exists !\n", bpath);
 			free(slash_cmd);
 			return (bpath);
 		}
