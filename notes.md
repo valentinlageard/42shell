@@ -17,7 +17,9 @@
 - builtin : pwd
 - builtin : export : Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
 - builtin : unset : Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
-- builtin : env
+- builtin : env :
+	- [x] prints env variables
+	- [ ] run a command by modifying its environment
 
 ### DONE
 - [x] builtin : exit

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:45:20 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/30 15:58:00 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:19:25 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,16 @@ char	*get_envval(char *key, t_shell *shell)
 		i++;
 	}
 	return (NULL);
+}
+
+void	print_env(t_shell *shell)
+{
+	int	i;
+
+	i = 0;
+	while (shell->env[i])
+	{
+		ft_printf("%s\n", shell->env[i]);
+		i++;
+	}
 }

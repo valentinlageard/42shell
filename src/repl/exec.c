@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:15:16 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:21:13 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	exec_builtin(t_cmd *cmd, t_shell *shell)
 	ft_printf("-> Executing : %s\n", cmd->cmd);
 	if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
 		builtin_exit(shell);
+	if (ft_strncmp(cmd->cmd, "env", ft_strlen(cmd->cmd)) == 0)
+		builtin_env(shell);
 }
 
 void	exec_bin(t_cmd *cmd, t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:10:14 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:21:33 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ void	print_cmds(t_cmd **cmds);
 
 // Builtins
 int		is_builtin(char *cmd_str);
+void	builtin_env(t_shell *shell);
 void	builtin_exit(t_shell *shell);
 
 // Environ utils
 char	*get_envval(char *key, t_shell *shell);
+void	print_env(t_shell *shell);
 
 // Errors and exit
 
