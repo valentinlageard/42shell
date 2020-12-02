@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:05:34 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/01 15:15:34 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:11:49 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_shell	*init_shell(char **envp)
 
 	if (!(shell = (t_shell *)malloc(sizeof(t_shell))))
 		return (NULL);
+	shell->cmds = NULL;
 	shell->env = envdup(envp);
 	return (shell);
 }

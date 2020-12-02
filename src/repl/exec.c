@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:01:53 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:15:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	exec_builtin(t_cmd *cmd, t_shell *shell)
 {
+	ft_printf("-> Executing : %s\n", cmd->cmd);
 	if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
 		builtin_exit(shell);
 }
@@ -39,21 +40,21 @@ void	exec_bin(t_cmd *cmd, t_shell *shell)
 	}
 }
 
-void	exec(t_cmd **cmds, t_shell *shell)
+void	exec(t_shell *shell)
 {
 	int		i;
 
 	i = 0;
-	while (cmds[i])
+	while (shell->cmds[i])
 	{
-		if (cmds[i]->is_valid)
+		if (shell->cmds[i]->is_valid)
 		{
-			if (cmds[i]->is_builtin)
-				exec_builtin(cmds[i], shell);
+			if (shell->cmds[i]->is_builtin)
+				exec_builtin(shell->cmds[i], shell);
 			else
-				exec_bin(cmds[i], shell);
+				exec_bin(shell->cmds[i], shell);
 		}
 		i++;
 	}
-	free_cmds(cmds);
+	free_cmds(shell->cmds);
 }

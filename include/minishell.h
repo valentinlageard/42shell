@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:00:35 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:10:14 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@
 # include <signal.h>
 # include "../libft/libft.h"
 
-typedef struct	s_shell {
-	char	**env;
-}				t_shell;
-
 typedef struct	s_cmd {
 	char	*cmd;
 	char	**args;
@@ -35,10 +31,15 @@ typedef struct	s_cmd {
 	// TODO : add flags for redirections and pipes.
 }				t_cmd;
 
+typedef struct	s_shell {
+	t_cmd	**cmds;
+	char	**env;
+}				t_shell;
+
 t_shell	*init_shell(char **envp);
 void	repl(t_shell *shell);
 t_cmd	**parse(char *line, t_shell *shell);
-void	exec(t_cmd **cmds, t_shell *shell);
+void	exec(t_shell *shell);
 char	*select_binpath(char *cmd, t_shell *shell);
 
 // Cmd utils

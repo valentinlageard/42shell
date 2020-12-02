@@ -2,10 +2,7 @@
 
 ## TODO
 
-- Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
 - Implémenter `change_env(key, new_value, env)` qui change la valeur d'une variable d'environnement.
-- Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
-- Faire que`exec` sélectionne entre builtin ou commande.
 - Gestion de `'` et `"`
 - Gestion des redirections :
 	- `<` utilise un fichier comme stdin
@@ -18,12 +15,14 @@
 - builtin : echo (avec l'option -n)
 - builtin : cd
 - builtin : pwd
-- builtin : export
-- builtin : unset
+- builtin : export : Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
+- builtin : unset : Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
 - builtin : env
-- builtin : exit
 
 ### DONE
+- [x] builtin : exit
+- [x] Stocker cmds dans shell afin qu'elles puissent être libérée lors d'un exit !
+- [x] Faire que`exec` sélectionne entre builtin ou commande.
 - [x] Créer une fonction `parse` qui crée une liste de struct cmd et qui la passe à `exec` qui exécute
 - [x] Séparation des commandes avec ``;``
 - [x] Implémenter `select_binpath` et `get_binpath` qui cherchent et remplacent le chemin du binaire.
@@ -88,7 +87,8 @@ Pour chaque commande :
 ### Shell configuration
 
 La configuration du shell contient :
-- Les variables d'environnement.
+- `t_cmd **cmds` : Une liste de commande stockant vers la liste de commande créée par `parse` et transmise à `exec`.
+- `char **env` : Les variables d'environnement.
 
 ### Commande
 

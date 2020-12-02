@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 16:55:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 16:53:00 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:12:18 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	repl(t_shell *shell)
 {
 	int		read_error;
 	char	*line;
-	t_cmd	**cmds;
 
 	line = NULL;
 	// DEBUG : Print environment variables
@@ -31,12 +30,12 @@ void	repl(t_shell *shell)
 	while ((read_error = ft_read_line(0, &line)) >= 0)
 	{
 		ft_printf("Parsing...\n");
-		cmds = parse(line, shell);
+		shell->cmds = parse(line, shell);
 		ft_printf("Parsing done.\n");
 		ft_printf("Parsed commands :\n");
-		print_cmds(cmds);
+		print_cmds(shell->cmds);
 		ft_printf("Executing...\n");
-		exec(cmds, shell);
+		exec(shell);
 		ft_printf("Executing done.\n");
 		free(line);
 		ft_printf("$> ");
