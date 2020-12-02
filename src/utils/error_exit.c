@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   error_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/24 17:11:00 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/24 17:29:24 by valentin         ###   ########.fr       */
+/*   Created: 2020/12/02 16:00:28 by valentin          #+#    #+#             */
+/*   Updated: 2020/12/02 16:00:31 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	perror_exit(void)
+void	shell_exit(int status, t_shell *shell)
+{
+	ft_free_words(shell->env);
+	free(shell);
+	exit(status);
+}
+
+void	perror_exit(t_shell *shell)
 {
 	ft_printf(strerror(errno));
-	exit(EXIT_FAILURE);
+	shell_exit(EXIT_FAILURE, shell);
 }

@@ -5,11 +5,7 @@
 - Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
 - Implémenter `change_env(key, new_value, env)` qui change la valeur d'une variable d'environnement.
 - Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
-- Faire une fonction `exec` qui sélectionne l'exécution d'un builtin ou d'une commande.
-- Séparation des commandes avec ``;`` :
-	- Splitter la ligne selon `;`
-	- Pour chaque split, créer une commande en splittant selon les whitespaces
-	- Pour chaque commande, exécuter.
+- Faire que`exec` sélectionne entre builtin ou commande.
 - Gestion de `'` et `"`
 - Gestion des redirections :
 	- `<` utilise un fichier comme stdin
@@ -28,6 +24,8 @@
 - builtin : exit
 
 ### DONE
+- [x] Créer une fonction `parse` qui crée une liste de struct cmd et qui la passe à `exec` qui exécute
+- [x] Séparation des commandes avec ``;``
 - [x] Implémenter `select_binpath` et `get_binpath` qui cherchent et remplacent le chemin du binaire.
 - [x] Récupérer les variables d'environnement et les stocker.
 - [x] Implémenter une fonction `get_envval(key, env)`.
@@ -63,13 +61,18 @@ struct s_cmd (t_cmd):
 - int is_piped : 1 si la commande est pipée dans la prochaine, sinon 0.
 
 ### Parsing
-1. Traiter `""` et `''`
-2. Découper la ligne selon `;` (et `|` ?)
-3. Découper les commandes selon whitespaces.
-4. Détecter si la commande est un builtin ou un binaire.
-	1. Si c'est un binaire, sélectionner le path et stocker dans main
-5. Remplacer les appels aux variables par leur valeur dans args.
-6. Répéter pour chaque commande et transmettre une liste de commande à exec qui exécutera ces commandes.
+
+- TODO : (Traiter `""` et `''` : comment ?)
+- Découper la ligne en plusieurs commandes selon `;` (TODO : et `|` ?)
+	- Pour chaque commande :
+	- Découper les commandes selon les whitespaces en args.
+	- Si la commande est un builtin.
+		- Mettre le flag is_builtin.
+	- Sinon :
+		- Détecter si le binaire existe relativement ou absolument selon $PATH.
+		- Si c'est le cas, stocker le chemin absolu dans cmd.
+	- Dans les args, détecter les appels aux variables. Si des variables sont appelées, remplacer la string par la valeur de cette variable (désallouer l'appel, allouer la variable, changer l'adresse du pointeur).
+	- Stocker args dans args.
 
 ### Exécution
 

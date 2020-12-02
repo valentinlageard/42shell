@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/01 16:35:38 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 14:32:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,19 @@ void	free_cmd(t_cmd *cmd)
 	free(cmd->cmd);
 	ft_free_words(cmd->args);
 	free(cmd);
+}
+
+void	free_cmds(t_cmd **cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i])
+	{
+		free_cmd(cmds[i]);
+		i++;
+	}
+	free(cmds);
 }
 
 void	print_cmd(t_cmd *cmd)

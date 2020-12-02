@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/01 16:14:59 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 17:00:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct	s_cmd {
 	char	**args;
 	int		is_valid;
 	int		is_builtin;
-	//int		is_piped;
+	// TODO : add flags for redirections and pipes.
 }				t_cmd;
 
 t_shell	*init_shell(char **envp);
@@ -44,10 +44,19 @@ char	*select_binpath(char *cmd, t_shell *shell);
 // Cmd utils
 t_cmd	*new_cmd(void);
 void	free_cmd(t_cmd *cmd);
+void	free_cmds(t_cmd **cmds);
 void	print_cmd(t_cmd *cmd);
 void	print_cmds(t_cmd **cmds);
 
+// Builtins
+int		is_builtin(char *cmd_str);
+void	builtin_exit(t_shell *shell);
+
 // Environ utils
 char	*get_envval(char *key, t_shell *shell);
+
+// Errors and exit
+
+void	shell_exit(int status, t_shell *shell);
 
 #endif

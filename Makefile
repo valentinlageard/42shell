@@ -4,7 +4,9 @@ SRC			=	src/minishell.c \
 				src/repl/repl.c \
 				src/repl/exec.c \
 				src/parsing/parse.c \
-				src/utils/error.c \
+				src/builtins/basic_builtins.c \
+				src/builtins/builtin_utils.c \
+				src/utils/error_exit.c \
 				src/utils/init.c \
 				src/utils/environ.c \
 				src/utils/binpath.c \

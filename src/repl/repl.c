@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 16:55:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/01 16:30:29 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/02 16:53:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@ void	repl(t_shell *shell)
 
 	line = NULL;
 	// DEBUG : Print environment variables
-	ft_printf("ENVIRONMENT VARTIABLES :\n");
+	/*ft_printf("ENVIRONMENT VARTIABLES :\n");
 	int i = 0;
 	while (shell->env[i])
 	{
 		ft_printf("%s\n", shell->env[i]);
 		i++;
-	}
-	ft_printf("GETVAL TEST | KEY = PATH : %s\n", get_envval("PATH", shell));
+	}*/
 	ft_printf("$> ");
 	while ((read_error = ft_read_line(0, &line)) >= 0)
 	{
@@ -43,5 +42,4 @@ void	repl(t_shell *shell)
 		ft_printf("$> ");
 	}
 	// If read_error == -1
-	// Exits properly
 }

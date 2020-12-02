@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   basic_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 16:25:00 by valentin         ###   ########.fr       */
+/*   Created: 2020/12/02 16:01:27 by valentin          #+#    #+#             */
+/*   Updated: 2020/12/02 17:00:20 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	builtin_exit(t_shell *shell)
 {
-	t_shell	*shell;
-
-	shell = init_shell(envp); // TODO : Check error and exit if any
-	repl(shell);
 	shell_exit(EXIT_SUCCESS, shell);
 }
