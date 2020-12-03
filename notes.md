@@ -2,6 +2,8 @@
 
 ## TODO
 
+- ARCHITECTURE : Faire que les variables d'environnment sont stockés comme liste chaînée.
+- DEBUG : Erreur de double free quand un zsh est lancé via minishell en utilisant $SHELL !
 - Implémenter `change_env(key, new_value, env)` qui change la valeur d'une variable d'environnement.
 - Gestion de `'` et `"`
 - Gestion des redirections :
@@ -9,7 +11,6 @@
 	- `>` écrit stdout dans un fichier
 	- `>>` ajoute stdout à la fin d'un fichier
 - Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
-- Gestion des variables d'environnement `$FOO`
 - Gestion de `$?` : donne le statut de ?
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 - builtin : echo (avec l'option -n)
@@ -17,11 +18,10 @@
 - builtin : pwd
 - builtin : export : Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
 - builtin : unset : Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
-- builtin : env :
-	- [x] prints env variables
-	- [ ] run a command by modifying its environment
 
 ### DONE
+- [x] Gestion des variables d'environnement `$FOO`
+- [x] builtin : env (no options or arguments !) : prints env variables
 - [x] builtin : exit
 - [x] Stocker cmds dans shell afin qu'elles puissent être libérée lors d'un exit !
 - [x] Faire que`exec` sélectionne entre builtin ou commande.

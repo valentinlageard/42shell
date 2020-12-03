@@ -19,11 +19,11 @@ CC			=	gcc $(FLAGS)
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS) $(LIBFT) -lm
-			$(CC) $(OBJS) $(LIBFT) -o $(NAME) -lm
+$(NAME):	$(OBJS) $(LIBFT)
+			$(CC) $(OBJS) $(LIBFT) -o $(NAME)
 
 %.o: %.c
-			$(CC) -Iinclude -c $< -o $@ -lm
+			$(CC) -Iinclude -c $< -o $@
 
 $(LIBFT):
 			make -C libft
