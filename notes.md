@@ -52,7 +52,7 @@ Pour l'instant, le programme ne fait que splitter la ligne et transmettre une li
 
 ### Interface parsing / exécution
 
-Idéalement le parsing construit des structures de données qui stockent les commandes. La fonction d'éxécution prend cette commande en entrée. Les commandes ont , dossier local, ...une structure de données.
+Idéalement le parsing construit des structures de données qui stockent les commandes. La fonction d'éxécution prend cette commande en entrée. Les commandes ont une structure de données.
 
 struct s_cmd (t_cmd):
 - char *main : contient le bpath de la commande ou le nom du builtin

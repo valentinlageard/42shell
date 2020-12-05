@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:21:33 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/05 13:32:37 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "../libft/libft.h"
+
+typedef struct	s_var {
+	char			*key;
+	char			*value;
+	struct s_var	*next;
+}				t_var;
 
 typedef struct	s_cmd {
 	char	*cmd;
