@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:21:13 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/05 16:33:42 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	exec_bin(t_cmd *cmd, t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
+	char	**wenv;
 
 	// TODO : BETTER ERROR / SIGNAL MANAGEMENT !
 	pid = fork();
@@ -32,7 +33,9 @@ void	exec_bin(t_cmd *cmd, t_shell *shell)
 	{
 		// Execute the command
 		ft_printf("-> Executing : %s\n", cmd->cmd);
-		execve(cmd->cmd, cmd->args, shell->env);
+		wenv = envtowenv(shell->env);
+		execve(cmd->cmd, cmd->args, wenv);
+		free(wenv);
 	}
 	else if (pid > 0) // In the parent process
 	{

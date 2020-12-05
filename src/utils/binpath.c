@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:44:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/01 16:19:50 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/05 16:37:09 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_binpath(char *cmd, t_shell *shell)
 	int		i;
 
 	slash_cmd = ft_strjoin("/", cmd); // TODO : Check errors
-	path_val = get_envval("PATH", shell); // TODO : Check errors
+	path_val = get_envval("PATH", shell->env); // TODO : Check errors
 	bpaths = ft_split(path_val, ":"); // TODO : Check errors
 	i = 0;
 	while (bpaths[i])

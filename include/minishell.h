@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 13:32:37 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/05 16:33:26 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct	s_cmd {
 
 typedef struct	s_shell {
 	t_cmd	**cmds;
-	char	**env;
+	t_var	*env;
 }				t_shell;
 
 t_shell	*init_shell(char **envp);
@@ -60,12 +60,20 @@ int		is_builtin(char *cmd_str);
 void	builtin_env(t_shell *shell);
 void	builtin_exit(t_shell *shell);
 
+// Var utils
+t_var	*new_var(char *key, char *value);
+void	free_var(t_var *var);
+void	addlast_var(t_var *var, t_var **env);
+void	change_value_var(char *key, char *new_value, t_var **env);
+void	delete_var(char *key, t_var **env);
+
 // Environ utils
-char	*get_envval(char *key, t_shell *shell);
-void	print_env(t_shell *shell);
+char	*get_envval(char *key, t_var *env);
+void	print_env(t_var *env);
+t_var	*wenvtoenv(char **wenv);
+char	**envtowenv(t_var *env);
 
 // Errors and exit
-
 void	shell_exit(int status, t_shell *shell);
 
 #endif

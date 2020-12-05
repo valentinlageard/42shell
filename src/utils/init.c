@@ -6,33 +6,12 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:05:34 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:11:49 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/05 16:36:49 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**envdup(char **envp)
-{
-	char	**env;
-	char	*str;
-	int		i;
-
-	i = 0;
-	if (!(env = (char **)malloc((ft_wlen(envp) + 1) * sizeof(char *))))
-		return (NULL);
-	while (envp[i])
-	{
-		if (!(str = ft_strdup(envp[i])))
-		{
-			ft_free_words(env);
-			return (NULL);
-		}
-		env[i] = str;
-		i++;
-	}
-	return (env);
-}
 
 t_shell	*init_shell(char **envp)
 {
@@ -41,6 +20,6 @@ t_shell	*init_shell(char **envp)
 	if (!(shell = (t_shell *)malloc(sizeof(t_shell))))
 		return (NULL);
 	shell->cmds = NULL;
-	shell->env = envdup(envp);
+	shell->env = wenvtoenv(envp);
 	return (shell);
 }

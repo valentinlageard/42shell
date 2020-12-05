@@ -10,11 +10,12 @@ SRC			=	src/minishell.c \
 				src/utils/init.c \
 				src/utils/environ.c \
 				src/utils/binpath.c \
-				src/utils/cmd.c
+				src/utils/cmd.c \
+				src/utils/var.c
 
 OBJS		=	$(SRC:.c=.o)
 
-FLAGS		=	#-Wall -Wextra -Werror
+FLAGS		=	-Wall -Wextra # -Werror
 CC			=	gcc $(FLAGS)
 
 all:		$(NAME)
