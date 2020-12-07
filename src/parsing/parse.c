@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 21:00:13 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:21:49 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ t_cmd	*parse_cmd(char *sc_split, t_shell *shell)
 	}
 	else
 		cmd->main = select_binpath(args[0], shell);
+	if (!cmd->main)
+		cmd->is_valid = 0;
 	cmd->args = args;
 	// TODO : manage other flags (pipe, redirection, etc...)
 	return (cmd);
