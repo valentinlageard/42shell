@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:44:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 16:37:09 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/05 21:03:20 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ char	*get_binpath(char *cmd, t_shell *shell)
 		if (file_exists(bpath))
 		{
 			free(slash_cmd);
+			free(path_val);
+			ft_free_words(bpaths);
 			return (bpath);
 		}
 		free(bpath);
 		i++;
 	}
 	free(slash_cmd);
+	free(path_val);
 	return (NULL);
 }
 

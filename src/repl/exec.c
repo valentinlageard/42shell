@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 16:33:42 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/05 20:23:20 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	exec_builtin(t_cmd *cmd, t_shell *shell)
 {
-	ft_printf("-> Executing : %s\n", cmd->cmd);
-	if (ft_strncmp(cmd->cmd, "exit", ft_strlen(cmd->cmd)) == 0)
+	ft_printf("-> Executing : %s\n", cmd->main);
+	if (ft_strncmp(cmd->main, "exit", ft_strlen(cmd->main)) == 0)
 		builtin_exit(shell);
-	if (ft_strncmp(cmd->cmd, "env", ft_strlen(cmd->cmd)) == 0)
+	if (ft_strncmp(cmd->main, "env", ft_strlen(cmd->main)) == 0)
 		builtin_env(shell);
 }
 
@@ -32,10 +32,10 @@ void	exec_bin(t_cmd *cmd, t_shell *shell)
 	if (pid == 0) // In the child process
 	{
 		// Execute the command
-		ft_printf("-> Executing : %s\n", cmd->cmd);
+		ft_printf("-> Executing : %s\n", cmd->main);
 		wenv = envtowenv(shell->env);
-		execve(cmd->cmd, cmd->args, wenv);
-		free(wenv);
+		execve(cmd->main, cmd->args, wenv);
+		ft_free_words(wenv);
 	}
 	else if (pid > 0) // In the parent process
 	{

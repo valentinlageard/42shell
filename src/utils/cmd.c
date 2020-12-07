@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/03 14:02:14 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/05 21:06:26 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*new_cmd(void)
 
 	if (!(cmd = (t_cmd *)malloc(sizeof(t_cmd))))
 		return (NULL);
-	cmd->cmd = NULL;
+	cmd->main = NULL;
 	cmd->args = NULL;
 	cmd->is_valid = 1;
 	cmd->is_builtin = 0;
@@ -27,7 +27,7 @@ t_cmd	*new_cmd(void)
 
 void	free_cmd(t_cmd *cmd)
 {
-	free(cmd->cmd);
+	free(cmd->main);
 	ft_free_words(cmd->args);
 	free(cmd);
 }
@@ -43,6 +43,7 @@ void	free_cmds(t_cmd **cmds)
 		i++;
 	}
 	free(cmds);
+	cmds = NULL;
 }
 
 void	print_cmd(t_cmd *cmd)
@@ -50,7 +51,7 @@ void	print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	ft_printf("\tCMD : %s\n", cmd->cmd);
+	ft_printf("\tCMD : %s\n", cmd->main);
 	ft_printf("\tARGS :\n");
 	while ((cmd->args)[i])
 	{

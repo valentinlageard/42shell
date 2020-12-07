@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 16:33:26 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/05 21:05:08 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_var {
 }				t_var;
 
 typedef struct	s_cmd {
-	char	*cmd;
+	char	*main;
 	char	**args;
 	int		is_valid;
 	int		is_builtin;
@@ -68,10 +68,11 @@ void	change_value_var(char *key, char *new_value, t_var **env);
 void	delete_var(char *key, t_var **env);
 
 // Environ utils
-char	*get_envval(char *key, t_var *env);
-void	print_env(t_var *env);
 t_var	*wenvtoenv(char **wenv);
 char	**envtowenv(t_var *env);
+void	free_env(t_var *env);
+char	*get_envval(char *key, t_var *env);
+void	print_env(t_var *env);
 
 // Errors and exit
 void	shell_exit(int status, t_shell *shell);

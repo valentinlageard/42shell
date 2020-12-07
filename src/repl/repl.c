@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 16:55:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/02 17:12:18 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/05 19:43:22 by vlageard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ void	repl(t_shell *shell)
 	{
 		ft_printf("Parsing...\n");
 		shell->cmds = parse(line, shell);
+		free(line);
 		ft_printf("Parsing done.\n");
 		ft_printf("Parsed commands :\n");
 		print_cmds(shell->cmds);
 		ft_printf("Executing...\n");
 		exec(shell);
 		ft_printf("Executing done.\n");
-		free(line);
 		ft_printf("$> ");
 	}
 	// If read_error == -1
