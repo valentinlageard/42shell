@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 21:06:26 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:11:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ t_cmd	*new_cmd(void)
 
 void	free_cmd(t_cmd *cmd)
 {
+	ft_printf("cmd->main addr : %p\n", &(cmd->main));
+	for (int i = 0; i < ft_wlen(cmd->args); i++)
+		ft_printf("cmd->args[%d] addr : %p\n", i, &(cmd->args[i]));
 	free(cmd->main);
 	ft_free_words(cmd->args);
 	free(cmd);

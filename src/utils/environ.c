@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:45:20 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 20:18:35 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/07 18:50:06 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	**envtowenv(t_var *env)
 	return (wenv);
 }
 
-char **key_val_split(char *var_str)
+char	**key_val_split(char *var_str)
 {
 	char	**key_val;
 	int		i;

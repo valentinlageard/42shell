@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:44:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 21:03:20 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/07 20:13:40 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	*get_binpath(char *cmd, t_shell *shell)
 	char	*bpath;
 	int		i;
 
-	slash_cmd = ft_strjoin("/", cmd); // TODO : Check errors
-	path_val = get_envval("PATH", shell->env); // TODO : Check errors
-	bpaths = ft_split(path_val, ":"); // TODO : Check errors
+	slash_cmd = ft_strjoin("/", cmd); // TODO : Check for ENOMEM
+	path_val = get_envval("PATH", shell->env);
+	bpaths = ft_split(path_val, ":"); // TODO : Check for ENOMEM
 	i = 0;
 	while (bpaths[i])
 	{
@@ -36,22 +36,21 @@ char	*get_binpath(char *cmd, t_shell *shell)
 		if (file_exists(bpath))
 		{
 			free(slash_cmd);
-			free(path_val);
 			ft_free_words(bpaths);
 			return (bpath);
 		}
 		free(bpath);
+		bpath = NULL;
 		i++;
 	}
 	free(slash_cmd);
-	free(path_val);
 	return (NULL);
 }
 
 char	*select_binpath(char *cmd, t_shell *shell)
 {
 	if (file_exists(cmd))
-		return (cmd);
+		return (ft_strdup(cmd)); // Check for ENOMEM
 	else
 		return (get_binpath(cmd, shell));
 }
