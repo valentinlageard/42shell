@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 17:05:22 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 14:03:44 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/08 14:07:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	builtin_export(t_cmd *cmd, t_shell *shell)
 	i = 1;
 	while (cmd->args[i])
 	{
-		if (ft_strchr(cmd->args[i], '='))
+		if (ft_iscinstr('=', cmd->args[i]))
 		{
 			split = key_val_split(cmd->args[i]);
 			if (!(change_value_var(split[0], split[1], &(shell->env))))
