@@ -2,7 +2,6 @@
 
 ## TODO
 
-- Implémenter `change_env(key, new_value, env)` qui change la valeur d'une variable d'environnement.
 - Gestion de `'` et `"`
 - Gestion des redirections :
 	- `<` utilise un fichier comme stdin
@@ -14,10 +13,11 @@
 - builtin : echo (avec l'option -n)
 - builtin : cd
 - builtin : pwd
-- builtin : export : Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
-- builtin : unset : Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
-
+ 
 ### DONE
+- [x] builtin : export : Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
+- [x] builtin : unset : Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
+- [x] Implémenter `change_env(key, new_value, env)` qui change la valeur d'une variable d'environnement.
 - [x] DEBUG : After launching another shell, the shell bugs.
 - [x] DEBUG : Erreur de double free quand un zsh est lancé via minishell en utilisant $SHELL !
 - [x] DEBUG : Seul le premier `=` sépare la clé de la valeur dans les variables d'environnement !

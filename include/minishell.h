@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 21:05:08 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:49:32 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,21 @@ void	print_cmds(t_cmd **cmds);
 // Builtins
 int		is_builtin(char *cmd_str);
 void	builtin_env(t_shell *shell);
+void	builtin_export(t_cmd *cmd, t_shell *shell);
+void	builtin_unset(t_cmd *cmd, t_shell *shell);
 void	builtin_exit(t_shell *shell);
 
 // Var utils
 t_var	*new_var(char *key, char *value);
 void	free_var(t_var *var);
 void	addlast_var(t_var *var, t_var **env);
-void	change_value_var(char *key, char *new_value, t_var **env);
+int		change_value_var(char *key, char *new_value, t_var **env);
 void	delete_var(char *key, t_var **env);
 
 // Environ utils
 t_var	*wenvtoenv(char **wenv);
 char	**envtowenv(t_var *env);
+char	**key_val_split(char *var_str);
 void	free_env(t_var *env);
 char	*get_envval(char *key, t_var *env);
 void	print_env(t_var *env);

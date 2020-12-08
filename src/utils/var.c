@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 14:12:07 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 21:01:59 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:42:47 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ void	addlast_var(t_var *var, t_var **env)
 	}
 }
 
-void	change_value_var(char *key, char *new_value, t_var **env)
+/* Returns 1 if value was changed, 0 if key doesn't exists and -1 if an error occured */
+
+int	change_value_var(char *key, char *new_value, t_var **env)
 {
 	t_var	*tmp;
 	int		key_len;
@@ -67,11 +69,13 @@ void	change_value_var(char *key, char *new_value, t_var **env)
 		if (ft_strncmp(key, tmp->key, key_len) == 0)
 		{
 			free(tmp->value);
-			tmp->value = ft_strdup(new_value);
-			break ;
+			if (!(tmp->value = ft_strdup(new_value)))
+				return (-1);
+			return (1);
 		}
 		tmp = tmp->next;
 	}
+	return (0);
 }
 
 void	delete_var(char *key, t_var **env)

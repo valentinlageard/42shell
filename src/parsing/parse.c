@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 00:25:00 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/08 00:26:20 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	replace_varcalls(char **args, t_shell *shell)
 	{
 		if (args[i][0] == '$')
 		{
-			ft_printf("$ encountered : args[%d] : %s\n", i, args[i]);
 			if ((val = get_envval(&(args[i][1]), shell->env)))
 			{
 				if (!(new_str = ft_strdup(val)))

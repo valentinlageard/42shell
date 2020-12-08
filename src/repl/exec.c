@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/05 20:23:20 by vlageard         ###   ########.fr       */
+/*   Updated: 2020/12/08 13:49:12 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ void	exec_builtin(t_cmd *cmd, t_shell *shell)
 		builtin_exit(shell);
 	if (ft_strncmp(cmd->main, "env", ft_strlen(cmd->main)) == 0)
 		builtin_env(shell);
+	if (ft_strncmp(cmd->main, "unset", ft_strlen(cmd->main)) == 0)
+		builtin_unset(cmd, shell);
+	if (ft_strncmp(cmd->main, "export", ft_strlen(cmd->main)) == 0)
+		builtin_export(cmd, shell);
 }
 
 void	exec_bin(t_cmd *cmd, t_shell *shell)
