@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 14:36:23 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 13:48:44 by valentin         ###   ########.fr       */
+/*   Updated: 2020/12/08 16:23:11 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	is_builtin(char *cmd_str)
 	else if (ft_strncmp(cmd_str, "export", ft_strlen(cmd_str)) == 0)
 		return (1);
 	else if (ft_strncmp(cmd_str, "unset", ft_strlen(cmd_str)) == 0)
+		return (1);
+	else if (ft_strncmp(cmd_str, "pwd", ft_strlen(cmd_str)) == 0)
+		return (1);
+	else if (ft_strncmp(cmd_str, "echo", ft_strlen(cmd_str)) == 0)
 		return (1);
 	else
 		return (0);

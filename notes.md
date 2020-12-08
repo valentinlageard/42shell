@@ -2,6 +2,7 @@
 
 ## TODO
 
+- DEBUG : meilleur gestion de -n dans echo
 - Gestion de `'` et `"`
 - Gestion des redirections :
 	- `<` utilise un fichier comme stdin
@@ -10,11 +11,11 @@
 - Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
 - Gestion de `$?` : donne le statut de ?
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
-- builtin : echo (avec l'option -n)
 - builtin : cd
-- builtin : pwd
- 
+
 ### DONE
+- [x] builtin : echo (avec l'option -n)
+- [x] builtin : pwd
 - [x] builtin : export : Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.
 - [x] builtin : unset : Implémenter `delete_env(key, env)` qui supprime une variable d'environnement.
 - [x] Implémenter `change_env(key, new_value, env)` qui change la valeur d'une variable d'environnement.
