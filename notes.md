@@ -2,6 +2,7 @@
 
 ## TODO
 
+- DEBUG : gérer les espaces dans cd ?
 - DEBUG : meilleur gestion de -n dans echo
 - Gestion de `'` et `"`
 - Gestion des redirections :
@@ -11,9 +12,9 @@
 - Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
 - Gestion de `$?` : donne le statut de ?
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
-- builtin : cd
 
 ### DONE
+- [x] builtin : cd
 - [x] builtin : echo (avec l'option -n)
 - [x] builtin : pwd
 - [x] builtin : export : Implémenter `new_env(key, value, env)` qui crée une nouvelle variable d'environnement.

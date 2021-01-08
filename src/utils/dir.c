@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_builtins.c                                    :+:      :+:    :+:   */
+/*   dir.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/08 16:45:57 by valentin         ###   ########.fr       */
+/*   Created: 2021/01/08 16:23:20 by valentin          #+#    #+#             */
+/*   Updated: 2021/01/08 16:43:57 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_pwd(t_shell *shell)
+void	update_pwd(t_shell *shell)
 {
-	ft_printf("%s\n", get_envval("PWD", shell->env));
-}
+	char	*path;
 
-void	builtin_cd(t_cmd *cmd, t_shell *shell)
-{
-	chdir((cmd->args)[1]);
-	update_pwd(shell);
-	// TODO : error management
+	path = getcwd(NULL, PATH_MAX);
+	if (!change_value_var("PWD", path, &shell->env))
+		addlast_var(new_var("PWD", path), &shell->env);
+	free(path);
+	// TODO : check for errors (new_var allocation, ...)
 }

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 16:24:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/08 16:46:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include "../libft/libft.h"
+
+# define PATH_MAX 4096
 
 typedef struct	s_var {
 	char			*key;
@@ -63,6 +65,7 @@ void	builtin_unset(t_cmd *cmd, t_shell *shell);
 void	builtin_pwd(t_shell *shell);
 void	builtin_echo(t_cmd *cmd);
 void	builtin_exit(t_shell *shell);
+void	builtin_cd(t_cmd *cmd, t_shell *shell);
 
 // Var utils
 t_var	*new_var(char *key, char *value);
@@ -78,6 +81,9 @@ char	**key_val_split(char *var_str);
 void	free_env(t_var *env);
 char	*get_envval(char *key, t_var *env);
 void	print_env(t_var *env);
+
+// Dir utils
+void	update_pwd(t_shell *shell);
 
 // Errors and exit
 void	shell_exit(int status, t_shell *shell);
