@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/08 16:46:16 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/13 00:25:50 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ typedef struct	s_var {
 	char			*value;
 	struct s_var	*next;
 }				t_var;
+
+typedef struct	s_tok {
+	char			*str;
+	int				type;
+	struct s_tok	*next;
+}				t_tok;
 
 typedef struct	s_cmd {
 	char	*main;
@@ -66,6 +72,16 @@ void	builtin_pwd(t_shell *shell);
 void	builtin_echo(t_cmd *cmd);
 void	builtin_exit(t_shell *shell);
 void	builtin_cd(t_cmd *cmd, t_shell *shell);
+
+// Tokens
+
+t_tok	*new_tok(char *str, int type);
+void	free_tok(t_tok *tok);
+int	addlast_tok(t_tok *tok, t_tok **ltok);
+void	print_tok(t_tok *tok);
+void	print_ltok(t_tok *tok);
+t_tok	*tokenize_quotes(char *line);
+void	free_ltok(t_tok *tok);
 
 // Var utils
 t_var	*new_var(char *key, char *value);

@@ -2,7 +2,8 @@
 
 ## TODO
 
-- DEBUG : gérer les espaces dans cd ?
+- OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
+- OPTIONAL : gérer les espaces dans cd ?
 - DEBUG : meilleur gestion de -n dans echo
 - Gestion de `'` et `"`
 - Gestion des redirections :
@@ -78,6 +79,63 @@ struct s_cmd (t_cmd):
 		- Si c'est le cas, stocker le chemin absolu dans cmd.
 	- Dans les args, détecter les appels aux variables. Si des variables sont appelées, remplacer la string par la valeur de cette variable (désallouer l'appel, allouer la variable, changer l'adresse du pointeur).
 	- Stocker args dans args.
+
+#### Parsing priority
+
+1. Quotes split : "" et ''
+2. Command split : ;
+3. Piping and redirection split : < > >> |
+4. Variable expansion : $...
+5. Whitespaces split
+6. Builtin check and binary path getter
+
+#### Quote parsing
+
+Deux possibilités :
+
+- Créer une liste de shorts qui stockent pour chaque caractère s'il est escapé ou non.
+	- Avantage : relativement simple à implémenter
+	- Inconvénients : il faut revoir tout le code, ft_split doit pouvoir garder l'info sur l'escaping des caractères.
+
+- Créer des tokens :
+
+ls -l; cat text.txt; "ls;$HOME" -l
+-> Quoting process (line to token list)
+- "ls -l; cat text.txt; ", text
+- "ls;$HOME", double-quote
+- " -l", text
+-> Command splitting (token list to array of token list)
+- ["ls -l" (text)]
+- ["cat text.txt" (text)]
+- [" " (text), "ls;$HOME" (double-quote), " -l" (text)]
+[TODO : Redirections and piping HERE !]
+-> Variable expansion (array of token list to array of token list)
+- ["ls -l" (text)]
+- ["cat text.txt" (text)]
+- [" " (text), "ls;/home/user" (double-quote), " -l"]
+-> Whitespace split (list of token list to list of strings)
+- ["ls", "-l"]
+- ["cat", text.txt]
+- ["ls;/home/user", "-l"]
+
+#### New parsing
+
+1. Récupérer la ligne.
+2. tok **quote_tokenize(char *line) : découpe la ligne en liste de tokens.
+
+#### Token structure and type
+
+typedef struct s_tok {
+	char *str;
+	int	type;
+}
+
+Types :
+0 : text
+1 : single-quote text ''
+2 : double-quote text ""
+3 : command separator ;
+
 
 ### Exécution
 

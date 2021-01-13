@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 00:26:20 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/13 00:51:33 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,13 @@ t_cmd	**parse(char *line, t_shell *shell)
 	char	**sc_splits;
 	t_cmd	**cmds;
 	int		i;
+	t_tok	*ltok;
 
 	i = 0;
+	// Split by "" et ''
+	ltok = tokenize_quotes(line);
+	print_ltok(ltok);
+	free_ltok(ltok); // TEMPORARY : TO CHECK LEAKS
 	if (!(sc_splits = ft_split(line, ";")))
 		return (NULL);
 	if (!(cmds = (t_cmd **)malloc(sizeof(t_cmd *) * (ft_wlen(sc_splits) + 1))))

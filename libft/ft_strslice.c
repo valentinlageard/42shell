@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_builtins.c                                    :+:      :+:    :+:   */
+/*   ft_strslice.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/11 18:45:35 by valentin         ###   ########.fr       */
+/*   Created: 2021/01/12 18:57:03 by valentin          #+#    #+#             */
+/*   Updated: 2021/01/13 01:09:59 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stdlib.h>
+#include "libft.h"
 
-void	builtin_pwd(t_shell *shell)
+char	*ft_strslice(char *str, int start, int end)
 {
-	ft_printf("%s\n", get_envval("PWD", shell->env));
-}
+	char	*slice;
 
-void	builtin_cd(t_cmd *cmd, t_shell *shell)
-{
-	chdir((cmd->args)[1]);
-	update_pwd(shell);
-	// TODO : error management : directory doesn't exist, pwd update error
+	if (start > end)
+		return (NULL);
+	if (start == end)
+		return (ft_strdup(""));
+	if (!(slice = (char *)malloc(sizeof(char) * ((end - start) + 1))))
+		return (NULL);
+	ft_strlcpy(slice, &str[start], (end - start) + 1);
+	return (slice);
 }
