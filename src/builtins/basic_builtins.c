@@ -29,7 +29,7 @@ void	builtin_export(t_cmd *cmd, t_shell *shell)
 		{
 			split = key_val_split(cmd->args[i]);
 			if (!(change_value_var(split[0], split[1], &(shell->env))))
-				addlast_var(new_var(split[0], split[1]), &(shell->env));
+				append_var(new_var(split[0], split[1]), &(shell->env));
 			ft_free_words(split);
 		}
 		i++;

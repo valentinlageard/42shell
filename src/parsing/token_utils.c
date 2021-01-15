@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 19:19:28 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/13 00:36:52 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/15 17:18:48 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_tok(t_tok *tok)
 	free(tok);
 }
 
-int		addlast_tok(t_tok *tok, t_tok **ltok)
+int		append_tok(t_tok *tok, t_tok **ltok)
 {
 	t_tok	*tmp;
 
@@ -47,7 +47,6 @@ int		addlast_tok(t_tok *tok, t_tok **ltok)
 		*ltok = tok;
 	else
 	{
-		ft_printf("TEST\n");
 		tmp = *ltok;
 		while (tmp->next)
 			tmp = tmp->next;

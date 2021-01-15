@@ -89,7 +89,7 @@ t_var	*wenvtoenv(char **wenv)
 		split = key_val_split(wenv[i]); // TODO : check errors !
 		var = new_var(split[0], split[1]);
 		ft_free_words(split);
-		addlast_var(var, &env);
+		append_var(var, &env);
 		i++;
 	}
 	return (env);

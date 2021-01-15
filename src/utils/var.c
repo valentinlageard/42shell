@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 14:12:07 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 13:42:47 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/15 16:25:08 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_var(t_var *var)
 	free(var);
 }
 
-void	addlast_var(t_var *var, t_var **env)
+void	append_var(t_var *var, t_var **env)
 {
 	t_var	*tmp;
 

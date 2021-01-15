@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/13 00:25:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/15 17:17:43 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ typedef struct	s_var {
 typedef struct	s_tok {
 	char			*str;
 	int				type;
+	// 0 : txt,
+	// 1 : simple quotes,
+	// 2 : double quotes,
+	// 3 : cmd separator
 	struct s_tok	*next;
 }				t_tok;
 
@@ -77,16 +81,17 @@ void	builtin_cd(t_cmd *cmd, t_shell *shell);
 
 t_tok	*new_tok(char *str, int type);
 void	free_tok(t_tok *tok);
-int	addlast_tok(t_tok *tok, t_tok **ltok);
+int		append_tok(t_tok *tok, t_tok **ltok);
 void	print_tok(t_tok *tok);
 void	print_ltok(t_tok *tok);
 t_tok	*tokenize_quotes(char *line);
+t_tok	*tokenize_separators(t_tok *ltok);
 void	free_ltok(t_tok *tok);
 
 // Var utils
 t_var	*new_var(char *key, char *value);
 void	free_var(t_var *var);
-void	addlast_var(t_var *var, t_var **env);
+void	append_var(t_var *var, t_var **env);
 int		change_value_var(char *key, char *new_value, t_var **env);
 void	delete_var(char *key, t_var **env);
 

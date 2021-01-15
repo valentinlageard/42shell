@@ -18,7 +18,7 @@ void	update_pwd(t_shell *shell)
 
 	path = getcwd(NULL, PATH_MAX);
 	if (!change_value_var("PWD", path, &shell->env))
-		addlast_var(new_var("PWD", path), &shell->env);
+		append_var(new_var("PWD", path), &shell->env);
 	free(path);
 	// TODO : check for errors (new_var allocation, ...)
 }
