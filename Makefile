@@ -3,6 +3,7 @@ NAME		=	minishell
 SRC			=	src/minishell.c \
 				src/repl/repl.c \
 				src/repl/exec.c \
+				src/parsing/expand_var.c \
 				src/parsing/parse.c \
 				src/parsing/token_utils.c \
 				src/parsing/tokenizes.c \

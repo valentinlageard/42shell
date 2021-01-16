@@ -100,23 +100,42 @@ Deux possibilités :
 - Créer des tokens :
 
 ls -l; cat text.txt; "ls;$HOME" -l
+
 -> Quoting process (line to token list)
-- "ls -l; cat text.txt; ", text
-- "ls;$HOME", double-quote
-- " -l", text
--> Command splitting (token list to array of token list)
-- ["ls -l" (text)]
-- ["cat text.txt" (text)]
-- [" " (text), "ls;$HOME" (double-quote), " -l" (text)]
+- "ls -l; cat text.txt; " [text]
+- "ls;$HOME" [double-quote]
+- " -l" [text]
+
+-> Command splitting (token list to token list)
+- "ls -l" [text]
+- ";" [sep]
+- "cat text.txt" [text]
+- ";" [sep]
+- " " [text]
+- "ls;$HOME" [double-quote]
+- " -l" [text]
+
 [TODO : Redirections and piping HERE !]
--> Variable expansion (array of token list to array of token list)
-- ["ls -l" (text)]
-- ["cat text.txt" (text)]
-- [" " (text), "ls;/home/user" (double-quote), " -l"]
--> Whitespace split (list of token list to list of strings)
-- ["ls", "-l"]
-- ["cat", text.txt]
-- ["ls;/home/user", "-l"]
+
+-> Variable expansion (token list to token list)
+- "ls -l" [text]
+- ";" [sep]
+- "cat text.txt" [text]
+- ";" [sep]
+- " " [text]
+- "ls;/home/user42" [double-quote]
+- " -l" [text]
+
+-> Whitespace split (token list to token list)
+Remove whitespaces and separate tokens containing spaces (except quotes) in multiple tokens.
+- "ls" [text]
+- "-l" [text]
+- ";" [sep]
+- "cat" [text]
+- "text.txt" [text]
+- ";" [sep]
+- "ls;/home/user42" [double-quote]
+- "-l" [text]
 
 #### New parsing
 

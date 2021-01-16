@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/15 17:17:43 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/16 13:18:13 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,14 @@ typedef struct	s_shell {
 
 t_shell	*init_shell(char **envp);
 void	repl(t_shell *shell);
-t_cmd	**parse(char *line, t_shell *shell);
 void	exec(t_shell *shell);
 char	*select_binpath(char *cmd, t_shell *shell);
+
+// Parsing
+t_cmd	**parse(char *line, t_shell *shell);
+t_tok	*tokenize_quotes(char *line);
+t_tok	*tokenize_separators(t_tok *ltok);
+void	expand_vars(t_tok *ltok, t_shell *shell);
 
 // Cmd utils
 t_cmd	*new_cmd(void);
@@ -84,8 +89,6 @@ void	free_tok(t_tok *tok);
 int		append_tok(t_tok *tok, t_tok **ltok);
 void	print_tok(t_tok *tok);
 void	print_ltok(t_tok *tok);
-t_tok	*tokenize_quotes(char *line);
-t_tok	*tokenize_separators(t_tok *ltok);
 void	free_ltok(t_tok *tok);
 
 // Var utils

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/15 17:58:01 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/16 13:17:28 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,19 +71,33 @@ t_cmd	**parse(char *line, t_shell *shell)
 	t_cmd	**cmds;
 	int		i;
 	t_tok	*ltok;
-	t_tok	*ltok2;
 
 	i = 0;
-	// Split by "" et ''
+
+	// Quote splitting
 	ft_printf("Tokenizing quotes...\n");
 	ltok = tokenize_quotes(line);
 	ft_printf("Quoted tokens :\n");
 	print_ltok(ltok);
+
+	// Separator splitting
 	ft_printf("Tokenizing separators...\n");
-	ltok2 = tokenize_separators(ltok);
+	ltok = tokenize_separators(ltok);
 	ft_printf("Separated tokens :\n");
-	print_ltok(ltok2);
-	free_ltok(ltok2); // TEMPORARY : TO CHECK LEAKS
+	print_ltok(ltok);
+
+	// Variable expansion
+	ft_printf("Expanding variables...\n");
+	expand_vars(ltok, shell);
+	ft_printf("Variables expanded :\n");
+	print_ltok(ltok);
+
+	free_ltok(ltok); // TEMPORARY : TO CHECK LEAKS
+
+
+
+
+	// REMOVE BELOW
 	if (!(sc_splits = ft_split(line, ";")))
 		return (NULL);
 	if (!(cmds = (t_cmd **)malloc(sizeof(t_cmd *) * (ft_wlen(sc_splits) + 1))))
