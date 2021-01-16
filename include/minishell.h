@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/16 13:18:13 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/16 14:33:15 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_cmd	**parse(char *line, t_shell *shell);
 t_tok	*tokenize_quotes(char *line);
 t_tok	*tokenize_separators(t_tok *ltok);
 void	expand_vars(t_tok *ltok, t_shell *shell);
+t_tok	*tokenize_spaces(t_tok *ltok);
 
 // Cmd utils
 t_cmd	*new_cmd(void);

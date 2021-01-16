@@ -7,6 +7,7 @@ SRC			=	src/minishell.c \
 				src/parsing/parse.c \
 				src/parsing/token_utils.c \
 				src/parsing/tokenizes.c \
+				src/parsing/tokenizes2.c \
 				src/builtins/basic_builtins.c \
 				src/builtins/path_builtins.c \
 				src/builtins/builtin_utils.c \

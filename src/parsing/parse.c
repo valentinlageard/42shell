@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/16 13:17:28 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/16 14:34:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,14 @@ t_cmd	**parse(char *line, t_shell *shell)
 	ft_printf("Variables expanded :\n");
 	print_ltok(ltok);
 
+	// Space splitting
+	ft_printf("Tokenizing by whitespaces...\n");
+	ltok = tokenize_spaces(ltok);
+	ft_printf("Splitted tokens :\n");
+	print_ltok(ltok);
+
+
 	free_ltok(ltok); // TEMPORARY : TO CHECK LEAKS
-
-
 
 
 	// REMOVE BELOW
