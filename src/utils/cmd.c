@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 00:22:48 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/18 14:30:32 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,58 @@ void	free_cmds(t_cmd **cmds)
 	}
 	free(cmds);
 	cmds = NULL;
+}
+
+t_cmd	**appendrealloc_cmd(t_cmd *cmd, t_cmd **cmds)
+{
+	int		i;
+	int		len_cmds;
+	t_cmd	**ncmds;
+
+	i = 0;
+	len_cmds = 0;
+	if (cmds)
+	{
+		while (cmds[len_cmds])
+			len_cmds++;
+	}
+	if (!(ncmds = (t_cmd **)malloc(sizeof(t_cmd *) * (len_cmds + 2))))
+		return (NULL);
+	while (i < len_cmds)
+	{
+		ncmds[i] = cmds[i];
+		i++;
+	}
+	ncmds[i] = cmd;
+	ncmds[i + 1] = NULL;
+	free(cmds);
+	return (ncmds);
+}
+
+int		appendrealloc_arg(char *arg, t_cmd *cmd)
+{
+	int		i;
+	int		len_args;
+	char	**args;
+	char	**nargs;
+
+	i = 0;
+	len_args = 0;
+	args = cmd->args;
+	while (args[len_args])
+		len_args++;
+	if (!(nargs = (char **)malloc(sizeof(char *) * (len_args + 2))))
+		return (-1);
+	while (i < len_args)
+	{
+		nargs[i] = args[i];
+		i++;
+	}
+	nargs[i] = ft_strdup(arg);
+	nargs[i + 1] = NULL;
+	free(args);
+	cmd->args = nargs;
+	return (0);
 }
 
 void	print_cmd(t_cmd *cmd)

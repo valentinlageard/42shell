@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 14:22:40 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/16 14:39:22 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/16 14:43:45 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	split_by_spaces(t_tok *tok, t_tok **nltok)
 	{
 		while (words[i])
 		{
-			ft_printf("- words[i] : %s\n", words[i]);
 			append_tok(new_tok(words[i], 0), nltok);
 			i++;
 		}
+		ft_free_words(words);
 	}
 }
 

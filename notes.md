@@ -137,6 +137,8 @@ Remove whitespaces and separate tokens containing spaces (except quotes) in mult
 - "ls;/home/user42" [double-quote]
 - "-l" [text]
 
+-> cmd list construction : token list to cmd array
+
 #### New parsing
 
 1. Récupérer la ligne.
