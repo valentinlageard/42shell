@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 19:19:28 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/15 17:18:48 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/19 15:00:03 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	free_ltok(t_tok *tok)
 
 void print_tok(t_tok *tok)
 {
-	ft_printf("TOKEN : %p | STR : \"%s\" | TYPE : %i | NEXT : %p\n", tok, tok->str, tok->type, tok->next);
+	ft_printf("TOKEN : [%p] | STR : \"%s\" | TYPE : %i | NEXT : [%p]\n", tok, tok->str, tok->type, tok->next);
 }
 
 void print_ltok(t_tok *tok)

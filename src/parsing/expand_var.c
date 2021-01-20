@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/15 18:53:23 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/16 14:08:21 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:10:33 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	expand_var(t_tok *tok, int *i, t_shell *shell)
 	if (!val)
 		val = "";
 	nstr_size = *i + ft_strlen(val) + (ft_strlen(tok->str) - j) + 1;
-	nstr = (char *)malloc(sizeof(char) * nstr_size); // PROTECT
+	nstr = (char *)malloc(sizeof(char) * nstr_size); // TODO : PROTECT
 	ft_memset(nstr, '\0', nstr_size);
 	ft_memcpy(nstr, tok->str, *i);
 	ft_memcpy(&(nstr[*i]), val, ft_strlen(val));

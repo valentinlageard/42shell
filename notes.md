@@ -3,9 +3,8 @@
 ## TODO
 
 - OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
-- OPTIONAL : gérer les espaces dans cd ?
+- DEBUG : Manage empty line, separator errors and invalid command
 - DEBUG : meilleur gestion de -n dans echo
-- Gestion de `'` et `"`
 - Gestion des redirections :
 	- `<` utilise un fichier comme stdin
 	- `>` écrit stdout dans un fichier
@@ -15,6 +14,9 @@
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
+- [x] Refactor cmds comme une liste chaînée.
+- [x] Gestion de `'` et `"`
+- [x] OPTIONAL : gérer les espaces dans cd ?
 - [x] builtin : cd
 - [x] builtin : echo (avec l'option -n)
 - [x] builtin : pwd
@@ -40,109 +42,111 @@
 
 1. **Initialiser le shell**
 	1. Récupérer et stocker les variables d'environnement.
-2. **Boucle d'interprétation** :
+2. **Read/Eval/Prompt/Loop** :
 	1. *Prompter* l'utilisateur.
 	2. *Lire* : lire des parties et stocker dans un buffer à taille variable.
-	3. *Parser la ligne* :
-		- Pour l'instant on split simplement.
-		1. *Executer* :
-			- Si le premier token est un builtin, lancer le builtin avec le reste des tokens en arguments.
-			- Sinon, créer un processus enfant et le faire exécuter la commande avec le reste des tokens en argument. Gérer le cas ou la commande ne correspond à rien.
-		3. *Répéter* pour chaque commande.
-	4. *Répéter* pour chaque ligne.
+	3. *Parser la ligne*.
+	4. *Executer les commandes*.
+	5. *Répéter* pour chaque ligne.
 3. **Fermer le programme**
 
-### Prototype
-Pour l'instant, le programme ne fait que splitter la ligne et transmettre une liste de string à l'exécution.
+### Groupes de commandes
 
-### Interface parsing / exécution
+Pendant la tokenization :
+- Splitter selon `;`.
+- Splitter selon `|`.
+- Splitter selon `>, <, >>`.
 
-Idéalement le parsing construit des structures de données qui stockent les commandes. La fonction d'éxécution prend cette commande en entrée. Les commandes ont une structure de données.
+Pendant le parsing :
+- Utiliser les séparateurs `;` pour séparer des groupes de commandes.
+- Utiliser les séparateurs `|` pour séparer des commandes dans un même groupe de commandes.
+- Utiliser les séparateurs `>, <, >>` et sélectionner le token suivant immédiatement comme path à stocker dans le groupe de commandes.
 
-struct s_cmd (t_cmd):
-- char *main : contient le bpath de la commande ou le nom du builtin
-- char **parameters : contient les paramètres de la commande.
-- int is_builtin : 1 si la commande est un builtin, sinon 0.
-- int is_valid : 1 si la commande est valide, sinon 0.
-- int is_piped : 1 si la commande est pipée dans la prochaine, sinon 0.
+Pendant l'éxecution pour chaque groupe de commandes :
+- S'il y a plusieurs commandes dans le groupe, piper chacune dans la suivante.
+- S'il y a une redirection entrante, rediriger le fichier dans la première commande.
+- S'il y a une redirection sortante, rediriger la sortie de la dernière commande dans le fichier de sortie.
+
+---
+
+- `cmdgs` : liste de groupe de commandes
+	- `cmdg` :
+		- `cmds` :
+			- `cmd`
+				- `main`
+				- `args`
+				- `is_valid`
+				- `is_builtin`
+			- ...
+		- `in_redir`
+		- `out_redir`
+		- `out_app_redir`
+	- ...
+
+### Redirections et pipes
+
+#### `a > b`
+
+Réecrit le stdout de a dans b.
+
+Si plusieurs fichiers sont stipulés, tous sont créés mais seul le dernier contient l'output :
+`a > b > c` créera b et c mais seul c contiendra le stdout de a.
+
+Si l'un existe déjà quand plusieurs sont stipulés, leur contenu sera effacé.
+
+#### `a >> b`
+
+Ajoute le stdout de a dans b.
+
+#### `a < b`
+
+Utilise b comme stdin pour a.
+
+Si plusieurs fichiers sont stipulés, seul le dernier est pris en compte :
+Dans `a < b < c`, a utilise c comme stdin et non b.
+
+#### `a | b`
+
+Utilise le stdout de a comme stdin de b.
+
+#### Parsing and execution
+
+A faire entre le split `;` et l'expansion de variables.
+
+**Tokenization part :**
+
+Ajouter des token types pour les redirections et pipes :
+- input redirection : <
+- output redirection : >
+- appending outpur redirection : >>
+- piping : |
+
+**Parsing part :**
+Quand un token de redirection est découvert, le token qui suit immédiatement est utilisé comme paramètre de la redirection et c'est stocké comme une propriété de la commande.
+
+Quand un token de piping est découvert, séparer la commande de ce qui suit et activer un flag is_piped.
+
+**Execution part :**
+
+Si les redirections sont activées dans la commande :
+- Ouvrir ces redirections.
+- Opérer ces redirections une fois l'enfant créé mais avant l'execution.
+
+Si un is_piped est activé :
+- créer un pipe
+- forker les enfants
+- rediriger stdout de l'enfant 1 dans le pipe
+- rediriger stdin de l'enfant 2 par le pipe
+- executer les enfants.
 
 ### Parsing
 
-- TODO : (Traiter `""` et `''` : comment ?)
-- Découper la ligne en plusieurs commandes selon `;` (TODO : et `|` ?)
-	- Pour chaque commande :
-	- Découper les commandes selon les whitespaces en args.
-	- Si la commande est un builtin.
-		- Mettre le flag is_builtin.
-	- Sinon :
-		- Détecter si le binaire existe relativement ou absolument selon $PATH.
-		- Si c'est le cas, stocker le chemin absolu dans cmd.
-	- Dans les args, détecter les appels aux variables. Si des variables sont appelées, remplacer la string par la valeur de cette variable (désallouer l'appel, allouer la variable, changer l'adresse du pointeur).
-	- Stocker args dans args.
-
-#### Parsing priority
-
-1. Quotes split : "" et ''
-2. Command split : ;
-3. Piping and redirection split : < > >> |
-4. Variable expansion : $...
-5. Whitespaces split
-6. Builtin check and binary path getter
-
-#### Quote parsing
-
-Deux possibilités :
-
-- Créer une liste de shorts qui stockent pour chaque caractère s'il est escapé ou non.
-	- Avantage : relativement simple à implémenter
-	- Inconvénients : il faut revoir tout le code, ft_split doit pouvoir garder l'info sur l'escaping des caractères.
-
-- Créer des tokens :
-
-ls -l; cat text.txt; "ls;$HOME" -l
-
--> Quoting process (line to token list)
-- "ls -l; cat text.txt; " [text]
-- "ls;$HOME" [double-quote]
-- " -l" [text]
-
--> Command splitting (token list to token list)
-- "ls -l" [text]
-- ";" [sep]
-- "cat text.txt" [text]
-- ";" [sep]
-- " " [text]
-- "ls;$HOME" [double-quote]
-- " -l" [text]
-
-[TODO : Redirections and piping HERE !]
-
--> Variable expansion (token list to token list)
-- "ls -l" [text]
-- ";" [sep]
-- "cat text.txt" [text]
-- ";" [sep]
-- " " [text]
-- "ls;/home/user42" [double-quote]
-- " -l" [text]
-
--> Whitespace split (token list to token list)
-Remove whitespaces and separate tokens containing spaces (except quotes) in multiple tokens.
-- "ls" [text]
-- "-l" [text]
-- ";" [sep]
-- "cat" [text]
-- "text.txt" [text]
-- ";" [sep]
-- "ls;/home/user42" [double-quote]
-- "-l" [text]
-
--> cmd list construction : token list to cmd array
-
-#### New parsing
-
-1. Récupérer la ligne.
-2. tok **quote_tokenize(char *line) : découpe la ligne en liste de tokens.
+1. Split quotes and text from read line to token list.
+2. Split tokens by commands separators.
+3. Add flag tokens for pipings and redirections.
+4. Expand variables in tokens.
+5. Split tokens by whitespaces.
+6. Convert token list to commands array.
 
 #### Token structure and type
 
@@ -157,12 +161,23 @@ Types :
 2 : double-quote text ""
 3 : command separator ;
 
+### Interface parsing / exécution
+
+Idéalement le parsing construit des structures de données qui stockent les commandes. La fonction d'éxécution prend cette commande en entrée. Les commandes ont une structure de données.
+
+struct s_cmd (t_cmd):
+- char *main : contient le bpath de la commande ou le nom du builtin
+- char **parameters : contient les paramètres de la commande.
+- int is_builtin : 1 si la commande est un builtin, sinon 0.
+- int is_valid : 1 si la commande est valide, sinon 0.
+- int is_piped : 1 si la commande est pipée dans la prochaine, sinon 0.
 
 ### Exécution
 
-Pour chaque commande :
-1. Si la commande transmise est un builtin, éxécuter le builtin.
-2. Sinon, exécuter la commande avec execve en utilisant la variable d'environnement PATH ou un chemin absolu.
+1. Fork the parent process.
+2. Have the parent process wait until the child finishes.
+3. Have the child process change its redirections if relevant.
+4. Execute the binary in the child process.
 
 **`pid_t fork(void)`** : creates a children process by duplicating the current process.
 - Returns : In the parent, the child pid is returned. In the child, 0 is returned. On failure, -1 is returned in the parent and errno is set appropriately.
@@ -174,13 +189,6 @@ Pour chaque commande :
 La configuration du shell contient :
 - `t_cmd **cmds` : Une liste de commande stockant vers la liste de commande créée par `parse` et transmise à `exec`.
 - `char **env` : Les variables d'environnement.
-
-### Commande
-
-- Chemin absolu de la commande ?
-- Arguments.
-
-Le parsing de la ligne crée une ou plusieurs commandes qui sont transmises à la boucle d'éxécution.
 
 ## Notions
 

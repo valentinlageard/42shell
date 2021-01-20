@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/18 14:30:32 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:59:06 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_cmd	*new_cmd(void)
 	cmd->args = NULL;
 	cmd->is_valid = 1;
 	cmd->is_builtin = 0;
+	cmd->next = NULL;
 	return (cmd);
 }
 
@@ -32,44 +33,31 @@ void	free_cmd(t_cmd *cmd)
 	free(cmd);
 }
 
-void	free_cmds(t_cmd **cmds)
+void	free_cmds(t_cmd *cmds)
 {
-	int	i;
+	t_cmd	*next;
 
-	i = 0;
-	while (cmds[i])
+	while (cmds)
 	{
-		free_cmd(cmds[i]);
-		i++;
+		next = cmds->next;
+		free_cmd(cmds);
+		cmds = next;
 	}
-	free(cmds);
-	cmds = NULL;
 }
 
-t_cmd	**appendrealloc_cmd(t_cmd *cmd, t_cmd **cmds)
+void	append_cmd(t_cmd *cmd, t_cmd **cmds)
 {
-	int		i;
-	int		len_cmds;
-	t_cmd	**ncmds;
+	t_cmd	*tmp;
 
-	i = 0;
-	len_cmds = 0;
-	if (cmds)
+	if (!(*cmds))
+		*cmds = cmd;
+	else
 	{
-		while (cmds[len_cmds])
-			len_cmds++;
+		tmp = *cmds;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = cmd;
 	}
-	if (!(ncmds = (t_cmd **)malloc(sizeof(t_cmd *) * (len_cmds + 2))))
-		return (NULL);
-	while (i < len_cmds)
-	{
-		ncmds[i] = cmds[i];
-		i++;
-	}
-	ncmds[i] = cmd;
-	ncmds[i + 1] = NULL;
-	free(cmds);
-	return (ncmds);
 }
 
 int		appendrealloc_arg(char *arg, t_cmd *cmd)
@@ -103,7 +91,7 @@ void	print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	ft_printf("\tCMD : %s\n", cmd->main);
+	ft_printf("\tCMD : %s [%p]\n", cmd->main, cmd);
 	ft_printf("\tARGS :\n");
 	while ((cmd->args)[i])
 	{
@@ -112,17 +100,18 @@ void	print_cmd(t_cmd *cmd)
 	}
 	ft_printf("\tIS_VALID : %d\n", cmd->is_valid);
 	ft_printf("\tIS_BUILTIN : %d\n", cmd->is_builtin);
+	ft_printf("\tNEXT : [%p]\n", cmd->next);
 }
 
-void	print_cmds(t_cmd **cmds)
+void	print_cmds(t_cmd *cmds)
 {
-	int	i;
+	t_cmd	*tmp;
 
-	i = 0;
-	while (cmds[i])
+	tmp = cmds;
+	while (tmp)
 	{
-		ft_printf("-> cmds[%d] :\n", i);
-		print_cmd(cmds[i]);
-		i++;
+		ft_printf("\t---------------------------\n");
+		print_cmd(tmp);
+		tmp = tmp->next;
 	}
 }

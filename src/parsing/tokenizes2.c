@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 14:22:40 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/16 14:43:45 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:18:48 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	split_by_spaces(t_tok *tok, t_tok **nltok)
 	char	**words;
 
 	i = 0;
-	words = ft_split(tok->str, " \t\n\v\f\r");
+	words = ft_split(tok->str, " \t\n");
 	if (words)
 	{
 		while (words[i])

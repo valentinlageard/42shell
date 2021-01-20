@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 19:19:17 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/15 18:32:23 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:18:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_tok	*tokenize_quotes(char *line)
 	return (ltok);
 }
 
-t_tok	*separate_token(t_tok *tok)
+t_tok	*separate_token(t_tok *tok, char *sep_str, int sep_type)
 {
 	int		i;
 	int		start;
@@ -74,11 +74,11 @@ t_tok	*separate_token(t_tok *tok)
 	ntok = NULL;
 	while (tok->str[i])
 	{
-		if (tok->str[i] == ';')
+		if (tok->str[i] == *sep_str)
 		{
 			if (start != i)
 				slice_append_tok(tok->str, start, i, 0, &ntok);
-			append_tok(new_tok(";", 3), &ntok);
+			append_tok(new_tok(sep_str, sep_type), &ntok);
 			start = i + 1;
 		}
 		i++;
@@ -88,7 +88,7 @@ t_tok	*separate_token(t_tok *tok)
 	return (ntok);
 }
 
-t_tok	*tokenize_separators(t_tok *ltok)
+t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type)
 {
 	t_tok	*tmp;
 	t_tok	*ntok;
@@ -100,7 +100,7 @@ t_tok	*tokenize_separators(t_tok *ltok)
 	while (tmp)
 	{
 		if (tmp->type == 0)
-			ntok = separate_token(tmp);
+			ntok = separate_token(tmp, sep_str, sep_type);
 		else
 			ntok = new_tok(tmp->str, tmp->type);
 		append_tok(ntok, &nltok);

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/18 14:15:20 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/20 16:22:03 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,36 @@ typedef struct	s_tok {
 	// 0 : txt,
 	// 1 : simple quotes,
 	// 2 : double quotes,
-	// 3 : cmd separator
+	// 3 : cmd separator,
+	// 4 : pipe
 	struct s_tok	*next;
 }				t_tok;
 
 typedef struct	s_cmd {
-	char	*main;
-	char	**args;
-	int		is_valid;
-	int		is_builtin;
-	// TODO : add flags for redirections and pipes.
+	char			*main;
+	char			**args;
+	int				is_valid;
+	int				is_builtin;
+	struct s_cmd	*next;
 }				t_cmd;
 
+typedef struct	s_cmdg {
+	t_cmd	*cmds;
+	// In redirection
+	// Out redirection
+	// Out append redirection
+	struct s_cmdg	*next;
+}				t_cmdg;
+
+typedef struct	s_pstate {
+	t_tok	*tmp;
+	t_cmd	*curcmd;
+	t_cmdg	*curcmdg;
+	t_cmdg	*cmdgs;
+}				t_pstate;
+
 typedef struct	s_shell {
-	t_cmd	**cmds;
+	t_cmd	*cmds;
 	t_var	*env;
 }				t_shell;
 
@@ -60,21 +76,30 @@ void	exec(t_shell *shell);
 char	*select_binpath(char *cmd, t_shell *shell);
 
 // Parsing
-t_cmd	**parse(char *line, t_shell *shell);
+t_cmd	*parse(char *line, t_shell *shell);
 t_tok	*tokenize_quotes(char *line);
-t_tok	*tokenize_separators(t_tok *ltok);
+t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type);
 void	expand_vars(t_tok *ltok, t_shell *shell);
 t_tok	*tokenize_spaces(t_tok *ltok);
-t_cmd	**tok_to_cmds(t_tok *ltok, t_shell *shell);
+t_cmd	*tok_to_cmds(t_tok *ltok, t_shell *shell);
+t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell);
 
 // Cmd utils
 t_cmd	*new_cmd(void);
 void	free_cmd(t_cmd *cmd);
-void	free_cmds(t_cmd **cmds);
-t_cmd	**appendrealloc_cmd(t_cmd *cmd, t_cmd **cmds);
+void	free_cmds(t_cmd *cmds);
+void	append_cmd(t_cmd *cmd, t_cmd **cmds);
 int		appendrealloc_arg(char *arg, t_cmd *cmd);
 void	print_cmd(t_cmd *cmd);
-void	print_cmds(t_cmd **cmds);
+void	print_cmds(t_cmd *cmds);
+
+// Cmdg utils
+t_cmdg	*new_cmdg(void);
+void	free_cmdg(t_cmdg *cmdg);
+void	free_cmdgs(t_cmdg *cmdgs);
+void	append_cmdg(t_cmdg *cmdg, t_cmdg **cmdgs);
+void	print_cmdg(t_cmdg *cmdg);
+void	print_cmdgs(t_cmdg *cmdgs);
 
 // Builtins
 int		is_builtin(char *cmd_str);

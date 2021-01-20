@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/08 16:46:45 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:53:42 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,19 @@ void	exec_bin(t_cmd *cmd, t_shell *shell)
 
 void	exec(t_shell *shell)
 {
-	int		i;
+	t_cmd	*curcmd;
 
-	i = 0;
-	while (shell->cmds[i])
+	curcmd = shell->cmds;
+	while (curcmd)
 	{
-		if (shell->cmds[i]->is_valid)
+		if (curcmd->is_valid)
 		{
-			if (shell->cmds[i]->is_builtin)
-				exec_builtin(shell->cmds[i], shell);
+			if (curcmd->is_builtin)
+				exec_builtin(curcmd, shell);
 			else
-				exec_bin(shell->cmds[i], shell);
+				exec_bin(curcmd, shell);
 		}
-		i++;
+		curcmd = curcmd->next;
 	}
 	free_cmds(shell->cmds);
 }

@@ -17,6 +17,7 @@ SRC			=	src/minishell.c \
 				src/utils/environ.c \
 				src/utils/binpath.c \
 				src/utils/cmd.c \
+				src/utils/cmdg.c \
 				src/utils/dir.c \
 				src/utils/var.c
 
