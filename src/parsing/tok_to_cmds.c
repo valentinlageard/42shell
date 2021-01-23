@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 14:46:24 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/20 16:50:31 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/20 17:44:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,35 +46,6 @@ t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
 	if (!ncmd->main)
 		ncmd->is_valid = 0;
 	return (ncmd);
-}
-
-t_cmd	*tok_to_cmds(t_tok *ltok, t_shell *shell)
-{
-	t_tok	*tmp;
-	t_cmd	*curcmd;
-	t_cmd	*cmds;
-
-	tmp = ltok;
-	curcmd = NULL;
-	cmds = NULL;
-	while (tmp)
-	{
-		if ((tmp->type == 0 || tmp->type == 1 || tmp->type == 2) && !curcmd)
-			curcmd = new_main_cmd(tmp, shell);
-		else if ((tmp->type == 0 || tmp->type == 1 || tmp->type == 2) && curcmd)
-			appendrealloc_arg(tmp->str, curcmd); // TODO : Check for error !
-		else if (tmp->type == 3 && curcmd)
-		{
-			append_cmd(curcmd, &cmds);
-			curcmd = NULL;
-		}
-		else if (tmp->type == 3 && !curcmd)
-			ft_printf("Separator error\n");
-		tmp = tmp->next;
-	}
-	if (curcmd)
-		append_cmd(curcmd, &cmds);
-	return (cmds);
 }
 
 void	update_cmdgs(t_pstate *ps)

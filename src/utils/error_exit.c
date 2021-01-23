@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 16:00:28 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 14:12:09 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/23 15:53:56 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	shell_exit(int status, t_shell *shell)
 {
-	free_cmds(shell->cmds);
+	free_cmdgs(shell->cmdgs);
 	free_env(shell->env);
 	free(shell);
 	exit(status);

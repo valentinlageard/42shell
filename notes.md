@@ -2,6 +2,7 @@
 
 ## TODO
 
+- Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant.
 - OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
 - DEBUG : Manage empty line, separator errors and invalid command
 - DEBUG : meilleur gestion de -n dans echo
@@ -181,6 +182,19 @@ struct s_cmd (t_cmd):
 
 **`pid_t fork(void)`** : creates a children process by duplicating the current process.
 - Returns : In the parent, the child pid is returned. In the child, 0 is returned. On failure, -1 is returned in the parent and errno is set appropriately.
+
+#### Logique de l'éxecution
+
+1. Pour chaque groupe de commandes :
+	1. S'il n'y a qu'une seule commande dans le groupe et que c'est un builtin.
+		1. Si la commande est valide : executer la fonction correspondante.
+	2. Sinon :
+		1. Pour chaque commande dans le groupe :
+			1. Si la commande n'est pas la dernière commande du groupe.
+				1. Créer un pipe.
+				2. ???
+			2. Si la commande est la dernière commande.
+				1.
 
 ## Structures de données
 

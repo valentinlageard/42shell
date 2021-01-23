@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/20 16:22:03 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/20 17:42:54 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct	s_pstate {
 }				t_pstate;
 
 typedef struct	s_shell {
-	t_cmd	*cmds;
+	t_cmdg	*cmdgs;
 	t_var	*env;
 }				t_shell;
 
@@ -76,7 +76,7 @@ void	exec(t_shell *shell);
 char	*select_binpath(char *cmd, t_shell *shell);
 
 // Parsing
-t_cmd	*parse(char *line, t_shell *shell);
+t_cmdg	*parse(char *line, t_shell *shell);
 t_tok	*tokenize_quotes(char *line);
 t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type);
 void	expand_vars(t_tok *ltok, t_shell *shell);
