@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 14:46:24 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/20 17:44:24 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/25 18:52:31 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,17 @@ int	handle_pipe(t_pstate *ps)
 		return (0);
 }
 
+int	handle_input_redirection(t_pstate *ps)
+{
+	if (!(ps->curcmdg))
+		ps->curcmdg = new_cmdg();
+	if (ps->curcmdg->in_redir)
+		free(ps->curcmdg->in_redir);
+	if (!(ps->curcmdg->in_redir = ft_strdup(ps->tmp->str)))
+		return (0);
+	return (1);
+}
+
 t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
 {
 	t_pstate	*ps;
@@ -109,6 +120,8 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
 			err = handle_sep(ps);
 		else if (ps->tmp->type == 4)
 			err = handle_pipe(ps);
+		else if (ps->tmp->type == 5)
+			err = handle_input_redirection(ps);
 		ps->tmp = ps->tmp->next;
 	}
 	if (ps->curcmd && ps->curcmdg)

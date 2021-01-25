@@ -6,23 +6,31 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/25 17:34:54 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/25 18:50:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	set_initial_input(t_cmdg *curcmdg, t_fds *fds)
+{
+	if (curcmdg->in_redir)
+		fds->cur_in = open(curcmdg->in_redir, O_RDONLY);
+	else
+		fds->cur_in = dup(fds->parent_in);
+}
+
 void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 {
-	pid_t		pid;
+	pid_t	pid;
 	t_fds	*fds;
-	t_cmd		*curcmd;
+	t_cmd	*curcmd;
 
 	fds = new_fds(); // TODO : ENOMEM PROTECT
 	save_inout(fds); // TODO : CHECK ERRORS
 	curcmd = curcmdg->cmds;
 	// TODO : Insert input redirection
-	fds->cur_in = dup(fds->parent_in); // TODO : CHECK ERRORS
+	set_initial_input(curcmdg, fds); // CHECK ERRORS
 	while (curcmd)
 	{
 		restore_cur_in(0, fds); // TODO : CHECK ERRORS

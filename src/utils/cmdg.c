@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:11:00 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/25 17:58:07 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/25 18:54:27 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_cmdg	*new_cmdg(void)
 void	free_cmdg(t_cmdg *cmdg)
 {
 	free_cmds(cmdg->cmds);
+	free(cmdg->in_redir);
 	free(cmdg);
 }
 
@@ -60,6 +61,7 @@ void	append_cmdg(t_cmdg *cmdg, t_cmdg **cmdgs)
 void	print_cmdg(t_cmdg *cmdg)
 {
 	ft_printf("CMDG [%p] : \n", cmdg);
+	ft_printf("\tINPUT REDIRECTION PATH : %s\n", cmdg->in_redir);
 	ft_printf("\tCMDS :\n");
 	print_cmds(cmdg->cmds);
 	ft_printf("NEXT : [%p]\n", cmdg->next);
