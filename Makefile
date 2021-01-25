@@ -2,7 +2,10 @@ LIBFT		=	libft/libft.a
 NAME		=	minishell
 SRC			=	src/minishell.c \
 				src/repl/repl.c \
-				src/repl/exec.c \
+				src/exec/exec.c \
+				src/exec/exec_cmd.c \
+				src/exec/exec_utils.c \
+				src/exec/exec_utils2.c \
 				src/parsing/expand_var.c \
 				src/parsing/parse.c \
 				src/parsing/token_utils.c \

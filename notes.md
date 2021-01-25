@@ -2,6 +2,8 @@
 
 ## TODO
 
+- INPUT REDIRECTION : Tokenizer `<`
+- INPUT REDIRECTION : Parser `<` : stocker le token suivant (si syntactiquement correct) dans cmdg. S'il y en a plusieurs, utiliser le dernier.
 - Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant.
 - OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
 - DEBUG : Manage empty line, separator errors and invalid command
@@ -10,11 +12,11 @@
 	- `<` utilise un fichier comme stdin
 	- `>` écrit stdout dans un fichier
 	- `>>` ajoute stdout à la fin d'un fichier
-- Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
 - Gestion de `$?` : donne le statut de ?
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
+- [x] Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
 - [x] Refactor cmds comme une liste chaînée.
 - [x] Gestion de `'` et `"`
 - [x] OPTIONAL : gérer les espaces dans cd ?

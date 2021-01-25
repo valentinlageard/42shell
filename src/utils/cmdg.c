@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:11:00 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/20 16:18:06 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/25 17:58:07 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_cmdg	*new_cmdg(void)
 	if (!(cmdg = (t_cmdg *)malloc(sizeof(t_cmdg))))
 		return (NULL);
 	cmdg->cmds = NULL;
+	cmdg->in_redir = NULL;
 	cmdg->next = NULL;
 	return (cmdg);
 }

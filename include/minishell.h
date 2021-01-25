@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/20 17:42:54 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/25 18:12:29 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct	s_cmd {
 
 typedef struct	s_cmdg {
 	t_cmd	*cmds;
+	char	*in_redir;
 	// In redirection
 	// Out redirection
 	// Out append redirection
@@ -65,6 +66,14 @@ typedef struct	s_pstate {
 	t_cmdg	*cmdgs;
 }				t_pstate;
 
+typedef struct	s_fds {
+	int		parent_in;
+	int		parent_out;
+	int		cur_in;
+	int		cur_out;
+	int		cur_pipe[2];
+}				t_fds;
+
 typedef struct	s_shell {
 	t_cmdg	*cmdgs;
 	t_var	*env;
@@ -72,7 +81,6 @@ typedef struct	s_shell {
 
 t_shell	*init_shell(char **envp);
 void	repl(t_shell *shell);
-void	exec(t_shell *shell);
 char	*select_binpath(char *cmd, t_shell *shell);
 
 // Parsing
@@ -81,8 +89,20 @@ t_tok	*tokenize_quotes(char *line);
 t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type);
 void	expand_vars(t_tok *ltok, t_shell *shell);
 t_tok	*tokenize_spaces(t_tok *ltok);
+t_tok	*tokenize_input_redirections(t_tok *ltok);
 t_cmd	*tok_to_cmds(t_tok *ltok, t_shell *shell);
 t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell);
+
+// Execution
+void	exec(t_shell *shell);
+void	exec_cmd(t_cmd *cmd, t_shell *shell);
+void	exec_simple_builtin(t_cmd *cmd, t_shell *shell);
+t_fds	*new_fds(void);
+void	save_inout(t_fds *fds);
+void	restore_inout(t_fds *fds);
+void	set_pipe(t_fds *fds);
+void	restore_cur_in(int fd, t_fds *fds);
+void	restore_cur_out(int fd, t_fds *fds);
 
 // Cmd utils
 t_cmd	*new_cmd(void);
