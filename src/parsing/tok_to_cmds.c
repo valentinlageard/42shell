@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 14:46:24 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/25 18:52:31 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/26 19:54:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,33 @@ int	handle_pipe(t_pstate *ps)
 
 int	handle_input_redirection(t_pstate *ps)
 {
+	t_inr	*new_in_redir;
+
 	if (!(ps->curcmdg))
 		ps->curcmdg = new_cmdg();
-	if (ps->curcmdg->in_redir)
-		free(ps->curcmdg->in_redir);
-	if (!(ps->curcmdg->in_redir = ft_strdup(ps->tmp->str)))
+	if (!(new_in_redir = new_inr(ps->tmp->str)))
 		return (0);
+	append_inr(new_in_redir, &(ps->curcmdg->in_redirs));
+	return (1);
+}
+
+int handle_output_redirection(t_pstate *ps)
+{
+	t_outr	*new_out_redir;
+
+	if (!(ps->curcmdg))
+		ps->curcmdg = new_cmdg();
+	if (ps->tmp->type == 6)
+	{
+		if (!(new_out_redir = new_outr(ps->tmp->str, 0)))
+			return (0);
+	}
+	else
+	{
+		if (!(new_out_redir = new_outr(ps->tmp->str, 1)))
+			return (0);
+	}
+	append_outr(new_out_redir, &(ps->curcmdg->out_redirs));
 	return (1);
 }
 
@@ -122,6 +143,8 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
 			err = handle_pipe(ps);
 		else if (ps->tmp->type == 5)
 			err = handle_input_redirection(ps);
+		else if (ps->tmp->type == 6)
+			err = handle_output_redirection(ps);
 		ps->tmp = ps->tmp->next;
 	}
 	if (ps->curcmd && ps->curcmdg)

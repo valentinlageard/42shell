@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/16 14:22:40 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/25 18:21:16 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/26 19:42:03 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,29 +49,33 @@ t_tok	*tokenize_spaces(t_tok *ltok)
 	return (nltok);
 }
 
-t_tok	*tokenize_input_redirections(t_tok *ltok)
+void	append_next_as_redirection(t_tok *tmp, t_tok *nltok)
+{
+	t_tok	*next;
+
+	next = tmp->next;
+	if (next)
+	{
+		if (next->type == 0 || next->type == 1 || next->type == 2)
+			append_tok(new_tok(next->str, tmp->type), &nltok);
+		// TODO : else parse error
+	}
+	// TODO : else parse error !
+}
+
+t_tok	*tokenize_redirections(t_tok *ltok)
 {
 	t_tok	*tmp;
-	t_tok	*next;
 	t_tok	*nltok;
 
 	tmp = ltok;
 	nltok = NULL;
 	while (tmp)
 	{
-		if (tmp->type == 5)
+		if (tmp->type == 5 || tmp->type == 6)
 		{
-			next = tmp->next;
-			if (next)
-			{
-				if (next->type == 0 || next->type == 1 || next->type == 2)
-				{
-					append_tok(new_tok(next->str, 5), &nltok);
-					tmp = next;
-				}
-				// else parse error
-			// else parse error !
-			}
+			append_next_as_redirection(tmp, nltok);
+			tmp = tmp->next;
 		}
 		else
 			append_tok(new_tok(tmp->str, tmp->type), &nltok);

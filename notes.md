@@ -2,8 +2,9 @@
 
 ## TODO
 
-- INPUT REDIRECTION : Tokenizer `<`
-- INPUT REDIRECTION : Parser `<` : stocker le token suivant (si syntactiquement correct) dans cmdg. S'il y en a plusieurs, utiliser le dernier.
+- Gérer les redirections dans exec_simple_bultin !
+- Avant l'exécution : vérifier si les output paths sont corrects.
+- Avant l'exécution : vérifier si les input paths sont corrects.
 - Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant.
 - OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
 - DEBUG : Manage empty line, separator errors and invalid command
@@ -16,6 +17,8 @@
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
+- [x] INPUT REDIRECTION : Tokenizer `<`
+- [x] INPUT REDIRECTION : Parser `<` : stocker le token suivant (si syntactiquement correct) dans cmdg. S'il y en a plusieurs, utiliser le dernier.
 - [x] Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
 - [x] Refactor cmds comme une liste chaînée.
 - [x] Gestion de `'` et `"`
@@ -81,7 +84,7 @@ Pendant l'éxecution pour chaque groupe de commandes :
 				- `is_valid`
 				- `is_builtin`
 			- ...
-		- `in_redir`
+		- `in_redirs`
 		- `out_redir`
 		- `out_app_redir`
 	- ...

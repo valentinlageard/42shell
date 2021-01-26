@@ -22,6 +22,8 @@ SRC			=	src/minishell.c \
 				src/utils/cmd.c \
 				src/utils/cmdg.c \
 				src/utils/dir.c \
+				src/utils/input_redirections.c \
+				src/utils/output_redirections.c \
 				src/utils/var.c
 
 OBJS		=	$(SRC:.c=.o)

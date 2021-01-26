@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/25 18:47:35 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/26 19:50:50 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct	s_tok {
 	// 2 : double quotes,
 	// 3 : cmd separator,
 	// 4 : pipe
+	// 5 : input redirection
+	// 6 : output redirection
+	// 7 : output apprend redirection
 	struct s_tok	*next;
 }				t_tok;
 
@@ -51,12 +54,21 @@ typedef struct	s_cmd {
 	struct s_cmd	*next;
 }				t_cmd;
 
+typedef struct	s_inr {
+	char			*path;
+	struct s_inr	*next;
+}				t_inr;
+
+typedef struct	s_outr {
+	char			*path;
+	int				is_append;
+	struct s_outr	*next;
+}				t_outr;
+
 typedef struct	s_cmdg {
-	t_cmd	*cmds;
-	char	*in_redir;
-	// In redirection
-	// Out redirection
-	// Out append redirection
+	t_cmd			*cmds;
+	t_inr			*in_redirs;
+	t_outr			*out_redirs;
 	struct s_cmdg	*next;
 }				t_cmdg;
 
@@ -90,7 +102,7 @@ t_tok	*tokenize_quotes(char *line);
 t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type);
 void	expand_vars(t_tok *ltok, t_shell *shell);
 t_tok	*tokenize_spaces(t_tok *ltok);
-t_tok	*tokenize_input_redirections(t_tok *ltok);
+t_tok	*tokenize_redirections(t_tok *ltok);
 t_cmd	*tok_to_cmds(t_tok *ltok, t_shell *shell);
 t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell);
 
@@ -131,6 +143,16 @@ void	builtin_pwd(t_shell *shell);
 void	builtin_echo(t_cmd *cmd);
 void	builtin_exit(t_shell *shell);
 void	builtin_cd(t_cmd *cmd, t_shell *shell);
+
+// Redirections
+t_inr	*new_inr(char *path);
+void	append_inr(t_inr *in_redir, t_inr **in_redirs);
+void	free_inrs(t_inr *inrs);
+void	print_inrs(t_inr *inrs);
+t_outr	*new_outr(char *path, int is_append);
+void	append_outr(t_outr *out_redir, t_outr **out_redirs);
+void	free_outrs(t_outr *outrs);
+void	print_outrs(t_outr *outrs);
 
 // Tokens
 
