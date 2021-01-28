@@ -6,12 +6,12 @@ SRC			=	src/minishell.c \
 				src/exec/exec_cmd.c \
 				src/exec/exec_utils.c \
 				src/exec/exec_utils2.c \
-				src/parsing/expand_var.c \
+				src/parsing/expand_vars.c \
 				src/parsing/parse.c \
-				src/parsing/token_utils.c \
-				src/parsing/tokenizes.c \
-				src/parsing/tokenizes2.c \
-				src/parsing/tok_to_cmds.c \
+				src/parsing/token.c \
+				src/parsing/tok_utils.c \
+				src/parsing/tok_utils2.c \
+				src/parsing/tok_to_cmdgs.c \
 				src/builtins/basic_builtins.c \
 				src/builtins/path_builtins.c \
 				src/builtins/builtin_utils.c \

@@ -8,17 +8,21 @@
 - Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant.
 - OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
 - DEBUG : Manage empty line, separator errors and invalid command
+- DEBUG : Redirections should work even if stated before the command !
 - DEBUG : meilleur gestion de -n dans echo
-- Gestion des redirections :
-	- `<` utilise un fichier comme stdin
-	- `>` écrit stdout dans un fichier
-	- `>>` ajoute stdout à la fin d'un fichier
-- Gestion de `$?` : donne le statut de ?
+- Gestion de `$?` :
+	- Refactorer l'exer afin de récupérer le return des commandes et le stocker dans une variable spéciale.
+	- Dans la phase d'expansion de variables, faire une fonction spéciale pour expandre spécifiquement cette variable.
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
-- [x] INPUT REDIRECTION : Tokenizer `<`
-- [x] INPUT REDIRECTION : Parser `<` : stocker le token suivant (si syntactiquement correct) dans cmdg. S'il y en a plusieurs, utiliser le dernier.
+- [x] Gestion de `>>` :
+	- [x] Refactorer le separate_token pour qu'il isole des séparateurs multicharacters.
+	- [x] Séparer `>>` et append_as_next_redirection avec le bon flag.
+	- [x] Ajouter l'append_redir à cmdg.
+	- [x] Dans l'exécution, ouvrir avec O_APPEND.
+- [x] Gestion de `>`
+- [x] Gestion de `<`
 - [x] Gestion des pipes `|` (may use `dup`, `dup2`, `pipe`)
 - [x] Refactor cmds comme une liste chaînée.
 - [x] Gestion de `'` et `"`

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizes2.c                                       :+:      :+:    :+:   */
+/*   tok_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/16 14:22:40 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/26 19:42:03 by valentin         ###   ########.fr       */
+/*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
+/*   Updated: 2021/01/28 14:51:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_tok	*tokenize_redirections(t_tok *ltok)
 	nltok = NULL;
 	while (tmp)
 	{
-		if (tmp->type == 5 || tmp->type == 6)
+		if (tmp->type == 5 || tmp->type == 6 || tmp->type == 7)
 		{
 			append_next_as_redirection(tmp, nltok);
 			tmp = tmp->next;

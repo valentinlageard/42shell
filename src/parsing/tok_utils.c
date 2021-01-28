@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizes.c                                        :+:      :+:    :+:   */
+/*   tok_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/12 19:19:17 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/19 14:18:35 by valentin         ###   ########.fr       */
+/*   Created: 2021/01/28 14:46:55 by valentin          #+#    #+#             */
+/*   Updated: 2021/01/28 14:46:57 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,12 @@ t_tok	*separate_token(t_tok *tok, char *sep_str, int sep_type)
 	ntok = NULL;
 	while (tok->str[i])
 	{
-		if (tok->str[i] == *sep_str)
+		if (ft_strncmp(sep_str, &(tok->str[i]), ft_strlen(sep_str)) == 0)
 		{
 			if (start != i)
 				slice_append_tok(tok->str, start, i, 0, &ntok);
 			append_tok(new_tok(sep_str, sep_type), &ntok);
-			start = i + 1;
+			start = i + ft_strlen(sep_str);
 		}
 		i++;
 	}
@@ -99,7 +99,7 @@ t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type)
 	tmp = ltok;
 	while (tmp)
 	{
-		if (tmp->type == 0)
+		if (tmp->type == 0) // Check special characters allowed in ""
 			ntok = separate_token(tmp, sep_str, sep_type);
 		else
 			ntok = new_tok(tmp->str, tmp->type);

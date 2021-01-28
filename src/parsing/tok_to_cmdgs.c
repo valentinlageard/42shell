@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_to_cmds.c                                      :+:      :+:    :+:   */
+/*   tok_to_cmdgs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/16 14:46:24 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/26 19:54:58 by valentin         ###   ########.fr       */
+/*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
+/*   Updated: 2021/01/28 14:53:15 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
 			err = handle_pipe(ps);
 		else if (ps->tmp->type == 5)
 			err = handle_input_redirection(ps);
-		else if (ps->tmp->type == 6)
+		else if (ps->tmp->type == 6 || ps->tmp->type == 7)
 			err = handle_output_redirection(ps);
 		ps->tmp = ps->tmp->next;
 	}
