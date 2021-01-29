@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 16:50:08 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 17:56:59 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_fds	*exec_cmdg_init(t_cmdg *curcmdg, t_shell *shell)
 
 	if (!(fds = new_fds()))
 		perrno_exit(shell);
-	store_parent_inout(fds); // TODO : CHECK ERRORS
+	store_parent_inout(fds);
 	if (select_first(curcmdg, fds) < 0)
 	{
 		free(fds);
@@ -33,30 +33,36 @@ t_fds	*exec_cmdg_init(t_cmdg *curcmdg, t_shell *shell)
 	return (fds);
 }
 
+int		cmd_is_simple_builtin(t_cmd *cmd, t_cmdg *cmdg)
+{
+	return (cmd == cmdg->cmds && !(cmd->next) && cmd->is_builtin);
+}
+
 void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 {
 	pid_t	pid;
 	t_fds	*fds;
 	t_cmd	*curcmd;
+	int		ret;
 
 	if ((fds = exec_cmdg_init(curcmdg, shell)))
 	{
 		curcmd = curcmdg->cmds;
 		while (curcmd)
 		{
-			restore_cur_in(0, fds); // TODO : CHECK ERRORS
-			if (!(curcmd->next)) // TODO : Insert output redirection
-			fds->cur_out = fds->last;
+			update_inout(curcmd, fds);
+			if (cmd_is_simple_builtin(curcmd, curcmdg))
+				exec_builtin(curcmd, shell);
 			else
-			set_pipe(fds); // TODO : CHECK ERRORS
-			restore_cur_out(1, fds); // TODO : CHECK ERRORS
-			pid = fork(); // TODO : CHECK ERRORS
-			if (pid == 0)
-			exec_cmd(curcmd, shell);
+			{
+				pid = fork();
+				if (pid == 0)
+					exec_cmd(curcmd, shell);
+			}
 			curcmd = curcmd->next;
 		}
-		restore_parent_inout(fds); // TODO : CHECK ERRORS
-		waitpid(pid, NULL, WUNTRACED); // STATUS ?
+		restore_parent_inout(fds);
+		waitpid(pid, &ret, WUNTRACED);
 		free(fds);
 	}
 }
@@ -68,16 +74,7 @@ void	exec(t_shell *shell)
 	curcmdg = shell->cmdgs;
 	while (curcmdg)
 	{
-		if (!(curcmdg->cmds->next) && (curcmdg->cmds->is_builtin))
-		{
-			ft_printf("Executing simple builtin\n");
-			exec_simple_builtin(curcmdg->cmds, shell);
-		}
-		else
-		{
-			ft_printf("Executing command group\n");
-			exec_cmdg(curcmdg, shell);
-		}
+		exec_cmdg(curcmdg, shell);
 		curcmdg = curcmdg->next;
 	}
 	free_cmdgs(shell->cmdgs);

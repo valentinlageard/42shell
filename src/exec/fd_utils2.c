@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:12 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 17:15:33 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 17:23:36 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ int		select_first(t_cmdg *cmdg, t_fds *fds)
 		{
 			if (fds->first >= 0)
 				close(fds->first);
-			fds->first = open(tmp->path, O_RDONLY);
-			if (fds->first < 0)
+			if ((fds->first = open(tmp->path, O_RDONLY)) < 0)
 			{
 				predir_error(tmp->path);
 				return (-1);
@@ -60,6 +59,7 @@ int		select_first(t_cmdg *cmdg, t_fds *fds)
 
 int		select_last(t_cmdg *cmdg, t_fds *fds)
 {
+	int		flags;
 	t_outr	*tmp;
 
 	if (cmdg->out_redirs)
@@ -69,12 +69,11 @@ int		select_last(t_cmdg *cmdg, t_fds *fds)
 		{
 			if (fds->last >= 0)
 				close(fds->last);
-			// TODO : PROTECT !
 			if (tmp->is_append)
-				fds->last = open(tmp->path, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+				flags = O_WRONLY | O_CREAT | O_APPEND;
 			else
-				fds->last = open(tmp->path, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-			if (fds->last < 0)
+				flags = O_WRONLY | O_CREAT | O_TRUNC;
+			if ((fds->last = open(tmp->path, flags, S_IRWXU)) < 0)
 			{
 				predir_error(tmp->path);
 				return (-1);

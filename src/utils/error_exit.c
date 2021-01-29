@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 16:00:28 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 17:16:26 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 17:23:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	exit_shell(int status, t_shell *shell)
 
 void	pcustom_error(char *str_error)
 {
-	ft_putstr_fd(str_error, STDERR);
+	ft_putstr_fd(str_error, 2);
 }
 
 void	perrno(void)
 {
-	ft_putstr_fd(strerror(errno), STDERR);
+	ft_putstr_fd(strerror(errno), 2);
 }
 
 void	pcustom_error_exit(char *str_error, t_shell *shell)

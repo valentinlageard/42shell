@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:16:30 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/25 17:26:21 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 17:59:36 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	exec_builtin(t_cmd *cmd, t_shell *shell)
 {
-	ft_printf("-> Executing : %s\n", cmd->main);
 	if (ft_strncmp(cmd->main, "exit", ft_strlen(cmd->main)) == 0)
 		builtin_exit(shell);
 	if (ft_strncmp(cmd->main, "env", ft_strlen(cmd->main)) == 0)
@@ -31,17 +30,10 @@ void	exec_builtin(t_cmd *cmd, t_shell *shell)
 		builtin_cd(cmd, shell);
 }
 
-void	exec_simple_builtin(t_cmd *cmd, t_shell *shell)
-{
-	if (cmd->is_valid)
-		exec_builtin(cmd, shell);
-}
-
 void	exec_bin(t_cmd *cmd, t_shell *shell)
 {
 	char	**wenv;
 
-	ft_printf("-> Executing : %s\n", cmd->main);
 	wenv = envtowenv(shell->env);
 	execve(cmd->main, cmd->args, wenv);
 }

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:00 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 16:07:54 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 17:45:06 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,14 @@ void	set_pipe(t_fds *fds)
 	pipe(fds->cur_pipe);
 	fds->cur_in = fds->cur_pipe[0];
 	fds->cur_out = fds->cur_pipe[1];
+}
+
+void	update_inout(t_cmd *cmd, t_fds *fds)
+{
+	restore_cur_in(0, fds);
+	if (!(cmd->next))
+		fds->cur_out = fds->last;
+	else
+		set_pipe(fds);
+	restore_cur_out(1, fds);
 }

@@ -2,9 +2,6 @@
 
 ## TODO
 
-- Gérer les redirections dans exec_simple_bultin !
-- Avant l'exécution : vérifier si les output paths sont corrects.
-- Avant l'exécution : vérifier si les input paths sont corrects.
 - Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant.
 - OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
 - DEBUG : Manage empty line, separator errors and invalid command
@@ -16,6 +13,9 @@
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
+- [x] Gérer les redirections dans pour un simple builtin !
+- [x] Avant l'exécution : vérifier si les output paths sont corrects.
+- [x] Avant l'exécution : vérifier si les input paths sont corrects.
 - [x] Gestion de `>>` :
 	- [x] Refactorer le separate_token pour qu'il isole des séparateurs multicharacters.
 	- [x] Séparer `>>` et append_as_next_redirection avec le bon flag.
