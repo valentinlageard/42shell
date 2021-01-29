@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:00 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 14:34:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 16:07:54 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_fds	*new_fds(void)
 		return (NULL);
 	fds->parent_in = -1;
 	fds->parent_out = -1;
+	fds->first = -1;
+	fds->last = -1;
 	fds->cur_in = -1;
 	fds->cur_out = -1;
 	fds->cur_pipe[0] = -1;
@@ -27,13 +29,13 @@ t_fds	*new_fds(void)
 	return (fds);
 }
 
-void	save_inout(t_fds *fds)
+void	store_parent_inout(t_fds *fds)
 {
 	fds->parent_in = dup(0);
 	fds->parent_out = dup(1);
 }
 
-void	restore_inout(t_fds *fds)
+void	restore_parent_inout(t_fds *fds)
 {
 	dup2(fds->parent_in, 0);
 	dup2(fds->parent_out, 1);

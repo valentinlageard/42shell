@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 15:22:41 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 16:38:28 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef struct	s_pstate {
 typedef struct	s_fds {
 	int		parent_in;
 	int		parent_out;
+	int		first;
+	int		last;
 	int		cur_in;
 	int		cur_out;
 	int		cur_pipe[2];
@@ -114,11 +116,13 @@ void	exec(t_shell *shell);
 void	exec_cmd(t_cmd *cmd, t_shell *shell);
 void	exec_simple_builtin(t_cmd *cmd, t_shell *shell);
 t_fds	*new_fds(void);
-void	save_inout(t_fds *fds);
-void	restore_inout(t_fds *fds);
+void	store_parent_inout(t_fds *fds);
+void	restore_parent_inout(t_fds *fds);
 void	set_pipe(t_fds *fds);
 void	restore_cur_in(int fd, t_fds *fds);
 void	restore_cur_out(int fd, t_fds *fds);
+int		select_first(t_cmdg *cmdg, t_fds *fds);
+int		select_last(t_cmdg *cmdg, t_fds *fds);
 
 // Cmd utils
 t_cmd	*new_cmd(void);
@@ -186,6 +190,10 @@ void	print_env(t_var *env);
 void	update_pwd(t_shell *shell);
 
 // Errors and exit
-void	shell_exit(int status, t_shell *shell);
+void	exit_shell(int status, t_shell *shell);
+void	pcustom_error(char *str_error);
+void	perrno(void);
+void	pcustom_error_exit(char *str_error, t_shell *shell);
+void	perrno_exit(t_shell *shell);
 
 #endif

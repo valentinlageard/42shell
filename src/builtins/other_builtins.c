@@ -38,5 +38,5 @@ void	builtin_echo(t_cmd *cmd)
 
 void	builtin_exit(t_shell *shell)
 {
-	shell_exit(EXIT_SUCCESS, shell);
+	exit_shell(EXIT_SUCCESS, shell);
 }

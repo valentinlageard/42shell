@@ -51,7 +51,7 @@ void	exec_cmd(t_cmd *cmd, t_shell *shell)
 	if (cmd->is_valid && cmd->is_builtin)
 	{
 		exec_builtin(cmd, shell);
-		shell_exit(EXIT_SUCCESS, shell);
+		exit_shell(EXIT_SUCCESS, shell);
 	}
 	else if (cmd->is_valid && !cmd->is_builtin)
 		exec_bin(cmd, shell);

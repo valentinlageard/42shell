@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:12 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 14:34:13 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 17:15:33 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,67 @@ void	restore_cur_out(int fd, t_fds *fds)
 {
 	dup2(fds->cur_out, fd);
 	close(fds->cur_out);
+}
+
+void	predir_error(char *path)
+{
+	pcustom_error("minishell: ");
+	pcustom_error(path);
+	pcustom_error(": ");
+	perrno();
+	pcustom_error("\n");
+}
+
+int		select_first(t_cmdg *cmdg, t_fds *fds)
+{
+	t_inr	*tmp;
+
+	if (cmdg->in_redirs)
+	{
+		tmp = cmdg->in_redirs;
+		while (tmp)
+		{
+			if (fds->first >= 0)
+				close(fds->first);
+			fds->first = open(tmp->path, O_RDONLY);
+			if (fds->first < 0)
+			{
+				predir_error(tmp->path);
+				return (-1);
+			}
+			tmp = tmp->next;
+		}
+	}
+	else
+		fds->first = dup(fds->parent_in);
+	return (0);
+}
+
+int		select_last(t_cmdg *cmdg, t_fds *fds)
+{
+	t_outr	*tmp;
+
+	if (cmdg->out_redirs)
+	{
+		tmp = cmdg->out_redirs;
+		while (tmp)
+		{
+			if (fds->last >= 0)
+				close(fds->last);
+			// TODO : PROTECT !
+			if (tmp->is_append)
+				fds->last = open(tmp->path, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
+			else
+				fds->last = open(tmp->path, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+			if (fds->last < 0)
+			{
+				predir_error(tmp->path);
+				return (-1);
+			}
+			tmp = tmp->next;
+		}
+	}
+	else
+		fds->last = dup(fds->parent_out);
+	return (0);
 }

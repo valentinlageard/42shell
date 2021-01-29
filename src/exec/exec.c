@@ -6,62 +6,31 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/26 23:20:12 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 16:50:08 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// TODO : When check for input and output is done before cmdg execution is implemented,
-// maybe you just need to open the last entry ?
-
-void	set_input(t_cmdg *curcmdg, t_fds *fds)
+t_fds	*exec_cmdg_init(t_cmdg *curcmdg, t_shell *shell)
 {
-	int		input_fd;
-	t_inr	*tmp;
+	t_fds	*fds;
 
-	input_fd = -1;
-	if (curcmdg->in_redirs)
+	if (!(fds = new_fds()))
+		perrno_exit(shell);
+	store_parent_inout(fds); // TODO : CHECK ERRORS
+	if (select_first(curcmdg, fds) < 0)
 	{
-		tmp = curcmdg->in_redirs;
-		while (tmp)
-		{
-			if (input_fd >= 0)
-				close(input_fd);
-			input_fd = open(tmp->path, O_RDONLY); // TODO : CHECK ERROR or before ?
-			tmp = tmp->next;
-		}
-		fds->cur_in = input_fd;
+		free(fds);
+		return (NULL);
 	}
-	else
-		fds->cur_in = dup(fds->parent_in);
-}
-
-void	set_output(t_cmdg *curcmdg, t_fds *fds)
-{
-	int		output_fd;
-	t_outr	*tmp;
-
-	output_fd = -1;
-	if (curcmdg->out_redirs)
+	if (select_last(curcmdg, fds) < 0)
 	{
-		tmp = curcmdg->out_redirs;
-		while (tmp) 
-		{
-			if (output_fd >= 0)
-				close(output_fd);
-			// TODO : PROTECT !
-			if (tmp->is_append)
-				output_fd = open(tmp->path, O_WRONLY | O_CREAT | O_APPEND, S_IRWXU);
-			else
-				output_fd = open(tmp->path, O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-			tmp = tmp->next;
-		}
-		fds->cur_out = output_fd;
-		ft_printf("Output path is opened\n");
+		free(fds);
+		return (NULL);
 	}
-	else
-		fds->cur_out = dup(fds->parent_out);
+	fds->cur_in = fds->first;
+	return (fds);
 }
 
 void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
@@ -70,26 +39,26 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 	t_fds	*fds;
 	t_cmd	*curcmd;
 
-	fds = new_fds(); // TODO : ENOMEM PROTECT
-	save_inout(fds); // TODO : CHECK ERRORS
-	curcmd = curcmdg->cmds;
-	set_input(curcmdg, fds); // CHECK ERRORS
-	while (curcmd)
+	if ((fds = exec_cmdg_init(curcmdg, shell)))
 	{
-		restore_cur_in(0, fds); // TODO : CHECK ERRORS
-		if (!(curcmd->next)) // TODO : Insert output redirection
-			set_output(curcmdg, fds); // TODO : CHECK ERRORS
-		else
+		curcmd = curcmdg->cmds;
+		while (curcmd)
+		{
+			restore_cur_in(0, fds); // TODO : CHECK ERRORS
+			if (!(curcmd->next)) // TODO : Insert output redirection
+			fds->cur_out = fds->last;
+			else
 			set_pipe(fds); // TODO : CHECK ERRORS
-		restore_cur_out(1, fds); // TODO : CHECK ERRORS
-		pid = fork(); // TODO : CHECK ERRORS
-		if (pid == 0)
+			restore_cur_out(1, fds); // TODO : CHECK ERRORS
+			pid = fork(); // TODO : CHECK ERRORS
+			if (pid == 0)
 			exec_cmd(curcmd, shell);
-		curcmd = curcmd->next;
+			curcmd = curcmd->next;
+		}
+		restore_parent_inout(fds); // TODO : CHECK ERRORS
+		waitpid(pid, NULL, WUNTRACED); // STATUS ?
+		free(fds);
 	}
-	restore_inout(fds); // TODO : CHECK ERRORS
-	waitpid(pid, NULL, WUNTRACED); // STATUS ?
-	free(fds);
 }
 
 void	exec(t_shell *shell)
