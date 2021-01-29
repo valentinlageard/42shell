@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 17:56:59 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 21:45:41 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ t_fds	*exec_cmdg_init(t_cmdg *curcmdg, t_shell *shell)
 	return (fds);
 }
 
-int		cmd_is_simple_builtin(t_cmd *cmd, t_cmdg *cmdg)
-{
-	return (cmd == cmdg->cmds && !(cmd->next) && cmd->is_builtin);
-}
-
 void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 {
 	pid_t	pid;
@@ -45,25 +40,33 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 	t_cmd	*curcmd;
 	int		ret;
 
-	if ((fds = exec_cmdg_init(curcmdg, shell)))
+	ret = 0;
+	if (check_cmds(curcmdg))
 	{
-		curcmd = curcmdg->cmds;
-		while (curcmd)
+		if ((fds = exec_cmdg_init(curcmdg, shell)))
 		{
-			update_inout(curcmd, fds);
-			if (cmd_is_simple_builtin(curcmd, curcmdg))
-				exec_builtin(curcmd, shell);
-			else
+			curcmd = curcmdg->cmds;
+			while (curcmd)
 			{
-				pid = fork();
-				if (pid == 0)
-					exec_cmd(curcmd, shell);
+				update_inout(curcmd, fds);
+				if (cmd_is_simple_builtin(curcmd, curcmdg))
+				{
+					exec_builtin(curcmd, shell);
+					break ;
+				}
+				else
+				{
+					pid = fork();
+					if (pid == 0)
+						exec_cmd(curcmd, shell);
+				}
+				curcmd = curcmd->next;
 			}
-			curcmd = curcmd->next;
+			restore_parent_inout(fds);
+			if (!cmd_is_simple_builtin(curcmd, curcmdg))
+				waitpid(pid, &ret, WUNTRACED);
+			free(fds);
 		}
-		restore_parent_inout(fds);
-		waitpid(pid, &ret, WUNTRACED);
-		free(fds);
 	}
 }
 

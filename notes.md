@@ -2,7 +2,12 @@
 
 ## TODO
 
-- Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant.
+- Whether : put fds in the shell for deallocation when exiting or don't allocate fds at all.
+- Manage errors in tokenization and parsing.
+- Manage errors in builtins :
+	- env_builtins
+	- other_builtins
+	- path_builtins
 - OPTIONAL : gérer "~" dans cd ainsi que cd sans arguments.
 - DEBUG : Manage empty line, separator errors and invalid command
 - DEBUG : Redirections should work even if stated before the command !
@@ -13,6 +18,7 @@
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
+- [x] Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant + message d'erreur.
 - [x] Gérer les redirections dans pour un simple builtin !
 - [x] Avant l'exécution : vérifier si les output paths sont corrects.
 - [x] Avant l'exécution : vérifier si les input paths sont corrects.

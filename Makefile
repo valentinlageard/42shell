@@ -10,6 +10,7 @@ SRC			=	src/minishell.c \
 				src/parse/tokenize2.c \
 				src/exec/exec.c \
 				src/exec/exec_cmd.c \
+				src/exec/exec_utils.c \
 				src/exec/fd_utils.c \
 				src/exec/fd_utils2.c \
 				src/builtins/env_builtins.c \

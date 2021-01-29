@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 17:56:19 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 20:37:45 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell);
 void	exec(t_shell *shell);
 void	exec_cmd(t_cmd *cmd, t_shell *shell);
 void	exec_builtin(t_cmd *cmd, t_shell *shell);
+int		cmd_is_simple_builtin(t_cmd *cmd, t_cmdg *cmdg);
+int		check_cmds(t_cmdg *cmdg);
 t_fds	*new_fds(void);
 void	store_parent_inout(t_fds *fds);
 void	restore_parent_inout(t_fds *fds);
