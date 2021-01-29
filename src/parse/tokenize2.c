@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_utils2.c                                       :+:      :+:    :+:   */
+/*   tokenize2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/28 14:51:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:23:48 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	split_by_spaces(t_tok *tok, t_tok **nltok)
 	{
 		while (words[i])
 		{
-			append_tok(new_tok(words[i], 0), nltok);
+			append_tok(new_tok(words[i], txt), nltok);
 			i++;
 		}
 		ft_free_words(words);
@@ -39,7 +39,7 @@ t_tok	*tokenize_spaces(t_tok *ltok)
 	nltok = NULL;
 	while (tmp)
 	{
-		if (tmp->type == 0)
+		if (tmp->type == txt)
 			split_by_spaces(tmp, &nltok);
 		else
 			append_tok(new_tok(tmp->str, tmp->type), &nltok);
@@ -56,7 +56,7 @@ void	append_next_as_redirection(t_tok *tmp, t_tok *nltok)
 	next = tmp->next;
 	if (next)
 	{
-		if (next->type == 0 || next->type == 1 || next->type == 2)
+		if (tok_is_identifier(next))
 			append_tok(new_tok(next->str, tmp->type), &nltok);
 		// TODO : else parse error
 	}
@@ -72,7 +72,7 @@ t_tok	*tokenize_redirections(t_tok *ltok)
 	nltok = NULL;
 	while (tmp)
 	{
-		if (tmp->type == 5 || tmp->type == 6 || tmp->type == 7)
+		if (tmp->type == inr || tmp->type == outr || tmp->type == outrapp)
 		{
 			append_next_as_redirection(tmp, nltok);
 			tmp = tmp->next;

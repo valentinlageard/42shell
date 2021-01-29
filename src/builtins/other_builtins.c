@@ -1,25 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils2.c                                      :+:      :+:    :+:   */
+/*   other_builtins.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/25 17:21:20 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/25 17:29:40 by valentin         ###   ########.fr       */
+/*   Created: 2021/01/29 14:51:22 by valentin          #+#    #+#             */
+/*   Updated: 2021/01/29 14:51:34 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	restore_cur_in(int fd, t_fds *fds)
+void	builtin_echo(t_cmd *cmd)
 {
-	dup2(fds->cur_in, fd);
-	close(fds->cur_in);
+	int	i;
+	int	nl;
+
+	if (ft_strncmp(cmd->args[1], "-n", 2) == 0)
+	{
+		i = 2;
+		nl = 0;
+	}
+	else
+	{
+		i = 1;
+		nl = 1;
+	}
+	while (cmd->args[i])
+	{
+		ft_printf("%s ", cmd->args[i]);
+		i++;
+	}
+	if (nl)
+		ft_printf("\n");
 }
 
-void	restore_cur_out(int fd, t_fds *fds)
+void	builtin_exit(t_shell *shell)
 {
-	dup2(fds->cur_out, fd);
-	close(fds->cur_out);
+	shell_exit(EXIT_SUCCESS, shell);
 }

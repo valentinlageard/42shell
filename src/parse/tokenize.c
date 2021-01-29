@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_utils.c                                        :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:46:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/28 14:46:57 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:20:49 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type)
 	tmp = ltok;
 	while (tmp)
 	{
-		if (tmp->type == 0) // Check special characters allowed in ""
+		if (tmp->type == txt) // Check special characters allowed in ""
 			ntok = separate_token(tmp, sep_str, sep_type);
 		else
 			ntok = new_tok(tmp->str, tmp->type);

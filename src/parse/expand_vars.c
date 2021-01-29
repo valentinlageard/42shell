@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:16 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/28 14:48:20 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:14:22 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	expand_vars(t_tok *ltok, t_shell *shell)
 	tmp = ltok;
 	while (tmp)
 	{
-		if (tmp->type == 0 || tmp->type == 2)
+		if (tmp->type == txt || tmp->type == dquo)
 		{
 			i = 0;
 			while (tmp->str[i])

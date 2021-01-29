@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/28 14:49:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/28 18:34:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_tok	*tokenize_line(char *line, t_shell *shell)
 	ltok = tokenize_separators(ltok, "<", 5);
 	ltok = tokenize_separators(ltok, ">>", 7);
 	ltok = tokenize_separators(ltok, ">", 6);
-	// TODO : Add redirection outputs
 	expand_vars(ltok, shell);
 	ltok = tokenize_spaces(ltok);
 	ltok = tokenize_redirections(ltok);

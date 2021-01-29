@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/28 14:53:15 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:19:55 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int handle_output_redirection(t_pstate *ps)
 
 	if (!(ps->curcmdg))
 		ps->curcmdg = new_cmdg();
-	if (ps->tmp->type == 6)
+	if (ps->tmp->type == outr)
 	{
 		if (!(new_out_redir = new_outr(ps->tmp->str, 0)))
 			return (0);
@@ -135,15 +135,15 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
 	{
 		if (!err)
 			return (NULL);
-		if (ps->tmp->type == 0 || ps->tmp->type == 1 || ps->tmp->type == 2)
+		if (tok_is_identifier(ps->tmp))
 			err = handle_text(ps, shell);
-		else if (ps->tmp->type == 3)
+		else if (ps->tmp->type == sep)
 			err = handle_sep(ps);
-		else if (ps->tmp->type == 4)
+		else if (ps->tmp->type == pip)
 			err = handle_pipe(ps);
-		else if (ps->tmp->type == 5)
+		else if (ps->tmp->type == inr)
 			err = handle_input_redirection(ps);
-		else if (ps->tmp->type == 6 || ps->tmp->type == 7)
+		else if (ps->tmp->type == outr || ps->tmp->type == outrapp)
 			err = handle_output_redirection(ps);
 		ps->tmp = ps->tmp->next;
 	}

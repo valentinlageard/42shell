@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/26 19:50:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:22:41 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,20 @@ typedef struct	s_var {
 	struct s_var	*next;
 }				t_var;
 
+typedef enum	e_tok_type {
+	txt,
+	squo,
+	dquo,
+	sep,
+	pip,
+	inr,
+	outr,
+	outrapp
+}				t_tok_type;
+
 typedef struct	s_tok {
 	char			*str;
-	int				type;
-	// 0 : txt,
-	// 1 : simple quotes,
-	// 2 : double quotes,
-	// 3 : cmd separator,
-	// 4 : pipe
-	// 5 : input redirection
-	// 6 : output redirection
-	// 7 : output apprend redirection
+	t_tok_type		type;
 	struct s_tok	*next;
 }				t_tok;
 
@@ -156,12 +159,13 @@ void	print_outrs(t_outr *outrs);
 
 // Tokens
 
-t_tok	*new_tok(char *str, int type);
+t_tok	*new_tok(char *str, t_tok_type type);
 void	free_tok(t_tok *tok);
 int		append_tok(t_tok *tok, t_tok **ltok);
+void	free_ltok(t_tok *tok);
+int		tok_is_identifier(t_tok *tok);
 void	print_tok(t_tok *tok);
 void	print_ltok(t_tok *tok);
-void	free_ltok(t_tok *tok);
 
 // Var utils
 t_var	*new_var(char *key, char *value);

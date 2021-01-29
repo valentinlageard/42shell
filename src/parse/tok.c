@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   tok.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:48 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/28 14:48:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 15:22:57 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tok	*new_tok(char *str, int type)
+t_tok	*new_tok(char *str, t_tok_type type)
 {
 	t_tok	*tok;
 
@@ -63,26 +63,5 @@ void	free_ltok(t_tok *tok)
 		next = tok->next;
 		free_tok(tok);
 		tok = next;
-	}
-}
-
-void print_tok(t_tok *tok)
-{
-	ft_printf("TOKEN : [%p] | STR : \"%s\" | TYPE : %i | NEXT : [%p]\n", tok, tok->str, tok->type, tok->next);
-}
-
-void print_ltok(t_tok *tok)
-{
-	t_tok	*tmp;
-
-	ft_printf("TOKENS :\n");
-	if (!tok)
-		ft_printf("\tEMPTY\n");
-	tmp = tok;
-	while (tmp)
-	{
-		ft_printf("\t");
-		print_tok(tmp);
-		tmp = tmp->next;
 	}
 }

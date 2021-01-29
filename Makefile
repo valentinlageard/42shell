@@ -1,29 +1,30 @@
 LIBFT		=	libft/libft.a
 NAME		=	minishell
 SRC			=	src/minishell.c \
-				src/repl/repl.c \
+				src/parse/parse.c \
+				src/parse/expand_vars.c \
+				src/parse/tok_to_cmdgs.c \
+				src/parse/tok.c \
+				src/parse/tok_utils.c \
+				src/parse/tokenize.c \
+				src/parse/tokenize2.c \
 				src/exec/exec.c \
 				src/exec/exec_cmd.c \
-				src/exec/exec_utils.c \
-				src/exec/exec_utils2.c \
-				src/parsing/expand_vars.c \
-				src/parsing/parse.c \
-				src/parsing/token.c \
-				src/parsing/tok_utils.c \
-				src/parsing/tok_utils2.c \
-				src/parsing/tok_to_cmdgs.c \
-				src/builtins/basic_builtins.c \
+				src/exec/fd_utils.c \
+				src/exec/fd_utils2.c \
+				src/builtins/env_builtins.c \
+				src/builtins/is_builtin.c \
+				src/builtins/other_builtins.c \
 				src/builtins/path_builtins.c \
-				src/builtins/builtin_utils.c \
-				src/utils/error_exit.c \
-				src/utils/init.c \
-				src/utils/environ.c \
 				src/utils/binpath.c \
 				src/utils/cmd.c \
 				src/utils/cmdg.c \
-				src/utils/dir.c \
-				src/utils/input_redirections.c \
-				src/utils/output_redirections.c \
+				src/utils/env.c \
+				src/utils/error_exit.c \
+				src/utils/init.c \
+				src/utils/inr.c \
+				src/utils/outr.c \
+				src/utils/update_pwd.c \
 				src/utils/var.c
 
 OBJS		=	$(SRC:.c=.o)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   basic_builtins.c                                   :+:      :+:    :+:   */
+/*   env_builtins.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 17:05:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/08 16:45:54 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/29 14:51:12 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,4 @@ void	builtin_unset(t_cmd *cmd, t_shell *shell)
 		delete_var(cmd->args[i], &(shell->env));
 		i++;
 	}
-}
-
-void	builtin_echo(t_cmd *cmd)
-{
-	int	i;
-	int	nl;
-
-	if (ft_strncmp(cmd->args[1], "-n", 2) == 0)
-	{
-		i = 2;
-		nl = 0;
-	}
-	else
-	{
-		i = 1;
-		nl = 1;
-	}
-	while (cmd->args[i])
-	{
-		ft_printf("%s ", cmd->args[i]);
-		i++;
-	}
-	if (nl)
-		ft_printf("\n");
-}
-
-void	builtin_exit(t_shell *shell)
-{
-	shell_exit(EXIT_SUCCESS, shell);
 }
