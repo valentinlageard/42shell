@@ -2,7 +2,9 @@
 
 ## TODO
 
-- Whether : put fds in the shell for deallocation when exiting or don't allocate fds at all.
+- DEBUG : `nexiste pas du tout ; echo $?` n'affiche pas 127 :( REFACTORER la repl pour qu'elle tokenize selon les ;, puis pour chaque groupe de commande, sous-tokenize et execute.
+- DEBUG : `echo $` prints something weird...
+- Refactorer l'execution afin que ce soit les processus enfants qui valident si la commande existe ou non.
 - Manage errors in tokenization and parsing.
 - Manage errors in builtins :
 	- env_builtins
@@ -13,11 +15,12 @@
 - DEBUG : Redirections should work even if stated before the command !
 - DEBUG : meilleur gestion de -n dans echo
 - Gestion de `$?` :
-	- Refactorer l'exer afin de récupérer le return des commandes et le stocker dans une variable spéciale.
+	- Refactorer l'exec afin de récupérer le return des commandes et le stocker dans une variable spéciale.
 	- Dans la phase d'expansion de variables, faire une fonction spéciale pour expandre spécifiquement cette variable.
 - Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
+- [x] REFACTORING : Ne pas allouer fds afin qu'exit ne leak pas.
 - [x] Avant l'exécution : si une des commande du groupe est invalide, ne pas executer le groupe et passer au suivant + message d'erreur.
 - [x] Gérer les redirections dans pour un simple builtin !
 - [x] Avant l'exécution : vérifier si les output paths sont corrects.

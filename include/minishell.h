@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 20:37:45 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/30 18:03:46 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,9 @@ typedef struct	s_fds {
 }				t_fds;
 
 typedef struct	s_shell {
-	t_cmdg	*cmdgs;
-	t_var	*env;
+	t_cmdg				*cmdgs;
+	t_var				*env;
+	unsigned int		exit_code;
 }				t_shell;
 
 t_shell	*init_shell(char **envp);
@@ -115,9 +116,9 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell);
 void	exec(t_shell *shell);
 void	exec_cmd(t_cmd *cmd, t_shell *shell);
 void	exec_builtin(t_cmd *cmd, t_shell *shell);
-int		cmd_is_simple_builtin(t_cmd *cmd, t_cmdg *cmdg);
-int		check_cmds(t_cmdg *cmdg);
-t_fds	*new_fds(void);
+int		cmdg_has_unique_builtin(t_cmdg *cmdg);
+void	perror_command_not_found(t_cmd *cmd);
+void	init_fds(t_fds *fds);
 void	store_parent_inout(t_fds *fds);
 void	restore_parent_inout(t_fds *fds);
 void	set_pipe(t_fds *fds);

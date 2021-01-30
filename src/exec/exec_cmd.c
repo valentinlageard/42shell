@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:16:30 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 17:59:36 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/30 16:19:43 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,24 @@ void	exec_bin(t_cmd *cmd, t_shell *shell)
 	char	**wenv;
 
 	wenv = envtowenv(shell->env);
-	execve(cmd->main, cmd->args, wenv);
+	execve(cmd->main, cmd->args, wenv); // PROTECT ?
 }
 
 void	exec_cmd(t_cmd *cmd, t_shell *shell)
 {
-	if (cmd->is_valid && cmd->is_builtin)
+	if (cmd->is_valid)
 	{
-		exec_builtin(cmd, shell);
-		exit_shell(EXIT_SUCCESS, shell);
+		if (cmd->is_builtin)
+		{
+			exec_builtin(cmd, shell);
+			exit_shell(EXIT_SUCCESS, shell); // Return should depend on builtin success
+		}
+		else
+			exec_bin(cmd, shell);
 	}
-	else if (cmd->is_valid && !cmd->is_builtin)
-		exec_bin(cmd, shell);
+	else
+	{
+		perror_command_not_found(cmd);
+		exit_shell(127, shell);
+	}
 }

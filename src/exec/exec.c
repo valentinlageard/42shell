@@ -6,67 +6,61 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 21:45:41 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/30 16:28:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_fds	*exec_cmdg_init(t_cmdg *curcmdg, t_shell *shell)
+int		setup_fds(t_fds *fds, t_cmdg *curcmdg)
 {
-	t_fds	*fds;
-
-	if (!(fds = new_fds()))
-		perrno_exit(shell);
+	init_fds(fds);
 	store_parent_inout(fds);
 	if (select_first(curcmdg, fds) < 0)
-	{
-		free(fds);
-		return (NULL);
-	}
+		return (-1);
 	if (select_last(curcmdg, fds) < 0)
-	{
-		free(fds);
-		return (NULL);
-	}
+		return (-1);
 	fds->cur_in = fds->first;
-	return (fds);
+	return (0);
+}
+
+void	exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
+{
+	t_fds	fds;
+	t_cmd	*curcmd;
+
+	if ((setup_fds(&fds, cmdg)) == 0)
+	{
+		curcmd = cmdg->cmds;
+		update_inout(curcmd, &fds);
+		exec_builtin(curcmd, shell);
+		restore_parent_inout(&fds);
+	}
 }
 
 void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 {
 	pid_t	pid;
-	t_fds	*fds;
+	t_fds	fds;
 	t_cmd	*curcmd;
-	int		ret;
+	int		status;
 
-	ret = 0;
-	if (check_cmds(curcmdg))
+	status = 0;
+	if ((setup_fds(&fds, curcmdg)) == 0)
 	{
-		if ((fds = exec_cmdg_init(curcmdg, shell)))
+		curcmd = curcmdg->cmds;
+		while (curcmd)
 		{
-			curcmd = curcmdg->cmds;
-			while (curcmd)
-			{
-				update_inout(curcmd, fds);
-				if (cmd_is_simple_builtin(curcmd, curcmdg))
-				{
-					exec_builtin(curcmd, shell);
-					break ;
-				}
-				else
-				{
-					pid = fork();
-					if (pid == 0)
-						exec_cmd(curcmd, shell);
-				}
-				curcmd = curcmd->next;
-			}
-			restore_parent_inout(fds);
-			if (!cmd_is_simple_builtin(curcmd, curcmdg))
-				waitpid(pid, &ret, WUNTRACED);
-			free(fds);
+			update_inout(curcmd, &fds);
+			pid = fork();
+			if (pid == 0)
+				exec_cmd(curcmd, shell);
+			curcmd = curcmd->next;
 		}
+		restore_parent_inout(&fds);
+		waitpid(pid, &status, WUNTRACED);
+		if (WIFEXITED(status))
+			shell->exit_code = WEXITSTATUS(status);
 	}
 }
 
@@ -77,7 +71,14 @@ void	exec(t_shell *shell)
 	curcmdg = shell->cmdgs;
 	while (curcmdg)
 	{
-		exec_cmdg(curcmdg, shell);
+		if (!(cmdg_has_unique_builtin(curcmdg)))
+			exec_cmdg(curcmdg, shell);
+		else
+		{
+			exec_unique_builtin(curcmdg, shell);
+			shell->exit_code = 0; // TODO : get exit code based on success or failure of builtin
+		}
+		ft_printf("EXIT CODE : %d\n", shell->exit_code);
 		curcmdg = curcmdg->next;
 	}
 	free_cmdgs(shell->cmdgs);

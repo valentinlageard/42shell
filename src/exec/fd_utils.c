@@ -6,18 +6,14 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:00 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 17:45:06 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/30 15:47:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_fds	*new_fds(void)
+void	init_fds(t_fds *fds)
 {
-	t_fds	*fds;
-
-	if (!(fds = (t_fds *)malloc(sizeof(t_fds))))
-		return (NULL);
 	fds->parent_in = -1;
 	fds->parent_out = -1;
 	fds->first = -1;
@@ -26,7 +22,6 @@ t_fds	*new_fds(void)
 	fds->cur_out = -1;
 	fds->cur_pipe[0] = -1;
 	fds->cur_pipe[1] = -1;
-	return (fds);
 }
 
 void	store_parent_inout(t_fds *fds)

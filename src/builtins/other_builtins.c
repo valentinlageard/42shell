@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:51:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 14:51:34 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/30 18:30:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	builtin_echo(t_cmd *cmd)
 	}
 	while (cmd->args[i])
 	{
-		ft_printf("%s ", cmd->args[i]);
+		ft_printf("%s", cmd->args[i]);
 		i++;
 	}
 	if (nl)
