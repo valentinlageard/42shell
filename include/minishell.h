@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/30 18:03:46 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 18:27:17 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ typedef struct	s_tok {
 	struct s_tok	*next;
 }				t_tok;
 
+typedef struct	s_cltok {
+	t_tok			*ltok;
+	struct s_cltok	*next;
+}				t_cltok;
+
 typedef struct	s_cmd {
 	char			*main;
 	char			**args;
@@ -79,7 +84,6 @@ typedef struct	s_pstate {
 	t_tok	*tmp;
 	t_cmd	*curcmd;
 	t_cmdg	*curcmdg;
-	t_cmdg	*cmdgs;
 }				t_pstate;
 
 typedef struct	s_fds {
@@ -93,7 +97,8 @@ typedef struct	s_fds {
 }				t_fds;
 
 typedef struct	s_shell {
-	t_cmdg				*cmdgs;
+	t_cltok				*cltoks;
+	t_cmdg				*cmdg;
 	t_var				*env;
 	unsigned int		exit_code;
 }				t_shell;
@@ -103,14 +108,15 @@ void	repl(t_shell *shell);
 char	*select_binpath(char *cmd, t_shell *shell);
 
 // Parsing
-t_cmdg	*parse(char *line, t_shell *shell);
+t_cltok	*parse_cltoks(char *line);
+t_cmdg	*parse_cmdg(t_tok *ltok, t_shell *shell);
 t_tok	*tokenize_quotes(char *line);
-t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type);
+t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, t_tok_type sep_type);
 void	expand_vars(t_tok *ltok, t_shell *shell);
 t_tok	*tokenize_spaces(t_tok *ltok);
 t_tok	*tokenize_redirections(t_tok *ltok);
 t_cmd	*tok_to_cmds(t_tok *ltok, t_shell *shell);
-t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell);
+t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell);
 
 // Execution
 void	exec(t_shell *shell);
@@ -174,6 +180,12 @@ void	free_ltok(t_tok *tok);
 int		tok_is_identifier(t_tok *tok);
 void	print_tok(t_tok *tok);
 void	print_ltok(t_tok *tok);
+
+// Command group tokens
+t_cltok	*new_cltok(t_tok *ltok);
+void	free_cltok(t_cltok *cltok);
+void	free_cltoks(t_cltok *cltoks);
+int		append_cltok(t_cltok *cltok, t_cltok **cltoks);
 
 // Var utils
 t_var	*new_var(char *key, char *value);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tok_to_cmdgs.c                                     :+:      :+:    :+:   */
+/*   tok_to_cmdg.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 15:19:55 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 18:39:57 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_pstate	*new_pstate(void)
 	pstate->tmp = NULL;
 	pstate->curcmd = NULL;
 	pstate->curcmdg = NULL;
-	pstate->cmdgs = NULL;
 	return (pstate);
 }
 
@@ -48,12 +47,10 @@ t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
 	return (ncmd);
 }
 
-void	update_cmdgs(t_pstate *ps)
+void	update_cmdg(t_pstate *ps)
 {
 	append_cmd(ps->curcmd, &(ps->curcmdg->cmds));
-	append_cmdg(ps->curcmdg, &(ps->cmdgs));
 	ps->curcmd = NULL;
-	ps->curcmdg = NULL;
 }
 
 int	handle_text(t_pstate *ps, t_shell *shell)
@@ -65,17 +62,6 @@ int	handle_text(t_pstate *ps, t_shell *shell)
 	else
 		appendrealloc_arg(ps->tmp->str, ps->curcmd);
 	return (1);
-}
-
-int	handle_sep(t_pstate *ps)
-{
-	if (ps->curcmd && ps->curcmdg)
-	{
-		update_cmdgs(ps);
-		return (1);
-	}
-	else
-		return (0);
 }
 
 int	handle_pipe(t_pstate *ps)
@@ -122,10 +108,10 @@ int handle_output_redirection(t_pstate *ps)
 	return (1);
 }
 
-t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
+t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell)
 {
 	t_pstate	*ps;
-	t_cmdg		*cmdgs;
+	t_cmdg		*cmdg;
 	int			err;
 
 	err = 1;
@@ -137,8 +123,6 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
 			return (NULL);
 		if (tok_is_identifier(ps->tmp))
 			err = handle_text(ps, shell);
-		else if (ps->tmp->type == sep)
-			err = handle_sep(ps);
 		else if (ps->tmp->type == pip)
 			err = handle_pipe(ps);
 		else if (ps->tmp->type == inr)
@@ -148,8 +132,8 @@ t_cmdg	*tok_to_cmdgs(t_tok *ltok, t_shell *shell)
 		ps->tmp = ps->tmp->next;
 	}
 	if (ps->curcmd && ps->curcmdg)
-		update_cmdgs(ps);
-	cmdgs = ps->cmdgs;
+		update_cmdg(ps);
+	cmdg = ps->curcmdg;
 	free(ps);
-	return (cmdgs);
+	return (cmdg);
 }

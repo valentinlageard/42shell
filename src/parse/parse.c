@@ -6,22 +6,55 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/28 18:34:39 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 18:43:02 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tok	*tokenize_line(char *line, t_shell *shell)
+t_cltok	*get_cltoks(t_tok *ltok)
+{
+	t_tok	*tmp;
+	t_tok	*cur_ltok;
+	t_cltok	*cltoks;
+
+	tmp = ltok;
+	cur_ltok = NULL;
+	cltoks = NULL;
+	while (tmp)
+	{
+		if (tmp->type == sep)
+		{
+			append_cltok(new_cltok(cur_ltok), &cltoks);
+			cur_ltok = NULL;
+		}
+		else
+			append_tok(new_tok(tmp->str, tmp->type), &cur_ltok);
+		tmp = tmp->next;
+	}
+	append_cltok(new_cltok(cur_ltok), &cltoks);
+	return (cltoks);
+}
+
+t_cltok	*parse_cltoks(char *line)
 {
 	t_tok	*ltok;
+	t_cltok	*cltoks;
 
+	cltoks = NULL;
 	ltok = tokenize_quotes(line);
-	ltok = tokenize_separators(ltok, ";", 3);
-	ltok = tokenize_separators(ltok, "|", 4);
-	ltok = tokenize_separators(ltok, "<", 5);
-	ltok = tokenize_separators(ltok, ">>", 7);
-	ltok = tokenize_separators(ltok, ">", 6);
+	ltok = tokenize_separators(ltok, ";", sep);
+	cltoks = get_cltoks(ltok);
+	free_ltok(ltok);
+	return (cltoks);
+}
+
+t_tok	*tokenize_cmdg(t_tok *ltok, t_shell *shell)
+{
+	ltok = tokenize_separators(ltok, "|", pip);
+	ltok = tokenize_separators(ltok, "<", inr);
+	ltok = tokenize_separators(ltok, ">>", outrapp);
+	ltok = tokenize_separators(ltok, ">", outr);
 	expand_vars(ltok, shell);
 	ltok = tokenize_spaces(ltok);
 	ltok = tokenize_redirections(ltok);
@@ -29,15 +62,14 @@ t_tok	*tokenize_line(char *line, t_shell *shell)
 	return (ltok);
 }
 
-t_cmdg	*parse(char *line, t_shell *shell)
+t_cmdg	*parse_cmdg(t_tok *ltok, t_shell *shell)
 {
-	t_tok	*ltok;
-	t_cmdg	*cmdgs;
+	t_tok	*fully_tokenized_ltok;
+	t_cmdg	*cmdg;
 
-	cmdgs = NULL;
-	ltok = tokenize_line(line, shell);
-	cmdgs = tok_to_cmdgs(ltok, shell);
-	print_cmdgs(cmdgs);
-	free_ltok(ltok);
-	return (cmdgs);
+	cmdg = NULL;
+	fully_tokenized_ltok = tokenize_cmdg(ltok, shell);
+	cmdg = tok_to_cmdg(fully_tokenized_ltok, shell);
+	free_ltok(fully_tokenized_ltok);
+	return (cmdg);
 }

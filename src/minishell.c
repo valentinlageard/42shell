@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 15:59:55 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 18:31:32 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,27 @@
 
 void	repl(t_shell *shell)
 {
+	t_cltok	*cur_cltok;
 	int		read_error;
 	char	*line;
+	t_cmdg	*cmdg;
 
 	line = NULL;
 	ft_printf("$> ");
 	while ((read_error = ft_read_line(0, &line)) >= 0)
 	{
 		ft_printf("#############################\nParsing...\n");
-		shell->cmdgs = parse(line, shell);
+		shell->cltoks = parse_cltoks(line);
 		free(line);
-		ft_printf("Parsing done.\n#############################\n");
-		ft_printf("#############################\nExecuting...\n");
-		exec(shell);
-		ft_printf("Executing done.\n#############################\n");
+		cur_cltok = shell->cltoks;
+		while (cur_cltok)
+		{
+			cmdg = parse_cmdg(cur_cltok->ltok, shell);
+			shell->cmdg = cmdg;
+			exec(shell);
+			cur_cltok = cur_cltok->next;
+		}
+		free_cltoks(shell->cltoks);
 		ft_printf("$> ");
 	}
 	// If read_error == -1

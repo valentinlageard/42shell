@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:05:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/30 16:26:20 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 18:24:10 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ t_shell	*init_shell(char **envp)
 
 	if (!(shell = (t_shell *)malloc(sizeof(t_shell))))
 		return (NULL);
-	shell->cmdgs = NULL;
+	shell->cltoks = NULL;
+	shell->cmdg = NULL;
 	shell->env = wenvtoenv(envp);
 	shell->exit_code = 0;
 	update_pwd(shell);

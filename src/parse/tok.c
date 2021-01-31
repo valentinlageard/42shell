@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:48 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 15:22:57 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 18:33:36 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_tok(t_tok *tok)
 {
 	free(tok->str);
 	free(tok);
+	tok = NULL;
 }
 
 int		append_tok(t_tok *tok, t_tok **ltok)

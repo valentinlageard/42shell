@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:46:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 15:20:49 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 16:30:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_tok	*tokenize_quotes(char *line)
 	return (ltok);
 }
 
-t_tok	*separate_token(t_tok *tok, char *sep_str, int sep_type)
+t_tok	*separate_token(t_tok *tok, char *sep_str, t_tok_type sep_type)
 {
 	int		i;
 	int		start;
@@ -88,7 +88,7 @@ t_tok	*separate_token(t_tok *tok, char *sep_str, int sep_type)
 	return (ntok);
 }
 
-t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, int sep_type)
+t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, t_tok_type sep_type)
 {
 	t_tok	*tmp;
 	t_tok	*ntok;

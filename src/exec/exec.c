@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/30 16:28:16 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 17:29:11 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,13 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 
 void	exec(t_shell *shell)
 {
-	t_cmdg	*curcmdg;
-
-	curcmdg = shell->cmdgs;
-	while (curcmdg)
+	if (!(cmdg_has_unique_builtin(shell->cmdg)))
+		exec_cmdg(shell->cmdg, shell);
+	else
 	{
-		if (!(cmdg_has_unique_builtin(curcmdg)))
-			exec_cmdg(curcmdg, shell);
-		else
-		{
-			exec_unique_builtin(curcmdg, shell);
-			shell->exit_code = 0; // TODO : get exit code based on success or failure of builtin
-		}
-		ft_printf("EXIT CODE : %d\n", shell->exit_code);
-		curcmdg = curcmdg->next;
+		exec_unique_builtin(shell->cmdg, shell);
+		shell->exit_code = 0; // TODO : get exit code based on success or failure of builtin
 	}
-	free_cmdgs(shell->cmdgs);
+	ft_printf("EXIT CODE : %d\n", shell->exit_code);
+	free_cmdg(shell->cmdg);
 }
