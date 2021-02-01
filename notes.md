@@ -2,18 +2,20 @@
 
 ## TODO
 
-- REFACTORING : Changer l'execution afin que le parent attende que TOUS LES ENFANTS terminent !
-- DEBUG : `nexistepas | touche lol` fait un print weird. Probablement qu'il faut gérer le groupe de process trankilement.
-- DEBUG : `nexiste pas du tout ; echo $?` n'affiche pas 127 :( REFACTORER la repl pour qu'elle tokenize selon les ;, puis pour chaque groupe de commande, sous-tokenize et execute.
+- Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 - DEBUG : `echo $` prints something weird...
+- DEBUG : Redirections should work even if stated before the command !
+- DEBUG : gérer cd sans arguments
 - Manage errors in tokenization and parsing.
 - Manage errors in builtins.
 - OPTIONAL : gérer "~" dans cd
-- DEBUG : gérer cd sans arguments
-- DEBUG : Redirections should work even if stated before the command !
-- Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
 
 ### DONE
+- [x] REFACTORING : Quand on fork, on crée une structure de donnée qui stocke la relation pid/cmd. Si le pid du wait est la dernière commande, on récupère son exit code. Si l'enfant renvoit 127, c'est le parent qui affiche le message d'erreur.
+- [x] DEBUG : Seul le code d'erreur du dernier enfant doit être récupéré, même s'il ne termine pas en dernier. (ex `sleep 5 | grep a | zinz` doit return 127).
+- [x] DEBUG : `nexistepas | touche lol` fait un print weird. Probablement qu'il faut gérer le groupe de process trankilement.
+- [x] REFACTORING : Changer l'execution afin que le parent attende que TOUS LES ENFANTS terminent !
+- [x] REFACTORING : la repl doit déparer les tokens par groupe de commandes, puis pour chacun, parser le groupe de commande et l'executer.
 - [x] REFACTORING : les processus enfants valident si la commande existe ou non et pas le parent.
 - [x] Gestion de `$?` :
 	- Refactorer l'exec afin de récupérer le return des commandes et le stocker dans une variable spéciale.

@@ -14,6 +14,7 @@ SRC			=	src/minishell.c \
 				src/exec/exec_utils.c \
 				src/exec/fd_utils.c \
 				src/exec/fd_utils2.c \
+				src/exec/lpid.c \
 				src/builtins/env_builtins.c \
 				src/builtins/is_builtin.c \
 				src/builtins/other_builtins.c \

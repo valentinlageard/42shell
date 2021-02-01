@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 18:27:17 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 00:48:34 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@
 
 # define PATH_MAX 4096
 
-typedef struct	s_var {
-	char			*key;
-	char			*value;
-	struct s_var	*next;
-}				t_var;
-
 typedef enum	e_tok_type {
 	txt,
 	squo,
@@ -43,62 +37,73 @@ typedef enum	e_tok_type {
 	outrapp
 }				t_tok_type;
 
+typedef struct	s_var {
+	char			*key;
+	char			*value;
+	struct s_var	*next;
+}				t_var;
+
 typedef struct	s_tok {
-	char			*str;
-	t_tok_type		type;
-	struct s_tok	*next;
+	char				*str;
+	t_tok_type			type;
+	struct s_tok		*next;
 }				t_tok;
 
 typedef struct	s_cltok {
-	t_tok			*ltok;
-	struct s_cltok	*next;
+	t_tok				*ltok;
+	struct s_cltok		*next;
 }				t_cltok;
 
 typedef struct	s_cmd {
-	char			*main;
-	char			**args;
-	int				is_valid;
-	int				is_builtin;
-	struct s_cmd	*next;
+	char				*main;
+	char				**args;
+	int					is_valid;
+	int					is_builtin;
+	struct s_cmd		*next;
 }				t_cmd;
 
 typedef struct	s_inr {
-	char			*path;
-	struct s_inr	*next;
+	char				*path;
+	struct s_inr		*next;
 }				t_inr;
 
 typedef struct	s_outr {
-	char			*path;
-	int				is_append;
-	struct s_outr	*next;
+	char				*path;
+	int					is_append;
+	struct s_outr		*next;
 }				t_outr;
 
 typedef struct	s_cmdg {
-	t_cmd			*cmds;
-	t_inr			*in_redirs;
-	t_outr			*out_redirs;
-	struct s_cmdg	*next;
+	t_cmd				*cmds;
+	t_inr				*in_redirs;
+	t_outr				*out_redirs;
 }				t_cmdg;
 
 typedef struct	s_pstate {
-	t_tok	*tmp;
-	t_cmd	*curcmd;
-	t_cmdg	*curcmdg;
+	t_tok				*tmp;
+	t_cmd				*curcmd;
+	t_cmdg				*curcmdg;
 }				t_pstate;
 
 typedef struct	s_fds {
-	int		parent_in;
-	int		parent_out;
-	int		first;
-	int		last;
-	int		cur_in;
-	int		cur_out;
-	int		cur_pipe[2];
+	int					parent_in;
+	int					parent_out;
+	int					first;
+	int					last;
+	int					cur_in;
+	int					cur_out;
+	int					cur_pipe[2];
 }				t_fds;
+
+typedef struct	s_lpid {
+	pid_t				pid;
+	struct s_lpid		*next;
+}				t_lpid;
 
 typedef struct	s_shell {
 	t_cltok				*cltoks;
 	t_cmdg				*cmdg;
+	t_lpid				*lpids;
 	t_var				*env;
 	unsigned int		exit_code;
 }				t_shell;
@@ -134,6 +139,13 @@ int		select_first(t_cmdg *cmdg, t_fds *fds);
 int		select_last(t_cmdg *cmdg, t_fds *fds);
 void	update_inout(t_cmd *cmd, t_fds *fds);
 
+// lpids
+t_lpid	*new_lpid(pid_t pid);
+void	free_lpids(t_lpid *lpids);
+int		append_lpid(t_lpid *lpid, t_lpid **lpids);
+pid_t	get_last_pid(t_lpid *lpids);
+t_cmd	*get_corresponding_cmd(pid_t pid, t_lpid *lpids, t_cmd *cmds);
+
 // Cmd utils
 t_cmd	*new_cmd(void);
 void	free_cmd(t_cmd *cmd);
@@ -146,10 +158,7 @@ void	print_cmds(t_cmd *cmds);
 // Cmdg utils
 t_cmdg	*new_cmdg(void);
 void	free_cmdg(t_cmdg *cmdg);
-void	free_cmdgs(t_cmdg *cmdgs);
-void	append_cmdg(t_cmdg *cmdg, t_cmdg **cmdgs);
 void	print_cmdg(t_cmdg *cmdg);
-void	print_cmdgs(t_cmdg *cmdgs);
 
 // Builtins
 int		is_builtin(char *cmd_str);

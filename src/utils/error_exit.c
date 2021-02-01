@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 16:00:28 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 18:24:44 by valentin         ###   ########.fr       */
+/*   Updated: 2021/01/31 21:11:59 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	exit_shell(int status, t_shell *shell)
 {
 	free_cltoks(shell->cltoks);
 	free_cmdg(shell->cmdg);
+	free_lpids(shell->lpids);
 	free_env(shell->env);
 	free(shell);
 	exit(status);
