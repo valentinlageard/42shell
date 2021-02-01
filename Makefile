@@ -28,6 +28,7 @@ SRC			=	src/minishell.c \
 				src/utils/inr.c \
 				src/utils/outr.c \
 				src/utils/signal_handling.c \
+				src/utils/read_line.c \
 				src/utils/update_pwd.c \
 				src/utils/var.c
 

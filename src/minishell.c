@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 14:47:14 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 20:56:40 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,22 @@
 void	repl(t_shell *shell)
 {
 	t_cltok	*cur_cltok;
-	int		read_error;
+	int		read;
 	char	*line;
 	t_cmdg	*cmdg;
 
+	read = 0;
 	line = NULL;
 	ft_printf("$> ");
-	while ((read_error = ft_read_line(0, &line)) >= 0)
+	while ((read = read_line(0, &line)) > 0)
 	{
+		ft_printf("read : %d\n", read);
 		ft_printf("#############BEGIN#############\n");
 		ft_printf("==============================\nParsing cltoks...\n");
 		shell->cltoks = parse_cltoks(line);
+		cur_cltok = shell->cltoks;
 		ft_printf("Parsed cltoks.\n");
 		free(line);
-		cur_cltok = shell->cltoks;
 		while (cur_cltok)
 		{
 			ft_printf("==============================\nParsing cmdg...\n");
@@ -37,14 +39,18 @@ void	repl(t_shell *shell)
 			shell->cmdg = cmdg;
 			ft_printf("==============================\nExecuting cmdg...\n");
 			exec(shell);
+			free_cmdg(shell->cmdg);
+			shell->cmdg = NULL;
 			ft_printf("Executed cmdg.\n");
 			cur_cltok = cur_cltok->next;
 		}
 		free_cltoks(shell->cltoks);
+		shell->cltoks = NULL;
 		ft_printf("##############END##############\n");
 		ft_printf("$> ");
 	}
-	// If read_error == -1
+	free(line);
+	// If read == -1
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -53,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 
 	setup_signal_handling();
 	shell = init_shell(envp); // TODO : Check error and exit if any
+	g_shell = shell;
 	repl(shell);
 	exit_shell(EXIT_SUCCESS, shell);
 }

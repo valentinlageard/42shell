@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:11:00 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 14:02:53 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 19:50:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ t_cmdg	*new_cmdg(void)
 
 void	free_cmdg(t_cmdg *cmdg)
 {
-	free_cmds(cmdg->cmds);
-	free_inrs(cmdg->in_redirs);
-	free_outrs(cmdg->out_redirs);
-	free(cmdg);
+	if (cmdg)
+	{
+		free_cmds(cmdg->cmds);
+		free_inrs(cmdg->in_redirs);
+		free_outrs(cmdg->out_redirs);
+		free(cmdg);
+	}
+	cmdg = NULL;
 }
 
 void	print_cmdg(t_cmdg *cmdg)

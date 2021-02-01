@@ -2,8 +2,8 @@
 
 ## TODO
 
-- Gestion de `Ctrl-C` : `SIGINT`
-- Gestion de `Ctrl-D` : sends an EOF to stdin.
+- DEBUG : Si on est en train d'écrire une ligne, EOF ne stoppe pas le shell.
+- DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130.
 - DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
 - DEBUG : `echo $` prints a random variable...
 - DEBUG : Redirections should work even if stated before the command !
@@ -13,6 +13,9 @@
 - OPTIONAL : gérer "~" dans cd
 
 ### DONE
+- [x] Gestion de `Ctrl-D` : sends an EOF to stdin.
+- [x] Faire en sorte que l'exit code = 130 si stoppé.
+- [x] Gestion de `Ctrl-C` : `SIGINT`.
 - [x] Gestion de `Ctrl-\` : `SIGQUIT` doit être ignoré et ne rien afficher sur stdout.
 - [x] DEBUG : If no input, there is a segfault.
 - [x] REFACTORING : Quand on fork, on crée une structure de donnée qui stocke la relation pid/cmd. Si le pid du wait est la dernière commande, on récupère son exit code. Si l'enfant renvoit 127, c'est le parent qui affiche le message d'erreur.

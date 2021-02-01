@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:16:30 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 00:52:51 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 15:43:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	exec_bin(t_cmd *cmd, t_shell *shell)
 
 void	exec_cmd(t_cmd *cmd, t_shell *shell)
 {
+	//signal(SIGINT, SIG_DFL);
 	if (cmd->is_valid)
 	{
 		if (cmd->is_builtin)

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 14:06:53 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 20:28:42 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,4 @@ void	exec(t_shell *shell)
 	}
 	ft_printf("---------END-EXECUTION---------\n");
 	ft_printf("EXIT CODE : %d\n", shell->exit_code);
-	free_cmdg(shell->cmdg);
 }

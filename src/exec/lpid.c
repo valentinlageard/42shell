@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 20:26:30 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 00:48:19 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 19:43:32 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,17 @@ t_lpid	*new_lpid(pid_t pid)
 
 void	free_lpids(t_lpid *lpids)
 {
+	t_lpid	*tmp;
 	t_lpid	*next;
 
-	while (lpids)
+	tmp = lpids;
+	while (tmp)
 	{
-		next = lpids->next;
-		free(lpids);
-		lpids = next;
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
 	}
+	lpids = NULL;
 }
 
 int		append_lpid(t_lpid *lpid, t_lpid **lpids)

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_read_line.c                                     :+:      :+:    :+:   */
+/*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:34 by valentin          #+#    #+#             */
-/*   Updated: 2020/11/28 16:24:16 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 19:48:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
@@ -34,7 +34,7 @@
 
 // TODO : TO NORME !
 
-int	ft_read_line(int fd, char **line_ptr)
+int	read_line(int fd, char **line_ptr)
 {
 	char	*line;
 	char	read_buffer;
@@ -43,6 +43,7 @@ int	ft_read_line(int fd, char **line_ptr)
 	int		read_error;
 
 	line = NULL;
+	read_buffer = 0;
 	chunk_num = 1;
 	i = 0;
 	read_error = 0;
@@ -74,5 +75,5 @@ int	ft_read_line(int fd, char **line_ptr)
 		return (errno);
 	}
 	*line_ptr = line;
-	return (0);
+	return (ft_strlen(line));
 }

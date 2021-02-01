@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:50:17 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 14:50:19 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 19:44:42 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,17 @@ char	*get_envval(char *key, t_var *env)
 
 void	free_env(t_var *env)
 {
+	t_var	*tmp;
 	t_var	*next;
 
-	while (env)
+	tmp = env;
+	while (tmp)
 	{
-		next = env->next;
-		free_var(env);
-		env = next;
+		next = tmp->next;
+		free_var(tmp);
+		tmp = next;
 	}
+	env = NULL;
 }
 
 void	print_env(t_var *env)

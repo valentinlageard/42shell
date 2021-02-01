@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 18:04:44 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 18:36:10 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 20:25:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,17 @@ void	free_cltok(t_cltok *cltok)
 
 void	free_cltoks(t_cltok *cltoks)
 {
+	t_cltok	*tmp;
 	t_cltok	*next;
 
-	while (cltoks)
+	tmp = cltoks;
+	while (tmp)
 	{
-		next = cltoks->next;
-		free(cltoks);
-		cltoks = next;
+		next = tmp->next;
+		free(tmp);
+		tmp = next;
 	}
+	cltoks = NULL;
 }
 
 int	append_cltok(t_cltok *cltok, t_cltok **cltoks)
