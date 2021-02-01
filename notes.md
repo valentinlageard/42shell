@@ -2,8 +2,10 @@
 
 ## TODO
 
-- Gestion de `Ctrl-C`, `Ctrl-D` et `Ctrl-\`
-- DEBUG : `echo $` prints something weird...
+- Gestion de `Ctrl-C` : `SIGINT`
+- Gestion de `Ctrl-D` : sends an EOF to stdin.
+- DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
+- DEBUG : `echo $` prints a random variable...
 - DEBUG : Redirections should work even if stated before the command !
 - DEBUG : gérer cd sans arguments
 - Manage errors in tokenization and parsing.
@@ -11,6 +13,8 @@
 - OPTIONAL : gérer "~" dans cd
 
 ### DONE
+- [x] Gestion de `Ctrl-\` : `SIGQUIT` doit être ignoré et ne rien afficher sur stdout.
+- [x] DEBUG : If no input, there is a segfault.
 - [x] REFACTORING : Quand on fork, on crée une structure de donnée qui stocke la relation pid/cmd. Si le pid du wait est la dernière commande, on récupère son exit code. Si l'enfant renvoit 127, c'est le parent qui affiche le message d'erreur.
 - [x] DEBUG : Seul le code d'erreur du dernier enfant doit être récupéré, même s'il ne termine pas en dernier. (ex `sleep 5 | grep a | zinz` doit return 127).
 - [x] DEBUG : `nexistepas | touche lol` fait un print weird. Probablement qu'il faut gérer le groupe de process trankilement.

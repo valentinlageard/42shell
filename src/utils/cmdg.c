@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:11:00 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 19:47:34 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 14:02:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,16 @@ void	free_cmdg(t_cmdg *cmdg)
 
 void	print_cmdg(t_cmdg *cmdg)
 {
-	ft_printf("CMDG [%p] : \n", cmdg);
-	ft_printf("\tINPUT REDIRECTIONS :\n");
-	print_inrs(cmdg->in_redirs);
-	ft_printf("\tOUTPUT REDIRECTIONS :\n");
-	print_outrs(cmdg->out_redirs);
-	ft_printf("\tCMDS :\n");
-	print_cmds(cmdg->cmds);
+	if (!cmdg)
+		ft_printf("CMDG [%p] : EMPTY\n", cmdg);
+	else
+	{
+		ft_printf("CMDG [%p] : \n", cmdg);
+		ft_printf("\tINPUT REDIRECTIONS :\n");
+		print_inrs(cmdg->in_redirs);
+		ft_printf("\tOUTPUT REDIRECTIONS :\n");
+		print_outrs(cmdg->out_redirs);
+		ft_printf("\tCMDS :\n");
+		print_cmds(cmdg->cmds);
+	}
 }

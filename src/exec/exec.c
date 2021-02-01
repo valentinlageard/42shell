@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 00:59:01 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 14:06:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 void	exec(t_shell *shell)
 {
 	ft_printf("--------BEGIN-EXECUTION--------\n");
-	if (!(cmdg_has_unique_builtin(shell->cmdg)))
+	if (!shell->cmdg)
+		return ;
+	else if (!(cmdg_has_unique_builtin(shell->cmdg)))
 		exec_cmdg(shell->cmdg, shell);
 	else
 	{

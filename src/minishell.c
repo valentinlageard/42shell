@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 21:16:53 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 14:47:14 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
 
+	setup_signal_handling();
 	shell = init_shell(envp); // TODO : Check error and exit if any
 	repl(shell);
 	exit_shell(EXIT_SUCCESS, shell);
