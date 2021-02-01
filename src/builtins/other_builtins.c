@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:51:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/30 18:30:44 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 22:53:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,28 @@
 void	builtin_echo(t_cmd *cmd)
 {
 	int	i;
-	int	nl;
+	int	first_printable_arg;
+	int	print_new_line;
 
-	if (ft_strncmp(cmd->args[1], "-n", 2) == 0)
+	if (cmd->args[1] && ft_strncmp(cmd->args[1], "-n", 3) == 0)
 	{
-		i = 2;
-		nl = 0;
+		first_printable_arg = 2;
+		print_new_line = 0;
 	}
 	else
 	{
-		i = 1;
-		nl = 1;
+		first_printable_arg = 1;
+		print_new_line = 1;
 	}
+	i = first_printable_arg;
 	while (cmd->args[i])
 	{
+		if (i != first_printable_arg)
+			ft_printf(" ");
 		ft_printf("%s", cmd->args[i]);
 		i++;
 	}
-	if (nl)
+	if (print_new_line)
 		ft_printf("\n");
 }
 

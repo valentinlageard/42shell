@@ -2,7 +2,6 @@
 
 ## TODO
 
-- DEBUG : Si on est en train d'écrire une ligne, EOF ne stoppe pas le shell.
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130.
 - DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
 - DEBUG : `echo $` prints a random variable...
@@ -13,6 +12,8 @@
 - OPTIONAL : gérer "~" dans cd
 
 ### DONE
+- [x] DEBUG : Si on est en train d'écrire une ligne, EOF ne doit pas stopper le shell.
+- [x] DEBUG : Faire entrée ne doit pas stopper le shell !
 - [x] Gestion de `Ctrl-D` : sends an EOF to stdin.
 - [x] Faire en sorte que l'exit code = 130 si stoppé.
 - [x] Gestion de `Ctrl-C` : `SIGINT`.

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 19:48:44 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 23:06:52 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,17 @@
 ** 		- It returns whenever a \n or a EOF is encountered.
 */
 
-// TODO : TO NORME !
+/*
+** read_line
+** Parameters :
+**		- int fd
+**		- line_ptr
+** Returns :
+**		- < 0 and line is NULL : There was an error.
+**		- 0 and *line_ptr is NULL : EOF while nothing in line
+**		- 0 and *line_ptr is empty string : empty new line
+**		- > 0 and *line_ptr is string : filled new line.
+*/
 
 int	read_line(int fd, char **line_ptr)
 {
@@ -47,6 +57,7 @@ int	read_line(int fd, char **line_ptr)
 	chunk_num = 1;
 	i = 0;
 	read_error = 0;
+	*line_ptr = NULL;
 	if (!(line = (char *)malloc(BUFFER_SIZE)))
 		return (-1);
 	while ((read_error = read(fd, &read_buffer, 1)) >= 0)
@@ -57,23 +68,32 @@ int	read_line(int fd, char **line_ptr)
 			if (!(line = (char *)ft_realloc(line, BUFFER_SIZE * chunk_num)))
 			{
 				free(line);
-				return (-1);
+				return (errno);
 			}
 		}
-		if (read_buffer == '\n' || read_error == 0)
+		if (read_error == 0 && i == 0)
+		{
+			free(line);
+			line = NULL;
+			break ;
+		}
+		if (read_buffer == '\n')
 		{
 			line[i] = '\0';
 			break ;
 		}
-		else
+		else if (!(read_error == 0 && i != 0))
 			line[i] = read_buffer;
+		if (read_error == 0 && i != 0)
+			continue ;
 		i++;
 	}
-	if (read_error == -1)
+	if (read_error < 0)
 	{
 		free(line);
+		line = NULL;
 		return (errno);
 	}
 	*line_ptr = line;
-	return (ft_strlen(line));
+	return (i);
 }

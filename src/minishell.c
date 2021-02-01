@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 20:56:40 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/01 22:56:52 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ void	repl(t_shell *shell)
 	read = 0;
 	line = NULL;
 	ft_printf("$> ");
-	while ((read = read_line(0, &line)) > 0)
+	while ((read = read_line(0, &line)) >= 0 && line)
 	{
-		ft_printf("read : %d\n", read);
 		ft_printf("#############BEGIN#############\n");
 		ft_printf("==============================\nParsing cltoks...\n");
 		shell->cltoks = parse_cltoks(line);
@@ -49,6 +48,8 @@ void	repl(t_shell *shell)
 		ft_printf("##############END##############\n");
 		ft_printf("$> ");
 	}
+	if (read == 0)
+		ft_printf("exit");
 	free(line);
 	// If read == -1
 }
