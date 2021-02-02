@@ -2,17 +2,17 @@
 
 ## TODO
 
+- Implémenter OLDPWD ?
 - Faire que exit peut prendre un exit code.
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130.
 - DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
 - DEBUG : `echo $` prints a random variable...
 - DEBUG : Redirections should work even if stated before the command !
-- DEBUG : gérer cd sans arguments
 - Manage errors in tokenization and parsing.
 - Manage errors in builtins :
 	- [x] echo
 	- [x] cd
-	- [ ] pwd
+	- [x] pwd
 	- [ ] export
 	- [ ] unset
 	- [ ] env
@@ -20,6 +20,8 @@
 - OPTIONAL : gérer "~" dans cd
 
 ### DONE
+- [x] DEBUG : `echo -nnnnnn zinz`, `echo -nope zinz`, `echo -n -n zinz -n`
+- [x] DEBUG : gérer cd sans arguments
 - [x] DEBUG : Si on est en train d'écrire une ligne, EOF ne doit pas stopper le shell.
 - [x] DEBUG : Faire entrée ne doit pas stopper le shell !
 - [x] Gestion de `Ctrl-D` : sends an EOF to stdin.
