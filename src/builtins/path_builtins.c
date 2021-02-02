@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 15:43:41 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:08:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	builtin_cd(t_cmd *cmd, t_shell *shell)
 	else if (arg_n == 1)
 	{
 		path = get_envval("HOME", shell->env);
-		ft_printf("path home : %s\n", path);
+		if (!path)
+			pcustom_error("minishell: cd: $HOME was not found\n");
 	}
 	else
 	{
