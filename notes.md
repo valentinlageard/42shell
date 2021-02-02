@@ -2,13 +2,21 @@
 
 ## TODO
 
+- Faire que exit peut prendre un exit code.
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130.
 - DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
 - DEBUG : `echo $` prints a random variable...
 - DEBUG : Redirections should work even if stated before the command !
 - DEBUG : gérer cd sans arguments
 - Manage errors in tokenization and parsing.
-- Manage errors in builtins.
+- Manage errors in builtins :
+	- [x] echo
+	- [x] cd
+	- [ ] pwd
+	- [ ] export
+	- [ ] unset
+	- [ ] env
+	- [ ] exit
 - OPTIONAL : gérer "~" dans cd
 
 ### DONE

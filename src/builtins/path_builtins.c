@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/11 18:45:35 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 15:43:41 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,38 @@ void	builtin_pwd(t_shell *shell)
 	ft_printf("%s\n", get_envval("PWD", shell->env));
 }
 
+void	perror_cd(char *arg_str)
+{
+	pcustom_error("minishell: cd: ");
+	pcustom_error(arg_str);
+	pcustom_error(": ");
+	perrno();
+	pcustom_error("\n");
+}
+
 void	builtin_cd(t_cmd *cmd, t_shell *shell)
 {
-	chdir((cmd->args)[1]);
-	update_pwd(shell);
-	// TODO : error management : directory doesn't exist, pwd update error
+	int		arg_n;
+	char	*path;
+
+	path = NULL;
+	arg_n = ft_wlen(cmd->args);
+	if (arg_n == 2)
+		path = cmd->args[1];
+	else if (arg_n == 1)
+	{
+		path = get_envval("HOME", shell->env);
+		ft_printf("path home : %s\n", path);
+	}
+	else
+	{
+		pcustom_error("minishell: cd: too many arguments\n");
+		return ;
+	}
+	if (path)
+	{
+		if (chdir(path) < 0)
+			perror_cd(path);
+		update_pwd(shell);
+	}
 }
