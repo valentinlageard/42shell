@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 20:28:42 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 23:09:09 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,21 @@ int		setup_fds(t_fds *fds, t_cmdg *curcmdg)
 	return (0);
 }
 
-void	exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
+int	exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
 {
+	int		exit_code;
 	t_fds	fds;
 	t_cmd	*curcmd;
 
+	exit_code = 1;
 	if ((setup_fds(&fds, cmdg)) == 0)
 	{
 		curcmd = cmdg->cmds;
 		update_inout(curcmd, &fds);
-		exec_builtin(curcmd, shell);
+		exit_code = exec_builtin(curcmd, shell);
 		restore_parent_inout(&fds);
 	}
+	return (exit_code);
 }
 
 void	wait_and_process_children(t_cmdg *cmdg, t_shell *shell)
@@ -74,7 +77,10 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 			update_inout(curcmd, &fds);
 			pid = fork();
 			if (pid > 0)
+			{
+				ft_printf("pid : %d\n", pid);
 				append_lpid(new_lpid(pid), &(shell->lpids));
+			}
 			if (pid == 0)
 				exec_cmd(curcmd, shell);
 			curcmd = curcmd->next;
@@ -88,6 +94,8 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 
 void	exec(t_shell *shell)
 {
+	u_char	exit_code;
+
 	ft_printf("--------BEGIN-EXECUTION--------\n");
 	if (!shell->cmdg)
 		return ;
@@ -95,8 +103,8 @@ void	exec(t_shell *shell)
 		exec_cmdg(shell->cmdg, shell);
 	else
 	{
-		exec_unique_builtin(shell->cmdg, shell);
-		shell->exit_code = 0; // TODO : get exit code based on success or failure of builtin
+		exit_code = (u_char)exec_unique_builtin(shell->cmdg, shell);
+		shell->exit_code = exit_code;
 	}
 	ft_printf("---------END-EXECUTION---------\n");
 	ft_printf("EXIT CODE : %d\n", shell->exit_code);

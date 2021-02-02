@@ -6,18 +6,19 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 17:05:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 14:51:12 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 21:38:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	builtin_env(t_shell *shell)
+int		builtin_env(t_shell *shell)
 {
 	print_env(shell->env);
+	return (0);
 }
 
-void	builtin_export(t_cmd *cmd, t_shell *shell)
+int		builtin_export(t_cmd *cmd, t_shell *shell)
 {
 	int		i;
 	char	**split;
@@ -34,10 +35,10 @@ void	builtin_export(t_cmd *cmd, t_shell *shell)
 		}
 		i++;
 	}
-	// If value has no = symbol, fuck this shit.
+	return (0);
 }
 
-void	builtin_unset(t_cmd *cmd, t_shell *shell)
+int		builtin_unset(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
 
@@ -47,4 +48,5 @@ void	builtin_unset(t_cmd *cmd, t_shell *shell)
 		delete_var(cmd->args[i], &(shell->env));
 		i++;
 	}
+	return (0);
 }

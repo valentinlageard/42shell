@@ -2,31 +2,34 @@
 
 ## TODO
 
-- Implémenter OLDPWD ?
+- GROS BUG AVEC GETBINPATH
+- Implémenter OLDPWD dans cd
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130.
 - DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
 - DEBUG : `echo $` prints a random variable...
 - DEBUG : Redirections should work even if stated before the command !
+- Manage all enomem errors : new_, append_, ft_strdup, malloc, realloc, ...
 - Manage errors in tokenization and parsing.
+- Return values of builtins :
+	- [ ] echo : always 0
+	- [ ] cd : 0 ou 1 si une erreur
+	- [ ] pwd : 0 ou errno si une erreur
+	- [ ] export : 0 ou errno si une erreur
+	- [ ] unset : 0 ou errno si une erreur
+	- [ ] env : 0
+	- [ ] exit : l'exit code si spécifié sinon le dernier exit code
+- OPTIONAL : gérer "~" dans cd
+- OPTIONAL : export sans argument ni option imprime les variables dans l'ordre.
+
+### DONE
 - Manage errors in builtins :
 	- [x] echo
 	- [x] cd
 	- [x] pwd
-	- [ ] export
-	- [ ] unset
-	- [ ] env
-	- [ ] exit
-- Return values of builtins :
-	- [ ] echo : always 0
-	- [ ] cd : ???
-	- [ ] pwd
-	- [ ] export
-	- [ ] unset
-	- [ ] env
-	- [ ] exit
-- OPTIONAL : gérer "~" dans cd
-
-### DONE
+	- [x] export
+	- [x] unset
+	- [x] env
+	- [x] exit
 - [x] Faire que exit peut prendre un exit code.
 - [x] DEBUG : `echo -nnnnnn zinz`, `echo -nope zinz`, `echo -n -n zinz -n`
 - [x] DEBUG : gérer cd sans arguments

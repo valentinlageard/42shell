@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 17:47:28 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 21:44:59 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell);
 // Execution
 void	exec(t_shell *shell);
 void	exec_cmd(t_cmd *cmd, t_shell *shell);
-void	exec_builtin(t_cmd *cmd, t_shell *shell);
+int		exec_builtin(t_cmd *cmd, t_shell *shell);
 int		cmdg_has_unique_builtin(t_cmdg *cmdg);
 void	perror_command_not_found(t_cmd *cmd);
 void	init_fds(t_fds *fds);
@@ -164,13 +164,13 @@ void	print_cmdg(t_cmdg *cmdg);
 
 // Builtins
 int		is_builtin(char *cmd_str);
-void	builtin_env(t_shell *shell);
-void	builtin_export(t_cmd *cmd, t_shell *shell);
-void	builtin_unset(t_cmd *cmd, t_shell *shell);
-void	builtin_pwd(void);
-void	builtin_echo(t_cmd *cmd);
-void	builtin_exit(t_cmd *cmd, t_shell *shell);
-void	builtin_cd(t_cmd *cmd, t_shell *shell);
+int		builtin_env(t_shell *shell);
+int		builtin_export(t_cmd *cmd, t_shell *shell);
+int		builtin_unset(t_cmd *cmd, t_shell *shell);
+int		builtin_pwd(void);
+int		builtin_echo(t_cmd *cmd);
+int		builtin_exit(t_cmd *cmd, t_shell *shell);
+int		builtin_cd(t_cmd *cmd, t_shell *shell);
 
 // Redirections
 t_inr	*new_inr(char *path);

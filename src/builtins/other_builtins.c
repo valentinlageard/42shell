@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:51:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 20:11:10 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 21:40:33 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		check_echo_args(t_cmd *cmd, int *i)
 	return (print_new_line);
 }
 
-void	builtin_echo(t_cmd *cmd)
+int	builtin_echo(t_cmd *cmd)
 {
 	int		i;
 	int		first_printable_arg;
@@ -52,6 +52,7 @@ void	builtin_echo(t_cmd *cmd)
 	}
 	if (print_new_line)
 		ft_printf("\n");
+	return (0);
 }
 
 int		is_arg_digit(char *str)
@@ -70,7 +71,7 @@ int		is_arg_digit(char *str)
 	return (1);
 }
 
-void	builtin_exit(t_cmd *cmd, t_shell *shell)
+int	builtin_exit(t_cmd *cmd, t_shell *shell)
 {
 	u_char	exit_code;
 	uint	args_num;
@@ -94,4 +95,5 @@ void	builtin_exit(t_cmd *cmd, t_shell *shell)
 			exit_code = (u_char)ft_atoi(cmd->args[1]);
 		exit_shell(exit_code, shell);
 	}
+	return (0);
 }
