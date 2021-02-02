@@ -6,13 +6,13 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 16:00:28 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 20:56:01 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 17:45:57 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_shell(int status, t_shell *shell)
+void	exit_shell(u_char status, t_shell *shell)
 {
 	free_cltoks(shell->cltoks);
 	shell->cltoks = NULL;

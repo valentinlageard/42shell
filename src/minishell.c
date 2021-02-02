@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 22:56:52 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 20:01:10 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	repl(t_shell *shell)
 		ft_printf("$> ");
 	}
 	if (read == 0)
-		ft_printf("exit");
+		ft_printf("exit\n");
 	free(line);
 	// If read == -1
 }

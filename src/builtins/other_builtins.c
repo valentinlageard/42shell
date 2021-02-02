@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:51:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 17:23:59 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 20:11:10 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,44 @@ void	builtin_echo(t_cmd *cmd)
 		ft_printf("\n");
 }
 
-void	builtin_exit(t_shell *shell)
+int		is_arg_digit(char *str)
 {
-	exit_shell(EXIT_SUCCESS, shell);
+	int	i;
+
+	if (!(ft_isdigit(str[0]) || str[0] == '-'))
+		return (0);
+	i = 1;
+	while (str[i])
+	{
+		if (!(ft_isdigit(str[i])))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	builtin_exit(t_cmd *cmd, t_shell *shell)
+{
+	u_char	exit_code;
+	uint	args_num;
+
+	args_num = ft_wlen(cmd->args);
+	exit_code = 0;
+	if (args_num == 1)
+		exit_shell(shell->exit_code, shell);
+	if (args_num > 2)
+		pcustom_error("minishell: exit: too many arguments\n"); // Returns exit code = 1
+	else if (args_num == 2)
+	{
+		if (!(is_arg_digit(cmd->args[1])) || ft_strlen(cmd->args[1]) > 17)
+		{
+			pcustom_error("minishell: exit: ");
+			pcustom_error(cmd->args[1]);
+			pcustom_error(": numeric argument required\n");
+			exit_code = 2;
+		}
+		else
+			exit_code = (u_char)ft_atoi(cmd->args[1]);
+		exit_shell(exit_code, shell);
+	}
 }

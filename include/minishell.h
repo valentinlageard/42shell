@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 16:29:28 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 17:47:28 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ typedef struct	s_lpid {
 }				t_lpid;
 
 typedef struct	s_shell {
-	t_cltok				*cltoks;
-	t_cmdg				*cmdg;
-	t_lpid				*lpids;
-	t_var				*env;
-	unsigned int		exit_code;
+	t_cltok		*cltoks;
+	t_cmdg		*cmdg;
+	t_lpid		*lpids;
+	t_var		*env;
+	u_char		exit_code;
 }				t_shell;
 
 t_shell	*g_shell;
@@ -169,7 +169,7 @@ void	builtin_export(t_cmd *cmd, t_shell *shell);
 void	builtin_unset(t_cmd *cmd, t_shell *shell);
 void	builtin_pwd(void);
 void	builtin_echo(t_cmd *cmd);
-void	builtin_exit(t_shell *shell);
+void	builtin_exit(t_cmd *cmd, t_shell *shell);
 void	builtin_cd(t_cmd *cmd, t_shell *shell);
 
 // Redirections
@@ -217,7 +217,7 @@ void	print_env(t_var *env);
 void	update_pwd(t_shell *shell);
 
 // Errors and exit
-void	exit_shell(int status, t_shell *shell);
+void	exit_shell(u_char status, t_shell *shell);
 void	pcustom_error(char *str_error);
 void	perrno(void);
 void	pcustom_error_exit(char *str_error, t_shell *shell);
