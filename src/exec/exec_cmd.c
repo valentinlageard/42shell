@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:16:30 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 15:43:53 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:29:45 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_builtin(t_cmd *cmd, t_shell *shell)
 	if (ft_strncmp(cmd->main, "export", ft_strlen(cmd->main)) == 0)
 		builtin_export(cmd, shell);
 	if (ft_strncmp(cmd->main, "pwd", ft_strlen(cmd->main)) == 0)
-		builtin_pwd(shell);
+		builtin_pwd();
 	if (ft_strncmp(cmd->main, "echo", ft_strlen(cmd->main)) == 0)
 		builtin_echo(cmd);
 	if (ft_strncmp(cmd->main, "cd", ft_strlen(cmd->main)) == 0)

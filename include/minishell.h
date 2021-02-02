@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 19:06:57 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/02 16:29:28 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include <signal.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
-
-# define PATH_MAX 4096
 
 typedef enum	e_tok_type {
 	txt,
@@ -169,7 +167,7 @@ int		is_builtin(char *cmd_str);
 void	builtin_env(t_shell *shell);
 void	builtin_export(t_cmd *cmd, t_shell *shell);
 void	builtin_unset(t_cmd *cmd, t_shell *shell);
-void	builtin_pwd(t_shell *shell);
+void	builtin_pwd(void);
 void	builtin_echo(t_cmd *cmd);
 void	builtin_exit(t_shell *shell);
 void	builtin_cd(t_cmd *cmd, t_shell *shell);
