@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 21:44:59 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/03 20:15:08 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell);
 void	exec(t_shell *shell);
 void	exec_cmd(t_cmd *cmd, t_shell *shell);
 int		exec_builtin(t_cmd *cmd, t_shell *shell);
+int		is_prev_cmd_builtin(t_cmd *cmd, t_cmd *cmds);
 int		cmdg_has_unique_builtin(t_cmdg *cmdg);
 void	perror_command_not_found(t_cmd *cmd);
 void	init_fds(t_fds *fds);

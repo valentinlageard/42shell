@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 23:09:09 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/03 20:15:51 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,25 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 	t_fds	fds;
 	t_cmd	*curcmd;
 
-	if ((setup_fds(&fds, curcmdg)) == 0)
+	if ((setup_fds(&fds, curcmdg)) < 0)
+		return ;
+	curcmd = curcmdg->cmds;
+	while (curcmd)
 	{
-		curcmd = curcmdg->cmds;
-		while (curcmd)
-		{
-			update_inout(curcmd, &fds);
-			pid = fork();
-			if (pid > 0)
-			{
-				ft_printf("pid : %d\n", pid);
-				append_lpid(new_lpid(pid), &(shell->lpids));
-			}
-			if (pid == 0)
-				exec_cmd(curcmd, shell);
-			curcmd = curcmd->next;
-		}
-		restore_parent_inout(&fds);
-		wait_and_process_children(curcmdg, shell);
-		free_lpids(shell->lpids);
-		shell->lpids = NULL;
+		update_inout(curcmd, &fds);
+		if (is_prev_cmd_builtin(curcmd, curcmdg->cmds))
+			waitpid(get_last_pid(shell->lpids), NULL, WUNTRACED);
+		pid = fork();
+		if (pid > 0)
+			append_lpid(new_lpid(pid), &(shell->lpids));
+		if (pid == 0)
+			exec_cmd(curcmd, shell);
+		curcmd = curcmd->next;
 	}
+	restore_parent_inout(&fds);
+	wait_and_process_children(curcmdg, shell);
+	free_lpids(shell->lpids);
+	shell->lpids = NULL;
 }
 
 void	exec(t_shell *shell)
