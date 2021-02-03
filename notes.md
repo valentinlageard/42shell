@@ -2,20 +2,21 @@
 
 ## TODO
 
-- Si la commande précédente est un builtin, l'attendre ?
 - Token error si quote unclosed !
-- Faire qu'un identifier ne soit considéré comme executable que s'il existe dans $PATH ou soit en chemin absolu.
-	- DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
 - Implémenter OLDPWD dans cd
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130, mais à son exit_code à elle.
 - DEBUG : `echo $` prints a random variable...
 - DEBUG : Redirections should work even if stated before the command !
 - Manage all enomem errors : new_, append_, ft_strdup, malloc, realloc, ...
 - Manage errors in tokenization and parsing.
+
 - OPTIONAL : gérer "~" dans cd
 - OPTIONAL : export sans argument ni option imprime les variables dans l'ordre.
 
 ### DONE
+- [x] DEBUG : `/bin/zinz` prints "command not found" instead of "no such file or directory"
+- [x] Faire qu'un identifier ne soit considéré comme executable que s'il existe dans $PATH ou soit en chemin absolu.
+- [x] Si la commande précédente est un builtin, l'attendre ?
 - Return values of builtins :
 	- [x] echo : always 0
 	- [x] cd : 0 ou 1 si une erreur

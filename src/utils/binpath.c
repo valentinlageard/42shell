@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:44:06 by valentin          #+#    #+#             */
-/*   Updated: 2020/12/08 14:13:51 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/03 22:04:30 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		file_exists(char *path)
 {
 	struct stat	buf;
+
 	return (stat(path, &buf) == 0);
 }
 
@@ -50,7 +51,7 @@ char	*get_binpath(char *cmd, t_shell *shell)
 
 char	*select_binpath(char *cmd, t_shell *shell)
 {
-	if (file_exists(cmd))
+	if (cmd[0] == '/' && file_exists(cmd))
 		return (ft_strdup(cmd)); // Check for ENOMEM
 	else
 		return (get_binpath(cmd, shell));
