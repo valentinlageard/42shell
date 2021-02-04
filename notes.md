@@ -9,6 +9,7 @@
 - DEBUG : Redirections should work even if stated before the command !
 - Manage all enomem errors : new_, append_, ft_strdup, malloc, realloc, ...
 - Manage errors in tokenization and parsing.
+- Tout mettre à la norme.
 
 - OPTIONAL : gérer "~" dans cd
 - OPTIONAL : export sans argument ni option imprime les variables dans l'ordre.

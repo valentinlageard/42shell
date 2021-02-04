@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 17:05:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 21:38:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 14:15:13 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ int		builtin_export(t_cmd *cmd, t_shell *shell)
 	i = 1;
 	while (cmd->args[i])
 	{
-		if (ft_iscinstr('=', cmd->args[i]))
+		if (ft_isdigit(cmd->args[i][0]))
+		{
+			pcustom_error("minishell: export: `");
+			pcustom_error(cmd->args[i]);
+			pcustom_error("': not a valid identifier\n");
+		}
+		else if (ft_iscinstr('=', cmd->args[i]))
 		{
 			split = key_val_split(cmd->args[i]);
 			if (!(change_value_var(split[0], split[1], &(shell->env))))
