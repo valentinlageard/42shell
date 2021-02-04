@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 15:04:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 15:07:02 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ void	repl(t_shell *shell)
 	if (read == 0)
 		ft_printf("exit\n");
 	free(line);
-	// If read == -1
+	if (read < 0)
+	{
+		pcustom_error("minishell: ");
+		perrno();
+		pcustom_error("\n");
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
