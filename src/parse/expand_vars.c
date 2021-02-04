@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:16 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/30 18:50:41 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 13:54:59 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	expand_var(t_tok *tok, int *i, t_shell *shell)
 		ft_strlen(tok->str) - j);
 	free(tok->str);
 	tok->str = nstr;
-	*i = *i - 1 + ft_strlen(val); // PROBLEM ID VALUE IS INFERIOR !
+	*i = *i - 1 + ft_strlen(val);
 }
 
 void	expand_exit_code(t_tok *tok, int *i, t_shell *shell)
@@ -76,11 +76,12 @@ void	expand_vars(t_tok *ltok, t_shell *shell)
 			i = 0;
 			while (tmp->str[i])
 			{
-				if (tmp->str[i] == '$')
+				if (tmp->str[i] == '$' && tmp->str[i + 1])
 				{
-					if (tmp->str[i + 1] && tmp->str[i + 1] == '?')
+					if (tmp->str[i + 1] == '?')
 						expand_exit_code(tmp, &i, shell);
-					else
+					else if (ft_isalnum(tmp->str[i + 1]) ||
+						tmp->str[i + 1] == '_')
 						expand_var(tmp, &i, shell);
 				}
 				i++;
