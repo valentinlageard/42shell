@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:46:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 16:30:21 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 14:56:37 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ t_tok	*tokenize_quotes(char *line)
 	if (quote != 0)
 	{
 		free_ltok(ltok);
+		if (quote == 1)
+			pcustom_error("minishell: syntax error near unexpected token `''\n");
+		if (quote == 2)
+			pcustom_error("minishell: syntax error near unexpected token `\"'\n");
 		return (NULL);
 	}
 	return (ltok);
