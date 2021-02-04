@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/03 22:42:45 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 15:02:37 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	repl(t_shell *shell);
 void	setup_signal_handling(void);
 char	*select_binpath(char *cmd, t_shell *shell);
 int		read_line(int fd, char **line_ptr);
+void	prompt(void);
 
 // Parsing
 t_cltok	*parse_cltoks(char *line);

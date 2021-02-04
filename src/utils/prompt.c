@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handling.c                                  :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/01 14:47:02 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 15:03:43 by valentin         ###   ########.fr       */
+/*   Created: 2021/02/04 15:01:46 by valentin          #+#    #+#             */
+/*   Updated: 2021/02/04 15:02:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_signals(int signum)
+void	prompt(void)
 {
-	if (signum == SIGQUIT)
-		write(2, "\b\b  \b\b", 6);
-	if (signum == SIGINT)
-	{
-		g_shell->exit_code = 128 + SIGINT;
-		write(2, "\n", 1);
-		prompt();
-	}
-	return ;
-}
-
-void	setup_signal_handling(void)
-{
-	signal(SIGQUIT, handle_signals);
-	signal(SIGINT, handle_signals);
+	write(2, "$> ", 3);
 }

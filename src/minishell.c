@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/03 22:51:11 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 15:04:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	repl(t_shell *shell)
 
 	read = 0;
 	line = NULL;
-	ft_printf("$> ");
+	prompt();
 	while ((read = read_line(0, &line)) >= 0 && line)
 	{
 		ft_printf("#############BEGIN#############\n");
@@ -46,7 +46,7 @@ void	repl(t_shell *shell)
 		free_cltoks(shell->cltoks);
 		shell->cltoks = NULL;
 		ft_printf("##############END##############\n");
-		ft_printf("$> ");
+		prompt();
 	}
 	if (read == 0)
 		ft_printf("exit\n");
