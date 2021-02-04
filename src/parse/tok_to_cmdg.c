@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 18:39:57 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/03 22:35:43 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
 	args[0] = ft_strdup(tok->str);
 	args[1] = NULL;
 	ncmd->args = args;
+	if (!ft_strlen(args[0]))
+		ncmd->is_valid = 0;
 	if (is_builtin(args[0]))
 	{
 		ncmd->main = ft_strdup(args[0]);
@@ -88,7 +90,7 @@ int	handle_input_redirection(t_pstate *ps)
 	return (1);
 }
 
-int handle_output_redirection(t_pstate *ps)
+int		handle_output_redirection(t_pstate *ps)
 {
 	t_outr	*new_out_redir;
 
