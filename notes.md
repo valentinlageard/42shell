@@ -2,7 +2,7 @@
 
 ## TODO
 
-- Single letters are detected as builtin
+- SIGINT should quit all commands if several commad groups are given.
 - Implémenter OLDPWD dans cd
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130, mais à son exit_code à elle.
 - DEBUG : Redirections should work even if stated before the command !
@@ -16,6 +16,7 @@
 - OPTIONAL : export sans argument ni option imprime les variables dans l'ordre.
 
 ### DONE
+- [x] Single letters are detected as builtin
 - [x] Mettre le prompt sur stderr plutot que stdout
 - [x] Token error si quote unclosed !
 - [x] DEBUG : `echo $` prints a random variable...

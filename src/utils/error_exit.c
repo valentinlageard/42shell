@@ -14,7 +14,7 @@
 
 void	exit_shell(u_char status, t_shell *shell)
 {
-	free_cltoks(shell->cltoks);
+	shallow_free_cloks(shell->cltoks);
 	shell->cltoks = NULL;
 	free_cmdg(shell->cmdg);
 	shell->cmdg = NULL;

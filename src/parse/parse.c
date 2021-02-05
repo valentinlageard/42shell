@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 14:57:28 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:02:29 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,18 @@ t_cltok	*get_cltoks(t_tok *ltok)
 	{
 		if (tmp->type == sep)
 		{
-			append_cltok(new_cltok(cur_ltok), &cltoks);
-			cur_ltok = NULL;
+			if (cur_ltok)
+			{
+				append_cltok(new_cltok(cur_ltok), &cltoks);
+				cur_ltok = NULL;
+			}
+			else
+			{
+				pcustom_error("minishell: syntax error near unexpected token `;'\n");
+				free_ltok(cur_ltok);
+				free_cltoks(cltoks);
+				return (NULL);
+			}
 		}
 		else
 			append_tok(new_tok(tmp->str, tmp->type), &cur_ltok);

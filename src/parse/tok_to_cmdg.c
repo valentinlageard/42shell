@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/03 22:35:43 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:19:37 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,18 @@ t_pstate	*new_pstate(void)
 	pstate->curcmdg = NULL;
 	return (pstate);
 }
-
+/*
+void	free_pstate(t_pstate *ps)
+{
+	if (ps->tmp)
+		free_tok(ps->tmp);
+	if (ps->curcmd)
+		free_cmd(ps->curcmd);
+	if (ps->curcmdg)
+		free_cmdg(ps->curcmdg);
+	free(ps);
+}
+*/
 t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
 {
 	t_cmd	*ncmd;
@@ -75,7 +86,10 @@ int	handle_pipe(t_pstate *ps)
 		return (1);
 	}
 	else
+	{
+		pcustom_error("minishell: syntax error near unexpected token `|'\n");
 		return (0);
+	}
 }
 
 int	handle_input_redirection(t_pstate *ps)
@@ -122,7 +136,10 @@ t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell)
 	while (ps->tmp)
 	{
 		if (!err)
+		{
+			free(ps);
 			return (NULL);
+		}
 		if (tok_is_identifier(ps->tmp))
 			err = handle_text(ps, shell);
 		else if (ps->tmp->type == pip)
@@ -132,6 +149,11 @@ t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell)
 		else if (ps->tmp->type == outr || ps->tmp->type == outrapp)
 			err = handle_output_redirection(ps);
 		ps->tmp = ps->tmp->next;
+	}
+	if (!err)
+	{
+		free(ps);
+		return (NULL);
 	}
 	if (ps->curcmd && ps->curcmdg)
 		update_cmdg(ps);

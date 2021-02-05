@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:05:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 21:10:47 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 12:54:02 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_shell	*init_shell(char **envp)
 	shell->cmdg = NULL;
 	shell->lpids = NULL;
 	shell->env = wenvtoenv(envp);
+	shell->pass = 0;
 	shell->exit_code = 0;
 	update_pwd(shell);
 	return (shell);

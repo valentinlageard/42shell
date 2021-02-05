@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 19:53:51 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 13:59:33 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,33 +24,28 @@ void	repl(t_shell *shell)
 	prompt();
 	while ((read = read_line(0, &line)) >= 0 && line)
 	{
-		ft_printf("line : %s\n", line);
-		ft_printf("#############BEGIN#############\n");
-		ft_printf("==============================\nParsing cltoks...\n");
 		shell->cltoks = parse_cltoks(line);
 		cur_cltok = shell->cltoks;
 		ft_printf("Parsed cltoks.\n");
 		free(line);
-		while (cur_cltok)
+		while (cur_cltok && !shell->pass)
 		{
-			ft_printf("==============================\nParsing cmdg...\n");
-			cmdg = parse_cmdg(cur_cltok->ltok, shell);
-			ft_printf("Parsed cmdg.\n");
+			if (!(cmdg = parse_cmdg(cur_cltok->ltok, shell)))
+				shell->pass = 1;
 			shell->cmdg = cmdg;
-			ft_printf("==============================\nExecuting cmdg...\n");
-			exec(shell);
+			if (!shell->pass)
+				exec(shell);
 			free_cmdg(shell->cmdg);
 			shell->cmdg = NULL;
-			ft_printf("Executed cmdg.\n");
 			cur_cltok = cur_cltok->next;
 		}
-		free_cltoks(shell->cltoks);
+		shallow_free_cloks(shell->cltoks);
 		shell->cltoks = NULL;
-		ft_printf("##############END##############\n");
+		shell->pass = 0;
 		prompt();
 	}
 	if (read == 0)
-		ft_printf("exit\n");
+		pcustom_error("exit\n");
 	free(line);
 	if (read < 0)
 	{

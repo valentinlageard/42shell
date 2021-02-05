@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 20:03:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:08:48 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ int	append_next_as_redirection(t_tok *tmp, t_tok *nltok)
 	next = tmp->next;
 	if (next)
 	{
-		if (tok_is_identifier(next)){
+		if (tok_is_identifier(next))
+		{
 			append_tok(new_tok(next->str, tmp->type), &nltok);
 			return (0);
 		}
 	}
-	pcustom_error("bash: redirection syntax error\n");
 	return (-1);
 }
 
@@ -78,6 +78,7 @@ t_tok	*tokenize_redirections(t_tok *ltok)
 		{
 			if (append_next_as_redirection(tmp, nltok) < 0)
 			{
+				pcustom_error("minishell: redirection syntax error\n");
 				free_ltok(ltok);
 				if (nltok)
 					free_ltok(nltok);

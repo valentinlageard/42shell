@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 15:02:37 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:00:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ typedef struct	s_shell {
 	t_cmdg		*cmdg;
 	t_lpid		*lpids;
 	t_var		*env;
+	int			pass;
 	u_char		exit_code;
 }				t_shell;
 
@@ -198,6 +199,7 @@ void	print_ltok(t_tok *tok);
 t_cltok	*new_cltok(t_tok *ltok);
 void	free_cltok(t_cltok *cltok);
 void	free_cltoks(t_cltok *cltoks);
+void	shallow_free_cloks(t_cltok *cltoks);
 int		append_cltok(t_cltok *cltok, t_cltok **cltoks);
 
 // Var utils
