@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:30:04 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 15:12:30 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ t_pstate	*new_pstate(void)
 	pstate->curcmd = NULL;
 	pstate->curcmdg = NULL;
 	return (pstate);
+}
+
+void	free_pstate(t_pstate *ps)
+{
+	if (ps)
+	{
+		if (ps->curcmdg)
+			free_cmdg(ps->curcmdg);
+		if (ps->curcmd)
+			free_cmd(ps->curcmd);
+		free(ps);
+	}
 }
 
 t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
@@ -79,15 +91,15 @@ int	handle_pipe(t_pstate *ps)
 {
 	if (ps->curcmd && ps->curcmdg)
 	{
-		append_cmd(ps->curcmd, &(ps->curcmdg->cmds));
-		ps->curcmd = NULL;
-		return (1);
+		if (ps->tmp->next && tok_is_identifier(ps->tmp->next))
+		{
+			append_cmd(ps->curcmd, &(ps->curcmdg->cmds));
+			ps->curcmd = NULL;
+			return (1);
+		}
 	}
-	else
-	{
-		pcustom_error("minishell: syntax error near unexpected token `|'\n");
-		return (0);
-	}
+	pcustom_error("minishell: syntax error near pipe\n");
+	return (0);
 }
 
 int	handle_input_redirection(t_pstate *ps)
@@ -135,7 +147,7 @@ t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell)
 	{
 		if (!err)
 		{
-			free(ps);
+			free_pstate(ps);
 			return (NULL);
 		}
 		if (tok_is_identifier(ps->tmp))
@@ -150,7 +162,7 @@ t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell)
 	}
 	if (!err)
 	{
-		free(ps);
+		free_pstate(ps);
 		return (NULL);
 	}
 	if (ps->curcmd && ps->curcmdg)

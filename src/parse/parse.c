@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:02:29 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 15:04:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ t_cmdg	*parse_cmdg(t_tok *ltok, t_shell *shell)
 
 	cmdg = NULL;
 	fully_tokenized_ltok = tokenize_cmdg(ltok, shell);
-	print_ltok(fully_tokenized_ltok);
 	cmdg = tok_to_cmdg(fully_tokenized_ltok, shell);
-	print_cmdg(cmdg);
 	free_ltok(fully_tokenized_ltok);
 	return (cmdg);
 }
