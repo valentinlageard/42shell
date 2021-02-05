@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:16 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 13:54:59 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:26:47 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	expand_var(t_tok *tok, int *i, t_shell *shell)
 	if (!val)
 		val = "";
 	nstr_size = *i + ft_strlen(val) + (ft_strlen(tok->str) - j) + 1;
-	nstr = (char *)malloc(sizeof(char) * nstr_size); // TODO : PROTECT
+	if (!(nstr = (char *)malloc(sizeof(char) * nstr_size)))
+		return ;
 	ft_memset(nstr, '\0', nstr_size);
 	ft_memcpy(nstr, tok->str, *i);
 	ft_memcpy(&(nstr[*i]), val, ft_strlen(val));
@@ -52,7 +53,8 @@ void	expand_exit_code(t_tok *tok, int *i, t_shell *shell)
 	str_exit_code = ft_utoa((unsigned)shell->exit_code);
 	str_exit_code_size = ft_strlen(str_exit_code);
 	nstr_size = *i + str_exit_code_size + (tok_str_size - (*i + 2)) + 1;
-	nstr = (char *)malloc(sizeof(char) * nstr_size); // TODO : PROTECT
+	if (!(nstr = (char *)malloc(sizeof(char) * nstr_size)))
+		return ;
 	ft_memset(nstr, '\0', nstr_size);
 	ft_memcpy(nstr, tok->str, *i);
 	ft_memcpy(&(nstr[*i]), str_exit_code, str_exit_code_size);

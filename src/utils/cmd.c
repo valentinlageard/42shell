@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/19 14:59:06 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:23:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ int		appendrealloc_arg(char *arg, t_cmd *cmd)
 		nargs[i] = args[i];
 		i++;
 	}
-	nargs[i] = ft_strdup(arg);
+	if (!(nargs[i] = ft_strdup(arg)))
+	{
+		ft_free_words(nargs);
+		return (-1);
+	}
 	nargs[i + 1] = NULL;
 	free(args);
 	cmd->args = nargs;

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 13:19:37 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:24:48 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,7 @@ t_pstate	*new_pstate(void)
 	pstate->curcmdg = NULL;
 	return (pstate);
 }
-/*
-void	free_pstate(t_pstate *ps)
-{
-	if (ps->tmp)
-		free_tok(ps->tmp);
-	if (ps->curcmd)
-		free_cmd(ps->curcmd);
-	if (ps->curcmdg)
-		free_cmdg(ps->curcmdg);
-	free(ps);
-}
-*/
+
 t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
 {
 	t_cmd	*ncmd;
@@ -43,14 +32,23 @@ t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
 	ncmd = new_cmd();
 	if (!(args = (char **)malloc(sizeof(char *) * 2)))
 		return (NULL);
-	args[0] = ft_strdup(tok->str);
+	if (!(args[0] = ft_strdup(tok->str)))
+	{
+		free_cmd(ncmd);
+		ft_free_words(args);
+		return (NULL);
+	}
 	args[1] = NULL;
 	ncmd->args = args;
 	if (!ft_strlen(args[0]))
 		ncmd->is_valid = 0;
 	if (is_builtin(args[0]))
 	{
-		ncmd->main = ft_strdup(args[0]);
+		if (!(ncmd->main = ft_strdup(args[0])))
+		{
+			free_cmd(ncmd);
+			return (NULL);
+		}
 		ncmd->is_builtin = 1;
 	}
 	else

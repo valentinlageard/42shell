@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:50:17 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 19:44:42 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:24:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ char	**key_val_split(char *var_str)
 		return (NULL);
 	}
 	ft_strlcpy(key_val[0], var_str, i + 1);
-	key_val[1] = ft_strdup(&(var_str[i + 1])); // Check errors !
+	if (!(key_val[1] = ft_strdup(&(var_str[i + 1]))))
+	{
+		free(key_val);
+		return (NULL);
+	}
 	key_val[2] = NULL;
 	return (key_val);
 }
