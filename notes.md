@@ -2,12 +2,10 @@
 
 ## TODO
 
-- SIGINT should quit all commands if several commad groups are given.
+- SIGINT should quit all commands if several command groups are given.
 - Implémenter OLDPWD dans cd
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130, mais à son exit_code à elle.
 - DEBUG : Redirections should work even if stated before the command !
-- Manage all enomem errors : new_, append_, ft_strdup, malloc, realloc, ...
-- Manage errors in tokenization and parsing.
 - Tout mettre à la norme.
 - Remettre -Werror dans le Makefile
 
@@ -16,6 +14,8 @@
 - OPTIONAL : export sans argument ni option imprime les variables dans l'ordre.
 
 ### DONE
+- [x] Manage errors in tokenization and parsing.
+- [x] Manage all enomem errors
 - [x] Single letters are detected as builtin
 - [x] Mettre le prompt sur stderr plutot que stdout
 - [x] Token error si quote unclosed !

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/03 22:19:08 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:58:22 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	exec(t_shell *shell)
 {
 	u_char	exit_code;
 
-	ft_printf("--------BEGIN-EXECUTION--------\n");
 	if (!shell->cmdg)
 		return ;
 	else if (!(cmdg_has_unique_builtin(shell->cmdg)))
@@ -104,6 +103,4 @@ void	exec(t_shell *shell)
 		exit_code = (u_char)exec_unique_builtin(shell->cmdg, shell);
 		shell->exit_code = exit_code;
 	}
-	ft_printf("---------END-EXECUTION---------\n");
-	ft_printf("EXIT CODE : %d\n", shell->exit_code);
 }

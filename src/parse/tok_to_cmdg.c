@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:24:48 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:30:04 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ int	handle_text(t_pstate *ps, t_shell *shell)
 		ps->curcmdg = new_cmdg();
 	if (!(ps->curcmd))
 		ps->curcmd = new_main_cmd(ps->tmp, shell);
-	else
-		appendrealloc_arg(ps->tmp->str, ps->curcmd);
+	else if ((appendrealloc_arg(ps->tmp->str, ps->curcmd)) < 0)
+		return (0);
 	return (1);
 }
 

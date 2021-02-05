@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:00:39 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 14:52:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ typedef struct	s_shell {
 t_shell	*g_shell;
 
 t_shell	*init_shell(char **envp);
-void	repl(t_shell *shell);
 void	setup_signal_handling(void);
 char	*select_binpath(char *cmd, t_shell *shell);
 int		read_line(int fd, char **line_ptr);
