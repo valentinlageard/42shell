@@ -2,19 +2,21 @@
 
 ## TODO
 
-- Mettre le prompt sur stderr plutot que stdout
+- Single letters are detected as builtin
 - Implémenter OLDPWD dans cd
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130, mais à son exit_code à elle.
 - DEBUG : Redirections should work even if stated before the command !
 - Manage all enomem errors : new_, append_, ft_strdup, malloc, realloc, ...
 - Manage errors in tokenization and parsing.
 - Tout mettre à la norme.
+- Remettre -Werror dans le Makefile
 
 - OPTIONAL : `export "zinz"="salut"` should work !
 - OPTIONAL : gérer "~" dans cd
 - OPTIONAL : export sans argument ni option imprime les variables dans l'ordre.
 
 ### DONE
+- [x] Mettre le prompt sur stderr plutot que stdout
 - [x] Token error si quote unclosed !
 - [x] DEBUG : `echo $` prints a random variable...
 - [x] "" should not exit

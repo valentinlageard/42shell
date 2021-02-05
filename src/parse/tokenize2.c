@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 15:23:48 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 20:03:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,20 @@ t_tok	*tokenize_spaces(t_tok *ltok)
 	return (nltok);
 }
 
-void	append_next_as_redirection(t_tok *tmp, t_tok *nltok)
+int	append_next_as_redirection(t_tok *tmp, t_tok *nltok)
 {
 	t_tok	*next;
 
 	next = tmp->next;
 	if (next)
 	{
-		if (tok_is_identifier(next))
+		if (tok_is_identifier(next)){
 			append_tok(new_tok(next->str, tmp->type), &nltok);
-		// TODO : else parse error
+			return (0);
+		}
 	}
-	// TODO : else parse error !
+	pcustom_error("bash: redirection syntax error\n");
+	return (-1);
 }
 
 t_tok	*tokenize_redirections(t_tok *ltok)
@@ -74,7 +76,13 @@ t_tok	*tokenize_redirections(t_tok *ltok)
 	{
 		if (tmp->type == inr || tmp->type == outr || tmp->type == outrapp)
 		{
-			append_next_as_redirection(tmp, nltok);
+			if (append_next_as_redirection(tmp, nltok) < 0)
+			{
+				free_ltok(ltok);
+				if (nltok)
+					free_ltok(nltok);
+				return (NULL);
+			}
 			tmp = tmp->next;
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 15:07:02 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/04 19:53:51 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	repl(t_shell *shell)
 	prompt();
 	while ((read = read_line(0, &line)) >= 0 && line)
 	{
+		ft_printf("line : %s\n", line);
 		ft_printf("#############BEGIN#############\n");
 		ft_printf("==============================\nParsing cltoks...\n");
 		shell->cltoks = parse_cltoks(line);

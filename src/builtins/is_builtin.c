@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:51:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/03 22:22:40 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 12:40:43 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int	is_builtin(char *cmd_str)
 {
-	if (!cmd_str[0])
-		return (0);
-	if (ft_strncmp(cmd_str, "exit", ft_strlen(cmd_str)) == 0)
+	int	c_len;
+
+	c_len = ft_strlen(cmd_str);
+	if (!ft_strncmp(cmd_str, "exit", c_len) && c_len == 4)
 		return (1);
-	else if (ft_strncmp(cmd_str, "env", ft_strlen(cmd_str)) == 0)
+	else if (!ft_strncmp(cmd_str, "env", c_len) && c_len == 3)
 		return (1);
-	else if (ft_strncmp(cmd_str, "export", ft_strlen(cmd_str)) == 0)
+	else if (!ft_strncmp(cmd_str, "export", c_len) && c_len == 6)
 		return (1);
-	else if (ft_strncmp(cmd_str, "unset", ft_strlen(cmd_str)) == 0)
+	else if (!ft_strncmp(cmd_str, "unset", c_len) && c_len == 5)
 		return (1);
-	else if (ft_strncmp(cmd_str, "pwd", ft_strlen(cmd_str)) == 0)
+	else if (!ft_strncmp(cmd_str, "pwd", c_len) && c_len == 3)
 		return (1);
-	else if (ft_strncmp(cmd_str, "echo", ft_strlen(cmd_str)) == 0)
+	else if (!ft_strncmp(cmd_str, "echo", c_len) && c_len == 4)
 		return (1);
-	else if (ft_strncmp(cmd_str, "cd", ft_strlen(cmd_str)) == 0)
+	else if (!ft_strncmp(cmd_str, "cd", c_len) && c_len == 2)
 		return (1);
-	else
-		return (0);
+	return (0);
 }
