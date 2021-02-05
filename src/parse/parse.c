@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 15:04:53 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 20:35:01 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_cltok	*get_cltoks(t_tok *ltok)
 			}
 			else
 			{
-				pcustom_error("minishell: syntax error near unexpected token `;'\n");
+				pcustom_error("minishell: syntax error\n");
 				free_ltok(cur_ltok);
 				free_cltoks(cltoks);
 				return (NULL);

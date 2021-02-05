@@ -6,18 +6,31 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 15:02:30 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 19:43:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	manage_read_error(int read)
+{
+	if (read == 0)
+		pcustom_error("exit\n");
+	if (read < 0)
+	{
+		pcustom_error("minishell: ");
+		perrno();
+		pcustom_error("\n");
+		return (-1);
+	}
+	return (0);
+}
 
 int	repl(t_shell *shell)
 {
 	t_cltok	*cur_cltok;
 	int		read;
 	char	*line;
-	t_cmdg	*cmdg;
 
 	read = 0;
 	line = NULL;
@@ -30,9 +43,8 @@ int	repl(t_shell *shell)
 		free(line);
 		while (cur_cltok)
 		{
-			if (!(cmdg = parse_cmdg(cur_cltok->ltok, shell)))
+			if (!(shell->cmdg = parse_cmdg(cur_cltok->ltok, shell)))
 				shell->pass = 1;
-			shell->cmdg = cmdg;
 			if (!shell->pass)
 				exec(shell);
 			free_cmdg(shell->cmdg);
@@ -41,19 +53,11 @@ int	repl(t_shell *shell)
 		}
 		shallow_free_cloks(shell->cltoks);
 		shell->cltoks = NULL;
-		prompt();
+		if (!shell->pass)
+			prompt();
 	}
 	free(line);
-	if (read == 0)
-		pcustom_error("exit\n");
-	if (read < 0)
-	{
-		pcustom_error("minishell: ");
-		perrno();
-		pcustom_error("\n");
-		return (-1);
-	}
-	return (0);
+	return (manage_read_error(read));
 }
 
 int	main(int argc, char **argv, char **envp)

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:08:48 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/05 20:34:49 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_tok	*tokenize_spaces(t_tok *ltok)
 	return (nltok);
 }
 
-int	append_next_as_redirection(t_tok *tmp, t_tok *nltok)
+int	append_next_as_redirection(t_tok *tmp, t_tok **nltok)
 {
 	t_tok	*next;
 
@@ -58,7 +58,7 @@ int	append_next_as_redirection(t_tok *tmp, t_tok *nltok)
 	{
 		if (tok_is_identifier(next))
 		{
-			append_tok(new_tok(next->str, tmp->type), &nltok);
+			append_tok(new_tok(next->str, tmp->type), nltok);
 			return (0);
 		}
 	}
@@ -76,7 +76,7 @@ t_tok	*tokenize_redirections(t_tok *ltok)
 	{
 		if (tmp->type == inr || tmp->type == outr || tmp->type == outrapp)
 		{
-			if (append_next_as_redirection(tmp, nltok) < 0)
+			if (append_next_as_redirection(tmp, &nltok) < 0)
 			{
 				pcustom_error("minishell: redirection syntax error\n");
 				free_ltok(ltok);
