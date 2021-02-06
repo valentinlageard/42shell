@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 18:04:44 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:30:47 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:43:12 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,41 +23,35 @@ t_cltok	*new_cltok(t_tok *ltok)
 	return (ncltok);
 }
 
-void	free_cltok(t_cltok *cltok)
+void	free_cltok(t_cltok **cltok)
 {
-	if (cltok->ltok)
+	t_cltok	*tmp;
+
+	if (*cltok)
 	{
-		free_ltok(cltok->ltok);
-		cltok->ltok = NULL;
+		tmp = *cltok;
+		if (tmp->ltok)
+			free_ltok(&(tmp->ltok));
+		free(*cltok);
+		*cltok = NULL;
 	}
-	free(cltok);
 }
 
-void	free_cltoks(t_cltok *cltoks)
+void	free_cltoks(t_cltok **cltoks)
 {
 	t_cltok	*tmp;
 	t_cltok	*next;
 
-	tmp = cltoks;
-	while (tmp)
+	if (*cltoks)
 	{
-		next = tmp->next;
-		free_cltok(tmp);
-		tmp = next;
-	}
-}
-
-void	shallow_free_cloks(t_cltok *cltoks)
-{
-	t_cltok	*tmp;
-	t_cltok	*next;
-
-	tmp = cltoks;
-	while (tmp)
-	{
-		next = tmp->next;
-		free(tmp);
-		tmp = next;
+		tmp = *cltoks;
+		while (tmp)
+		{
+			next = tmp->next;
+			free_cltok(&tmp);
+			tmp = next;
+		}
+		*cltoks = NULL;
 	}
 }
 

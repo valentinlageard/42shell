@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 18:03:53 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 18:08:11 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:07:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 t_cltok	*manage_cltok_syntax_error(t_tok **cur_ltok, t_cltok **cltoks)
 {
 	pcustom_error("minishell: syntax error\n");
-	free_ltok(*cur_ltok);
-	free_cltoks(*cltoks);
+	free_ltok(cur_ltok);
+	free_cltoks(cltoks);
 	return (NULL);
 }
 
@@ -58,7 +58,7 @@ t_cltok	*parse_cltoks(char *line)
 	ltok = tokenize_quotes(line);
 	ltok = tokenize_separators(ltok, ";", sep);
 	cltoks = get_cltoks(ltok);
-	free_ltok(ltok);
+	free_ltok(&ltok);
 	if (!cltoks || !cltoks->ltok)
 	{
 		free(cltoks);

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 18:19:27 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:43:23 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ typedef enum	e_tok_type {
 	outr,
 	outrapp
 }				t_tok_type;
+
+typedef struct	s_si {
+	int		start;
+	int		end;
+}				t_si;
 
 typedef struct	s_var {
 	char			*key;
@@ -123,6 +128,7 @@ void	prompt(void);
 // Parsing
 t_cltok	*parse_cltoks(char *line);
 t_cmdg	*parse_cmdg(t_tok *ltok, t_shell *shell);
+void	slice_append_tok(char *line, t_si *si, int type, t_tok **ltok);
 t_tok	*tokenize_quotes(char *line);
 t_tok	*tokenize_separators(t_tok *ltok, char *sep_str, t_tok_type sep_type);
 void	expand_vars(t_tok *ltok, t_shell *shell);
@@ -200,18 +206,18 @@ void	print_outrs(t_outr *outrs);
 // Tokens
 
 t_tok	*new_tok(char *str, t_tok_type type);
-void	free_tok(t_tok *tok);
+void	free_tok(t_tok **tok);
 int		append_tok(t_tok *tok, t_tok **ltok);
-void	free_ltok(t_tok *tok);
+void	free_ltok(t_tok **tok);
 int		tok_is_identifier(t_tok *tok);
 void	print_tok(t_tok *tok);
 void	print_ltok(t_tok *tok);
+t_tok	*copy_ltok(t_tok *ltok);
 
 // Command group tokens
 t_cltok	*new_cltok(t_tok *ltok);
-void	free_cltok(t_cltok *cltok);
-void	free_cltoks(t_cltok *cltoks);
-void	shallow_free_cloks(t_cltok *cltoks);
+void	free_cltok(t_cltok **cltok);
+void	free_cltoks(t_cltok **cltoks);
 int		append_cltok(t_cltok *cltok, t_cltok **cltoks);
 
 // Var utils

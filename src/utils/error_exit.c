@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 16:00:28 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 17:45:57 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:20:12 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	exit_shell(u_char status, t_shell *shell)
 {
-	shallow_free_cloks(shell->cltoks);
-	shell->cltoks = NULL;
+	free_cltoks(&(shell->cltoks));
 	free_cmdg(shell->cmdg);
 	shell->cmdg = NULL;
 	free_lpids(shell->lpids);

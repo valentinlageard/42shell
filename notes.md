@@ -5,10 +5,6 @@
 - DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130, mais à son exit_code à elle.
 - Tout mettre à la norme.
 
-- OPTIONAL : `export "zinz"="salut"` should work !
-- OPTIONAL : gérer "~" dans cd
-- OPTIONAL : export sans argument ni option imprime les variables dans l'ordre.
-
 ### DONE
 - [x] Implémenter OLDPWD dans cd
 - [x] Remettre -Werror dans le Makefile

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 18:03:19 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:43:40 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int		repl(t_shell *shell)
 		free(line);
 		while (cur_cltok)
 			parse_cmdg_and_exec(&cur_cltok, shell);
-		shallow_free_cloks(shell->cltoks);
+		free_cltoks(&(shell->cltoks));
 		if (!shell->pass)
 			prompt();
 	}

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:48 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 13:35:29 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:41:15 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,25 @@ t_tok	*new_tok(char *str, t_tok_type type)
 	return (tok);
 }
 
-void	free_tok(t_tok *tok)
+void	free_tok(t_tok **tok)
 {
-	free(tok->str);
-	free(tok);
-	tok = NULL;
+	t_tok	*tmp;
+
+	if (*tok)
+	{
+		tmp = *tok;
+		if (tmp->str)
+		{
+			free(tmp->str);
+			tmp->str = NULL;
+		}
+		if (tmp)
+		{
+			free(tmp);
+			tmp = NULL;
+		}
+		*tok = NULL;
+	}
 }
 
 int		append_tok(t_tok *tok, t_tok **ltok)
@@ -55,14 +69,35 @@ int		append_tok(t_tok *tok, t_tok **ltok)
 	return (0);
 }
 
-void	free_ltok(t_tok *tok)
+void	free_ltok(t_tok **ltok)
 {
+	t_tok	*tmp;
 	t_tok	*next;
 
-	while (tok)
+	if (*ltok)
 	{
-		next = tok->next;
-		free_tok(tok);
-		tok = next;
+		tmp = *ltok;
+		while (tmp)
+		{
+			next = tmp->next;
+			free_tok(&tmp);
+			tmp = next;
+		}
+		*ltok = NULL;
 	}
+}
+
+t_tok	*copy_ltok(t_tok *ltok)
+{
+	t_tok	*nltok;
+	t_tok	*tmp;
+
+	nltok = NULL;
+	tmp = ltok;
+	while (tmp)
+	{
+		append_tok(new_tok(tmp->str, tmp->type), &nltok);
+		tmp = tmp->next;
+	}
+	return (nltok);
 }

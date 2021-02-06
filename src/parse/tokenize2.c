@@ -6,11 +6,20 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:40:51 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:00:43 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	slice_append_tok(char *line, t_si *si, int type, t_tok **ltok)
+{
+	char	*tok_str;
+
+	tok_str = ft_strslice(line, si->start, si->end);
+	append_tok(new_tok(tok_str, type), ltok);
+	free(tok_str);
+}
 
 void	split_by_spaces(t_tok *tok, t_tok **nltok)
 {
@@ -45,7 +54,7 @@ t_tok	*tokenize_spaces(t_tok *ltok)
 			append_tok(new_tok(tmp->str, tmp->type), &nltok);
 		tmp = tmp->next;
 	}
-	free_ltok(ltok);
+	free_ltok(&ltok);
 	return (nltok);
 }
 
@@ -79,9 +88,9 @@ t_tok	*tokenize_redirections(t_tok *ltok)
 			if (append_next_as_redirection(tmp, &nltok) < 0)
 			{
 				pcustom_error("minishell: redirection syntax error\n");
-				free_ltok(ltok);
+				free_ltok(&ltok);
 				if (nltok)
-					free_ltok(nltok);
+					free_ltok(&nltok);
 				return (NULL);
 			}
 			tmp = tmp->next;
@@ -90,6 +99,6 @@ t_tok	*tokenize_redirections(t_tok *ltok)
 			append_tok(new_tok(tmp->str, tmp->type), &nltok);
 		tmp = tmp->next;
 	}
-	free_ltok(ltok);
+	free_ltok(&ltok);
 	return (nltok);
 }
