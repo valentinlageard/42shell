@@ -6,6 +6,8 @@
 - Tout mettre à la norme.
 
 ### DONE
+- [x] DEBUG : SIGINT should not prompt if during execution !
+- [x] lines filled with spaces don't prompt :( as well as lines finishing with ;
 - [x] Implémenter OLDPWD dans cd
 - [x] Remettre -Werror dans le Makefile
 - [x] SIGINT should quit all commands if several command groups are given.

@@ -6,13 +6,14 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/04 15:01:46 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 15:02:53 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:51:17 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt(void)
+int	prompt(void)
 {
 	write(2, "$> ", 3);
+	return (1);
 }

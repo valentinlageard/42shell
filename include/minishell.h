@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 20:43:23 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:54:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct	s_lpid {
 }				t_lpid;
 
 typedef struct	s_shell {
+	int				is_executing;
 	t_cltok			*cltoks;
 	t_cmdg			*cmdg;
 	t_lpid			*lpids;
@@ -123,7 +124,7 @@ void	setup_signal_handling(void);
 char	*select_binpath(char *cmd, t_shell *shell);
 int		mng_read_err(int read_err, char **line);
 int		read_line(int fd, char **line_ptr);
-void	prompt(void);
+int		prompt(void);
 
 // Parsing
 t_cltok	*parse_cltoks(char *line);

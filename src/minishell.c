@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 20:43:40 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 20:55:25 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ void	parse_cmdg_and_exec(t_cltok **cur_cltok, t_shell *shell)
 	if (!(shell->cmdg = parse_cmdg((*cur_cltok)->ltok, shell)))
 		shell->pass = 1;
 	if (!shell->pass)
+	{
+		shell->is_executing = 1;
 		exec(shell);
+		shell->is_executing = 0;
+	}
 	free_cmdg(shell->cmdg);
 	shell->cmdg = NULL;
 	*cur_cltok = (*cur_cltok)->next;
@@ -51,8 +55,7 @@ int		repl(t_shell *shell)
 
 	read = 0;
 	line = NULL;
-	prompt();
-	while ((read = read_line(0, &line)) >= 0 && line)
+	while (prompt() && (read = read_line(0, &line)) >= 0 && line)
 	{
 		reinit_shell(shell);
 		shell->cltoks = parse_cltoks(line);
@@ -61,8 +64,6 @@ int		repl(t_shell *shell)
 		while (cur_cltok)
 			parse_cmdg_and_exec(&cur_cltok, shell);
 		free_cltoks(&(shell->cltoks));
-		if (!shell->pass)
-			prompt();
 	}
 	free(line);
 	return (manage_read_error(read));
