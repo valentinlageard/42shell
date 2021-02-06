@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/03 00:34:48 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:30:18 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 void	update_pwd(t_shell *shell)
 {
 	char	*path;
+	char	*old_path;
 
 	if ((path = getcwd(NULL, 0)))
 	{
+		if ((old_path = get_envval("PWD", shell->env)))
+		{
+			if (!change_value_var("OLDPWD", old_path, &shell->env))
+				append_var(new_var("OLDPWD", old_path), &shell->env);
+		}
 		if (!change_value_var("PWD", path, &shell->env))
 			append_var(new_var("PWD", path), &shell->env);
 		free(path);
