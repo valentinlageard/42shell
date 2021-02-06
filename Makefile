@@ -34,7 +34,7 @@ SRC			=	src/minishell.c \
 
 OBJS		=	$(SRC:.c=.o)
 
-FLAGS		=	-Wall -Wextra # -Werror
+FLAGS		=	-Wall -Wextra -Werror
 CC			=	gcc $(FLAGS)
 
 all:		$(NAME)

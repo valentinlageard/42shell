@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:52:44 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 14:47:03 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void	restore_cur_out(int fd, t_fds *fds);
 int		select_first(t_cmdg *cmdg, t_fds *fds);
 int		select_last(t_cmdg *cmdg, t_fds *fds);
 void	update_inout(t_cmd *cmd, t_fds *fds);
+void	error_close_fds(t_fds *fds);
 
 // lpids
 t_lpid	*new_lpid(pid_t pid);

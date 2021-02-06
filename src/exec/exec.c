@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:58:22 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 14:47:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
 		exit_code = exec_builtin(curcmd, shell);
 		restore_parent_inout(&fds);
 	}
+	else
+		error_close_fds(&fds);
 	return (exit_code);
 }
 
@@ -70,7 +72,10 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 	t_cmd	*curcmd;
 
 	if ((setup_fds(&fds, curcmdg)) < 0)
+	{
+		error_close_fds(&fds);
 		return ;
+	}
 	curcmd = curcmdg->cmds;
 	while (curcmd)
 	{
@@ -94,7 +99,7 @@ void	exec(t_shell *shell)
 {
 	u_char	exit_code;
 
-	if (!shell->cmdg)
+	if (!shell->cmdg || !shell->cmdg->cmds)
 		return ;
 	else if (!(cmdg_has_unique_builtin(shell->cmdg)))
 		exec_cmdg(shell->cmdg, shell);
