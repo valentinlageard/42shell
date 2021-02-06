@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:15:55 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 20:35:01 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:13:45 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ t_cltok	*parse_cltoks(char *line)
 	ltok = tokenize_separators(ltok, ";", sep);
 	cltoks = get_cltoks(ltok);
 	free_ltok(ltok);
+	if (!cltoks || !cltoks->ltok)
+	{
+		free(cltoks);
+		return (NULL);
+	}
 	return (cltoks);
 }
 

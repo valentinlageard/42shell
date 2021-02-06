@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 18:04:44 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:00:21 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:08:09 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,27 @@ void	free_cltoks(t_cltok *cltoks)
 		next = tmp->next;
 		free_cltok(tmp);
 		tmp = next;
+	}
+}
+
+void print_cltoks(t_cltok *cltoks)
+{
+	t_cltok *tmp;
+
+	if (cltoks)
+	{
+		tmp = cltoks;
+		while (tmp)
+		{
+			ft_printf("cltok : [%p]\n", tmp);
+			ft_printf("\tltok : \n");
+			if (tmp->ltok)
+				print_ltok(tmp->ltok);
+			else
+				ft_printf("EMPTY\n");
+			ft_printf("next : [%p]\n", tmp->next);
+			tmp = tmp->next;
+		}
 	}
 }
 
