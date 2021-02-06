@@ -2,10 +2,10 @@
 
 ## TODO
 
-- DEBUG : Faire en sorte que si on interrompt un pipe mais que la dernière commande n'a pas été interrompue (car déjà terminée), alors l'exit code n'est pas changé à 130, mais à son exit_code à elle.
-- Tout mettre à la norme.
+- [ ] Normer l'include
 
 ### DONE
+- [x] Tout mettre à la norme.
 - [x] DEBUG : SIGINT should not prompt if during execution !
 - [x] lines filled with spaces don't prompt :( as well as lines finishing with ;
 - [x] Implémenter OLDPWD dans cd
