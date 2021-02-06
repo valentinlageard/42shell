@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 17:57:05 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 18:19:27 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ int		handle_text(t_pstate *ps, t_shell *shell);
 int		handle_pipe(t_pstate *ps);
 int		handle_input_redirection(t_pstate *ps);
 int		handle_output_redirection(t_pstate *ps);
+t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell);
 t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell);
 
 // Execution

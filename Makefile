@@ -1,11 +1,13 @@
 LIBFT		=	libft/libft.a
 NAME		=	minishell
 SRC			=	src/minishell.c \
-				src/parse/parse.c \
+				src/parse/parse_cmdg.c \
+				src/parse/parse_cltoks.c \
 				src/parse/expand_vars.c \
 				src/parse/cltok.c \
 				src/parse/tok_to_cmdg.c \
 				src/parse/tok_to_cmdg_handlers.c \
+				src/parse/tok_to_cmdg_new_main.c \
 				src/parse/tok.c \
 				src/parse/tok_utils.c \
 				src/parse/tokenize.c \

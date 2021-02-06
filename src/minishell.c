@@ -6,13 +6,13 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 18:00:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 18:03:19 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	manage_read_error(int read)
+int		manage_read_error(int read)
 {
 	if (read == 0)
 		pcustom_error("exit\n");
@@ -43,7 +43,7 @@ void	parse_cmdg_and_exec(t_cltok **cur_cltok, t_shell *shell)
 	*cur_cltok = (*cur_cltok)->next;
 }
 
-int	repl(t_shell *shell)
+int		repl(t_shell *shell)
 {
 	t_cltok	*cur_cltok;
 	int		read;
@@ -68,7 +68,7 @@ int	repl(t_shell *shell)
 	return (manage_read_error(read));
 }
 
-int	main(int argc, char **argv, char **envp)
+int		main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
 
