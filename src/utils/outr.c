@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:38:49 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 14:38:49 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:36:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ void	print_outrs(t_outr *outrs)
 		tmp = outrs;
 		while (tmp)
 		{
-			ft_printf("\t\toutr->PATH : %s | IS_APPEND : %i\n", tmp->path, tmp->is_append);
+			ft_printf("\t\toutr->PATH : %s | IS_APPEND : %i\n",
+				tmp->path, tmp->is_append);
 			tmp = tmp->next;
 		}
 	}

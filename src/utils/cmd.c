@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:23:16 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:47:17 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,58 +64,26 @@ int		appendrealloc_arg(char *arg, t_cmd *cmd)
 {
 	int		i;
 	int		len_args;
-	char	**args;
 	char	**nargs;
 
 	i = 0;
 	len_args = 0;
-	args = cmd->args;
-	while (args[len_args])
+	while (cmd->args[len_args])
 		len_args++;
 	if (!(nargs = (char **)malloc(sizeof(char *) * (len_args + 2))))
 		return (-1);
 	while (i < len_args)
 	{
-		nargs[i] = args[i];
+		nargs[i] = cmd->args[i];
 		i++;
 	}
 	if (!(nargs[i] = ft_strdup(arg)))
 	{
-		ft_free_words(nargs);
+		free(nargs);
 		return (-1);
 	}
 	nargs[i + 1] = NULL;
-	free(args);
+	free(cmd->args);
 	cmd->args = nargs;
 	return (0);
-}
-
-void	print_cmd(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("\tCMD : %s [%p]\n", cmd->main, cmd);
-	ft_printf("\tARGS :\n");
-	while ((cmd->args)[i])
-	{
-		ft_printf("\t- args[%d] : %s\n", i, (cmd->args)[i]);
-		i++;
-	}
-	ft_printf("\tIS_VALID : %d\n", cmd->is_valid);
-	ft_printf("\tIS_BUILTIN : %d\n", cmd->is_builtin);
-	ft_printf("\tNEXT : [%p]\n", cmd->next);
-}
-
-void	print_cmds(t_cmd *cmds)
-{
-	t_cmd	*tmp;
-
-	tmp = cmds;
-	while (tmp)
-	{
-		ft_printf("\t---------------------------\n");
-		print_cmd(tmp);
-		tmp = tmp->next;
-	}
 }

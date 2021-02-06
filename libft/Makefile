@@ -53,7 +53,6 @@ SRC			=	ft_atoi.c \
 				ft_utoabase.c \
 				ft_ultoabase.c \
 				ft_abs.c \
-				ft_get_next_line.c \
 				ft_atof.c \
 				ft_free_words.c \
 				ft_wlen.c \

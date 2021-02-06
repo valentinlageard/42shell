@@ -6,7 +6,7 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/11 21:08:46 by vlageard          #+#    #+#             */
-/*   Updated: 2021/02/01 17:40:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:38:16 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 # include <string.h>
 # include "ft_printf/ft_printf.h"
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
-# endif
 
 typedef struct	s_list
 {

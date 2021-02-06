@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/30 15:05:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 15:35:56 by valentin         ###   ########.fr       */
+/*   Created: 2021/02/06 15:39:22 by valentin          #+#    #+#             */
+/*   Updated: 2021/02/06 15:43:39 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_shell	*init_shell(char **envp)
+void	free_env(t_var *env)
 {
-	t_shell	*shell;
+	t_var	*tmp;
+	t_var	*next;
 
-	if (!(shell = (t_shell *)malloc(sizeof(t_shell))))
-		return (NULL);
-	shell->cltoks = NULL;
-	shell->cmdg = NULL;
-	shell->lpids = NULL;
-	shell->env = wenvtoenv(envp);
-	shell->pass = 0;
-	shell->exit_code = 0;
-	update_pwd(shell);
-	return (shell);
+	tmp = env;
+	while (tmp)
+	{
+		next = tmp->next;
+		free_var(tmp);
+		tmp = next;
+	}
+	env = NULL;
+}
+
+void	print_env(t_var *env)
+{
+	while (env)
+	{
+		ft_printf("%s=%s\n", env->key, env->value);
+		env = env->next;
+	}
 }

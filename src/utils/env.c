@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:50:17 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:24:24 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:41:50 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,11 @@ t_var	*wenvtoenv(char **wenv)
 	env = NULL;
 	while (wenv[i])
 	{
-		split = key_val_split(wenv[i]); // TODO : check errors !
+		if (!(split = key_val_split(wenv[i])))
+		{
+			pcustom_error("minishell: env conversion error\n");
+			continue ;
+		}
 		var = new_var(split[0], split[1]);
 		ft_free_words(split);
 		append_var(var, &env);
@@ -111,28 +115,4 @@ char	*get_envval(char *key, t_var *env)
 		env = env->next;
 	}
 	return (NULL);
-}
-
-void	free_env(t_var *env)
-{
-	t_var	*tmp;
-	t_var	*next;
-
-	tmp = env;
-	while (tmp)
-	{
-		next = tmp->next;
-		free_var(tmp);
-		tmp = next;
-	}
-	env = NULL;
-}
-
-void	print_env(t_var *env)
-{
-	while (env)
-	{
-		ft_printf("%s=%s\n", env->key, env->value);
-		env = env->next;
-	}
 }

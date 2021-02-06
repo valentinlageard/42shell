@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/01 23:06:52 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:37:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,6 @@
 #include <errno.h>
 #include <unistd.h>
 #include <stdio.h>
-
-/*
-** ft_read_line
-** Parameters :
-** 		- int fd : the file descriptor of the file / stream to read
-** 		- char **line_ptr : a string parameter output to store the line read
-** Returns :
-** 		- If successful, it returns 0 and **line points to an allocated string
-** 		containing the read line with \n or EOF replaced by \0.
-** 		- If unsuccessful, it returns -1, frees internally allocated memory and
-** 		sets line to NULL.
-** Notes :
-** 		- ft_read_line reads the file / stream character by character but
-** 		allocates BUFFER_SIZE by BUFFER_SIZE.
-** 		- It returns whenever a \n or a EOF is encountered.
-*/
 
 /*
 ** read_line

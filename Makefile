@@ -21,8 +21,10 @@ SRC			=	src/minishell.c \
 				src/builtins/path_builtins.c \
 				src/utils/binpath.c \
 				src/utils/cmd.c \
+				src/utils/cmd2.c \
 				src/utils/cmdg.c \
 				src/utils/env.c \
+				src/utils/env2.c \
 				src/utils/error_exit.c \
 				src/utils/init.c \
 				src/utils/inr.c \

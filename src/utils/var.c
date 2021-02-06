@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 14:12:07 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/15 16:25:08 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 15:36:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ void	append_var(t_var *var, t_var **env)
 	}
 }
 
-/* Returns 1 if value was changed, 0 if key doesn't exists and -1 if an error occured */
-
-int	change_value_var(char *key, char *new_value, t_var **env)
+int		change_value_var(char *key, char *new_value, t_var **env)
 {
 	t_var	*tmp;
 	int		key_len;
