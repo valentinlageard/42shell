@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:12 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/29 17:23:36 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:40:15 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	predir_error(char *path)
 	perrno();
 	pcustom_error("\n");
 }
+
 
 int		select_first(t_cmdg *cmdg, t_fds *fds)
 {

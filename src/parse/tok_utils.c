@@ -6,13 +6,13 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 15:15:19 by valentin          #+#    #+#             */
-/*   Updated: 2021/01/31 16:23:27 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:32:25 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	tok_is_identifier(t_tok *tok)
+int		tok_is_identifier(t_tok *tok)
 {
 	if (tok->type == txt || tok->type == squo || tok->type == dquo)
 		return (1);
@@ -20,12 +20,13 @@ int	tok_is_identifier(t_tok *tok)
 		return (0);
 }
 
-void print_tok(t_tok *tok)
+void	print_tok(t_tok *tok)
 {
-	ft_printf("TOKEN : [%p] | STR : \"%s\" | TYPE : %i | NEXT : [%p]\n", tok, tok->str, tok->type, tok->next);
+	ft_printf("TOKEN : [%p] | STR : \"%s\" | TYPE : %i | NEXT : [%p]\n",
+		tok, tok->str, tok->type, tok->next);
 }
 
-void print_ltok(t_tok *tok)
+void	print_ltok(t_tok *tok)
 {
 	t_tok	*tmp;
 

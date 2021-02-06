@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 15:38:23 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:38:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,12 @@ void	expand_vars(t_tok *ltok, t_shell *shell);
 t_tok	*tokenize_spaces(t_tok *ltok);
 t_tok	*tokenize_redirections(t_tok *ltok);
 t_cmd	*tok_to_cmds(t_tok *ltok, t_shell *shell);
+t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell);
+void	update_cmdg(t_pstate *ps);
+int		handle_text(t_pstate *ps, t_shell *shell);
+int		handle_pipe(t_pstate *ps);
+int		handle_input_redirection(t_pstate *ps);
+int		handle_output_redirection(t_pstate *ps);
 t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell);
 void 	print_cltoks(t_cltok *cltoks);
 

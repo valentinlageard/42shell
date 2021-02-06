@@ -6,13 +6,13 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:16:30 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/04 13:34:01 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:22:56 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	exec_builtin(t_cmd *cmd, t_shell *shell)
+int		exec_builtin(t_cmd *cmd, t_shell *shell)
 {
 	int	exit_code;
 

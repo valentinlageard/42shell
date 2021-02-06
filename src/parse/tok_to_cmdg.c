@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:36 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 14:03:57 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:41:10 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_pstate	*new_pstate(void)
 	return (pstate);
 }
 
-void	free_pstate(t_pstate *ps)
+void		free_pstate(t_pstate *ps)
 {
 	if (ps)
 	{
@@ -36,7 +36,7 @@ void	free_pstate(t_pstate *ps)
 	}
 }
 
-t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
+t_cmd		*new_main_cmd(t_tok *tok, t_shell *shell)
 {
 	t_cmd	*ncmd;
 	char	**args;
@@ -70,71 +70,13 @@ t_cmd	*new_main_cmd(t_tok *tok, t_shell *shell)
 	return (ncmd);
 }
 
-void	update_cmdg(t_pstate *ps)
+void		update_cmdg(t_pstate *ps)
 {
 	append_cmd(ps->curcmd, &(ps->curcmdg->cmds));
 	ps->curcmd = NULL;
 }
 
-int	handle_text(t_pstate *ps, t_shell *shell)
-{
-	if (!(ps->curcmdg))
-		ps->curcmdg = new_cmdg();
-	if (!(ps->curcmd))
-		ps->curcmd = new_main_cmd(ps->tmp, shell);
-	else if ((appendrealloc_arg(ps->tmp->str, ps->curcmd)) < 0)
-		return (0);
-	return (1);
-}
-
-int	handle_pipe(t_pstate *ps)
-{
-	if (ps->curcmd && ps->curcmdg)
-	{
-		if (ps->tmp->next && tok_is_identifier(ps->tmp->next))
-		{
-			append_cmd(ps->curcmd, &(ps->curcmdg->cmds));
-			ps->curcmd = NULL;
-			return (1);
-		}
-	}
-	pcustom_error("minishell: syntax error near pipe\n");
-	return (0);
-}
-
-int	handle_input_redirection(t_pstate *ps)
-{
-	t_inr	*new_in_redir;
-
-	if (!(ps->curcmdg))
-		ps->curcmdg = new_cmdg();
-	if (!(new_in_redir = new_inr(ps->tmp->str)))
-		return (0);
-	append_inr(new_in_redir, &(ps->curcmdg->in_redirs));
-	return (1);
-}
-
-int		handle_output_redirection(t_pstate *ps)
-{
-	t_outr	*new_out_redir;
-
-	if (!(ps->curcmdg))
-		ps->curcmdg = new_cmdg();
-	if (ps->tmp->type == outr)
-	{
-		if (!(new_out_redir = new_outr(ps->tmp->str, 0)))
-			return (0);
-	}
-	else
-	{
-		if (!(new_out_redir = new_outr(ps->tmp->str, 1)))
-			return (0);
-	}
-	append_outr(new_out_redir, &(ps->curcmdg->out_redirs));
-	return (1);
-}
-
-t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell)
+t_cmdg		*tok_to_cmdg(t_tok *ltok, t_shell *shell)
 {
 	t_pstate	*ps;
 	t_cmdg		*cmdg;

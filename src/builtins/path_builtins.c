@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 15:30:18 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:17:34 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	update_pwd(t_shell *shell)
 	}
 }
 
-int	builtin_pwd(void)
+int		builtin_pwd(void)
 {
 	char	*path;
 
@@ -73,7 +73,7 @@ char	*get_cd_path(t_cmd *cmd, t_shell *shell)
 	return (path);
 }
 
-int	builtin_cd(t_cmd *cmd, t_shell *shell)
+int		builtin_cd(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
 

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/31 18:04:44 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 15:08:09 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:30:47 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,6 @@ void	free_cltoks(t_cltok *cltoks)
 	}
 }
 
-void print_cltoks(t_cltok *cltoks)
-{
-	t_cltok *tmp;
-
-	if (cltoks)
-	{
-		tmp = cltoks;
-		while (tmp)
-		{
-			ft_printf("cltok : [%p]\n", tmp);
-			ft_printf("\tltok : \n");
-			if (tmp->ltok)
-				print_ltok(tmp->ltok);
-			else
-				ft_printf("EMPTY\n");
-			ft_printf("next : [%p]\n", tmp->next);
-			tmp = tmp->next;
-		}
-	}
-}
-
 void	shallow_free_cloks(t_cltok *cltoks)
 {
 	t_cltok	*tmp;
@@ -82,8 +61,7 @@ void	shallow_free_cloks(t_cltok *cltoks)
 	}
 }
 
-
-int	append_cltok(t_cltok *cltok, t_cltok **cltoks)
+int		append_cltok(t_cltok *cltok, t_cltok **cltoks)
 {
 	t_cltok	*tmp;
 

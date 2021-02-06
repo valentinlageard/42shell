@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:51:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/02 21:40:33 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:22:23 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		check_echo_args(t_cmd *cmd, int *i)
 	return (print_new_line);
 }
 
-int	builtin_echo(t_cmd *cmd)
+int		builtin_echo(t_cmd *cmd)
 {
 	int		i;
 	int		first_printable_arg;
@@ -71,7 +71,7 @@ int		is_arg_digit(char *str)
 	return (1);
 }
 
-int	builtin_exit(t_cmd *cmd, t_shell *shell)
+int		builtin_exit(t_cmd *cmd, t_shell *shell)
 {
 	u_char	exit_code;
 	uint	args_num;
@@ -81,10 +81,10 @@ int	builtin_exit(t_cmd *cmd, t_shell *shell)
 	if (args_num == 1)
 		exit_shell(shell->exit_code, shell);
 	if (args_num > 2)
-		pcustom_error("minishell: exit: too many arguments\n"); // Returns exit code = 1
+		pcustom_error("minishell: exit: too many arguments\n");
 	else if (args_num == 2)
 	{
-		if (!(is_arg_digit(cmd->args[1])) || ft_strlen(cmd->args[1]) > 17)
+		if (!(is_arg_digit(cmd->args[1])))
 		{
 			pcustom_error("minishell: exit: ");
 			pcustom_error(cmd->args[1]);
@@ -95,5 +95,5 @@ int	builtin_exit(t_cmd *cmd, t_shell *shell)
 			exit_code = (u_char)ft_atoi(cmd->args[1]);
 		exit_shell(exit_code, shell);
 	}
-	return (0);
+	return (1);
 }

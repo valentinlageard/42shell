@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:16 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 14:26:47 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:34:37 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	expand_var(t_tok *tok, int *i, t_shell *shell)
 	j = *i + 1;
 	while ((ft_isalnum(tok->str[j])) || tok->str[j] == '_')
 		j++;
-	slice = ft_strslice(tok->str, *i + 1, j); // Protect
+	slice = ft_strslice(tok->str, *i + 1, j);
 	val = get_envval(slice, shell->env);
 	free(slice);
 	if (!val)
@@ -58,7 +58,8 @@ void	expand_exit_code(t_tok *tok, int *i, t_shell *shell)
 	ft_memset(nstr, '\0', nstr_size);
 	ft_memcpy(nstr, tok->str, *i);
 	ft_memcpy(&(nstr[*i]), str_exit_code, str_exit_code_size);
-	ft_memcpy(&(nstr[*i + str_exit_code_size]), &(tok->str[*i + 2]), tok_str_size - (*i + 2));
+	ft_memcpy(&(nstr[*i + str_exit_code_size]), &(tok->str[*i + 2]),
+		tok_str_size - (*i + 2));
 	free(tok->str);
 	tok->str = nstr;
 	*i = *i - 1 + str_exit_code_size;

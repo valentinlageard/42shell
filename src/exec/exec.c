@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 14:47:53 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:26:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		setup_fds(t_fds *fds, t_cmdg *curcmdg)
 	return (0);
 }
 
-int	exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
+int		exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
 {
 	int		exit_code;
 	t_fds	fds;
@@ -63,6 +63,8 @@ void	wait_and_process_children(t_cmdg *cmdg, t_shell *shell)
 				shell->exit_code = WEXITSTATUS(status);
 		}
 	}
+	free_lpids(shell->lpids);
+	shell->lpids = NULL;
 }
 
 void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
@@ -91,8 +93,6 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 	}
 	restore_parent_inout(&fds);
 	wait_and_process_children(curcmdg, shell);
-	free_lpids(shell->lpids);
-	shell->lpids = NULL;
 }
 
 void	exec(t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:50:17 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 15:41:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:34:08 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ char	*get_envval(char *key, t_var *env)
 {
 	int		key_len;
 
+	if (!key)
+		return (NULL);
 	key_len = ft_strlen(key);
 	while (env)
 	{

@@ -5,6 +5,7 @@ SRC			=	src/minishell.c \
 				src/parse/expand_vars.c \
 				src/parse/cltok.c \
 				src/parse/tok_to_cmdg.c \
+				src/parse/tok_to_cmdg_handlers.c \
 				src/parse/tok.c \
 				src/parse/tok_utils.c \
 				src/parse/tokenize.c \
@@ -14,6 +15,7 @@ SRC			=	src/minishell.c \
 				src/exec/exec_utils.c \
 				src/exec/fd_utils.c \
 				src/exec/fd_utils2.c \
+				src/exec/fd_utils_error.c \
 				src/exec/lpid.c \
 				src/builtins/env_builtins.c \
 				src/builtins/is_builtin.c \

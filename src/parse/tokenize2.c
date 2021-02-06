@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/05 20:34:49 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 16:40:51 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_tok	*tokenize_spaces(t_tok *ltok)
 	return (nltok);
 }
 
-int	append_next_as_redirection(t_tok *tmp, t_tok **nltok)
+int		append_next_as_redirection(t_tok *tmp, t_tok **nltok)
 {
 	t_tok	*next;
 
