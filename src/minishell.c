@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 15:14:16 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 18:00:50 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,23 @@ int	manage_read_error(int read)
 	return (0);
 }
 
+void	reinit_shell(t_shell *shell)
+{
+	shell->pass = 0;
+	shell->cltoks = NULL;
+}
+
+void	parse_cmdg_and_exec(t_cltok **cur_cltok, t_shell *shell)
+{
+	if (!(shell->cmdg = parse_cmdg((*cur_cltok)->ltok, shell)))
+		shell->pass = 1;
+	if (!shell->pass)
+		exec(shell);
+	free_cmdg(shell->cmdg);
+	shell->cmdg = NULL;
+	*cur_cltok = (*cur_cltok)->next;
+}
+
 int	repl(t_shell *shell)
 {
 	t_cltok	*cur_cltok;
@@ -37,22 +54,13 @@ int	repl(t_shell *shell)
 	prompt();
 	while ((read = read_line(0, &line)) >= 0 && line)
 	{
-		shell->pass = 0;
+		reinit_shell(shell);
 		shell->cltoks = parse_cltoks(line);
 		cur_cltok = shell->cltoks;
 		free(line);
 		while (cur_cltok)
-		{
-			if (!(shell->cmdg = parse_cmdg(cur_cltok->ltok, shell)))
-				shell->pass = 1;
-			if (!shell->pass)
-				exec(shell);
-			free_cmdg(shell->cmdg);
-			shell->cmdg = NULL;
-			cur_cltok = cur_cltok->next;
-		}
+			parse_cmdg_and_exec(&cur_cltok, shell);
 		shallow_free_cloks(shell->cltoks);
-		shell->cltoks = NULL;
 		if (!shell->pass)
 			prompt();
 	}

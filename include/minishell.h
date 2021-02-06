@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 17:38:14 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 17:57:05 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,6 @@ int		handle_pipe(t_pstate *ps);
 int		handle_input_redirection(t_pstate *ps);
 int		handle_output_redirection(t_pstate *ps);
 t_cmdg	*tok_to_cmdg(t_tok *ltok, t_shell *shell);
-void 	print_cltoks(t_cltok *cltoks);
-
 
 // Execution
 void	exec(t_shell *shell);
