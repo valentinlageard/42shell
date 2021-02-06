@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   read_line2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/27 16:10:17 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 17:17:25 by valentin         ###   ########.fr       */
+/*   Created: 2021/02/06 17:36:55 by valentin          #+#    #+#             */
+/*   Updated: 2021/02/06 17:37:55 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "minishell.h"
 
-void	*ft_realloc(void *ptr, size_t new_size, size_t old_size)
+int	mng_read_err(int read_err, char **line)
 {
-	void	*new_ptr;
-
-	new_ptr = NULL;
-	if (new_size > 0)
+	if (read_err < 0)
 	{
-		if (!(new_ptr = malloc(new_size)))
-			return (NULL);
+		free(*line);
+		*line = NULL;
+		return (errno);
 	}
-	if (ptr)
-	{
-		new_ptr = ft_memcpy(new_ptr, ptr, old_size);
-		free(ptr);
-	}
-	return (new_ptr);
+	return (0);
 }

@@ -34,6 +34,7 @@ SRC			=	src/minishell.c \
 				src/utils/prompt.c \
 				src/utils/signal_handling.c \
 				src/utils/read_line.c \
+				src/utils/read_line2.c \
 				src/utils/var.c
 
 OBJS		=	$(SRC:.c=.o)

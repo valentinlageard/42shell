@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:38:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/06 17:38:14 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ t_shell	*g_shell;
 t_shell	*init_shell(char **envp);
 void	setup_signal_handling(void);
 char	*select_binpath(char *cmd, t_shell *shell);
+int		mng_read_err(int read_err, char **line);
 int		read_line(int fd, char **line_ptr);
 void	prompt(void);
 
