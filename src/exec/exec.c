@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:26:21 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/07 16:53:10 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 	t_fds	fds;
 	t_cmd	*curcmd;
 
-	if ((setup_fds(&fds, curcmdg)) < 0)
+	if ((setup_fds(&fds, curcmdg)) < 0 || !curcmdg->cmds)
 	{
 		error_close_fds(&fds);
 		return ;
@@ -99,8 +99,11 @@ void	exec(t_shell *shell)
 {
 	u_char	exit_code;
 
-	if (!shell->cmdg || !shell->cmdg->cmds)
+	if (!shell->cmdg)
 		return ;
+	else if (!shell->cmdg->cmds &&
+		(shell->cmdg->in_redirs || shell->cmdg->out_redirs))
+		exec_cmdg(shell->cmdg, shell);
 	else if (!(cmdg_has_unique_builtin(shell->cmdg)))
 		exec_cmdg(shell->cmdg, shell);
 	else
