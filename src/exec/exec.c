@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/07 22:36:42 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 19:02:03 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	wait_and_process_children(t_cmdg *cmdg, t_shell *shell)
 			if (WEXITSTATUS(status) == 127)
 			{
 				cmd = get_corresponding_cmd(pid, shell->lpids, cmdg->cmds);
-				perror_command_not_found(cmd);
+				if (!cmd->is_main_path)
+					perror_command_not_found(cmd);
 			}
 			if (pid == get_last_pid(shell->lpids))
 			{

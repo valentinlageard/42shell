@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/01 14:20:19 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 15:47:17 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 19:00:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_cmd	*new_cmd(void)
 	cmd->args = NULL;
 	cmd->is_valid = 1;
 	cmd->is_builtin = 0;
+	cmd->is_main_path = 0;
 	cmd->next = NULL;
 	return (cmd);
 }

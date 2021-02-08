@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 18:18:56 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 18:26:46 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 18:58:42 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int			fill_builtin_or_binpath(char *arg0, t_cmd **ncmd, t_shell *shell)
 		(*ncmd)->is_builtin = 1;
 	}
 	else
-		(*ncmd)->main = select_binpath(arg0, shell);
+		select_binpath(ncmd, arg0, shell);
 	return (0);
 }
 

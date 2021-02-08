@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:44:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:15:26 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 19:15:09 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,19 @@ int		file_exists(char *path)
 {
 	struct stat	buf;
 
-	return (stat(path, &buf) == 0);
+	if (stat(path, &buf) == 0)
+	{
+		if (S_ISDIR(buf.st_mode))
+		{
+			pcustom_error("minishell: ");
+			pcustom_error(path);
+			pcustom_error(": Is a directory\n");
+			return (2);
+		}
+		return (1);
+	}
+	else
+		return (0);
 }
 
 char	*get_binpath(char *cmd, t_shell *shell)
@@ -48,10 +60,25 @@ char	*get_binpath(char *cmd, t_shell *shell)
 	return (bpath);
 }
 
-char	*select_binpath(char *cmd, t_shell *shell)
+void	select_binpath(t_cmd **ncmd, char *cmd_str, t_shell *shell)
 {
-	if (cmd[0] && cmd[0] == '/' && file_exists(cmd))
-		return (ft_strdup(cmd));
+	int	file_type;
+
+	if (cmd_str[0] && (cmd_str[0] == '/' || cmd_str[0] == '.'))
+	{
+		(*ncmd)->is_main_path = 1;
+		file_type = file_exists(cmd_str);
+		if (file_type == 1)
+			(*ncmd)->main = ft_strdup(cmd_str);
+		else if (file_type == 0)
+		{
+			pcustom_error("minishell: ");
+			pcustom_error(cmd_str);
+			pcustom_error(": ");
+			perrno();
+			pcustom_error("\n");
+		}
+	}
 	else
-		return (get_binpath(cmd, shell));
+		(*ncmd)->main = get_binpath(cmd_str, shell);
 }
