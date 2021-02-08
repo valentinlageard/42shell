@@ -6,7 +6,7 @@
 /*   By: vlageard <vlageard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 15:35:45 by vlageard          #+#    #+#             */
-/*   Updated: 2019/11/05 15:42:37 by vlageard         ###   ########.fr       */
+/*   Updated: 2021/02/08 14:42:43 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		j;
 	char	*joined_str;
 
+	if (!s1 || !s2)
+		return (NULL);
 	i = 0;
 	j = 0;
 	if (!(joined_str = (char *)malloc((ft_strlen(s1) +

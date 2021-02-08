@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:47:54 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 20:00:43 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 15:50:20 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,43 +19,6 @@ void	slice_append_tok(char *line, t_si *si, int type, t_tok **ltok)
 	tok_str = ft_strslice(line, si->start, si->end);
 	append_tok(new_tok(tok_str, type), ltok);
 	free(tok_str);
-}
-
-void	split_by_spaces(t_tok *tok, t_tok **nltok)
-{
-	int		i;
-	char	**words;
-
-	i = 0;
-	words = ft_split(tok->str, " \t\n");
-	if (words)
-	{
-		while (words[i])
-		{
-			append_tok(new_tok(words[i], txt), nltok);
-			i++;
-		}
-		ft_free_words(words);
-	}
-}
-
-t_tok	*tokenize_spaces(t_tok *ltok)
-{
-	t_tok	*tmp;
-	t_tok	*nltok;
-
-	tmp = ltok;
-	nltok = NULL;
-	while (tmp)
-	{
-		if (tmp->type == txt)
-			split_by_spaces(tmp, &nltok);
-		else
-			append_tok(new_tok(tmp->str, tmp->type), &nltok);
-		tmp = tmp->next;
-	}
-	free_ltok(&ltok);
-	return (nltok);
 }
 
 int		append_next_as_redirection(t_tok *tmp, t_tok **nltok)

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 18:04:37 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 20:41:44 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 17:00:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,14 @@ t_tok	*tokenize_cmdg(t_tok *ltok, t_shell *shell)
 	nltok = tokenize_separators(nltok, ">>", outrapp);
 	nltok = tokenize_separators(nltok, ">", outr);
 	expand_vars(nltok, shell);
+	ft_printf("BEFORE SPACE TOKENIZATION : \n");
+	print_ltok(nltok);
 	nltok = tokenize_spaces(nltok);
+	ft_printf("BEFORE CONCATENATION : \n");
+	print_ltok(nltok);
+	nltok = concatenate_identifiers(nltok);
+	ft_printf("AFTER CONCATENATION : \n");
+	print_ltok(nltok);
 	nltok = tokenize_redirections(nltok);
 	return (nltok);
 }

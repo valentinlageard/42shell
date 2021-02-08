@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 21:59:02 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 16:40:35 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef struct		s_var {
 typedef struct		s_tok {
 	char			*str;
 	t_tok_type		type;
+	int				is_fchar_sp;
+	int				is_lchar_sp;
+	int				next_was_quote;
 	struct s_tok	*next;
 }					t_tok;
 
@@ -108,6 +111,7 @@ typedef struct		s_lpid {
 }					t_lpid;
 
 typedef struct		s_shell {
+	char			*line;
 	int				is_executing;
 	t_cltok			*cltoks;
 	t_cmdg			*cmdg;
@@ -134,6 +138,7 @@ t_tok				*tokenize_separators(t_tok *ltok, char *sep_str,
 	t_tok_type sep_type);
 void				expand_vars(t_tok *ltok, t_shell *shell);
 t_tok				*tokenize_spaces(t_tok *ltok);
+t_tok				*concatenate_identifiers(t_tok *ltok);
 t_tok				*tokenize_redirections(t_tok *ltok);
 t_cmd				*tok_to_cmds(t_tok *ltok, t_shell *shell);
 t_cmd				*new_main_cmd(t_tok *tok, t_shell *shell);

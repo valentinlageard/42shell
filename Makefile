@@ -12,6 +12,7 @@ SRC			=	src/minishell.c \
 				src/parse/tok_utils.c \
 				src/parse/tokenize.c \
 				src/parse/tokenize2.c \
+				src/parse/tokenize3.c \
 				src/exec/exec.c \
 				src/exec/exec_cmd.c \
 				src/exec/exec_utils.c \

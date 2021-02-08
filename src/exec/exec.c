@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/07 16:53:10 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/07 22:36:42 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,19 @@ int		exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
 	return (exit_code);
 }
 
+void	kill_all_children(t_lpid *lpids)
+{
+	t_lpid	*tmp;
+
+	tmp = lpids;
+	while (tmp)
+	{
+		kill(tmp->pid, SIGQUIT);
+		tmp = tmp->next;
+	}
+	errno = 0;
+}
+
 void	wait_and_process_children(t_cmdg *cmdg, t_shell *shell)
 {
 	pid_t	pid;
@@ -60,7 +73,10 @@ void	wait_and_process_children(t_cmdg *cmdg, t_shell *shell)
 				perror_command_not_found(cmd);
 			}
 			if (pid == get_last_pid(shell->lpids))
+			{
 				shell->exit_code = WEXITSTATUS(status);
+				kill_all_children(shell->lpids);
+			}
 		}
 	}
 	free_lpids(shell->lpids);

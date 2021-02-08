@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/07 16:54:11 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/07 23:12:37 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,21 @@ int		repl(t_shell *shell)
 {
 	t_cltok	*cur_cltok;
 	int		read;
-	char	*line;
 
 	read = 0;
-	line = NULL;
-	while (prompt() && (read = read_line(0, &line)) >= 0 && line)
+	while (prompt() && (read = read_line(0, &(shell->line))) >= 0 && shell->line)
 	{
 		reinit_shell(shell);
-		shell->cltoks = parse_cltoks(line);
+		shell->cltoks = parse_cltoks(shell->line);
 		cur_cltok = shell->cltoks;
-		free(line);
+		free(shell->line);
+		shell->line = NULL;
 		while (cur_cltok)
 			parse_cmdg_and_exec(&cur_cltok, shell);
 		free_cltoks(&(shell->cltoks));
 	}
-	free(line);
+	free(shell->line);
+	shell->line = NULL;
 	return (manage_read_error(read));
 }
 

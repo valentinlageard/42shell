@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 14:48:48 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 20:41:15 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 16:37:27 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ t_tok	*new_tok(char *str, t_tok_type type)
 		return (NULL);
 	}
 	tok->type = type;
+	tok->is_fchar_sp = 1;
+	tok->is_lchar_sp = 1;
+	tok->next_was_quote = 0;
 	tok->next = NULL;
 	return (tok);
 }
