@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:44:06 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/08 19:15:09 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/09 18:11:41 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ void	select_binpath(t_cmd **ncmd, char *cmd_str, t_shell *shell)
 {
 	int	file_type;
 
-	if (cmd_str[0] && (cmd_str[0] == '/' || cmd_str[0] == '.'))
+	if (ft_strlen(cmd_str) == 0)
+		return ;
+	else if (cmd_str[0] == '/' || cmd_str[0] == '.')
 	{
 		(*ncmd)->is_main_path = 1;
 		file_type = file_exists(cmd_str);
