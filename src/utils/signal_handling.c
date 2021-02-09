@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 14:47:02 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/07 23:18:51 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/08 19:59:50 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_signals(int signum)
 	}
 	if (signum == SIGINT)
 	{
-		ft_printf("g_shell->line :%s\n");
+		//ft_printf("g_shell->line :%s\n");
 		free(g_shell->line);
 		g_shell->line = NULL;
 		g_shell->pass = 1;

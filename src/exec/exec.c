@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/08 19:02:03 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/09 17:53:23 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,6 @@ int		exec_unique_builtin(t_cmdg *cmdg, t_shell *shell)
 	return (exit_code);
 }
 
-void	kill_all_children(t_lpid *lpids)
-{
-	t_lpid	*tmp;
-
-	tmp = lpids;
-	while (tmp)
-	{
-		kill(tmp->pid, SIGQUIT);
-		tmp = tmp->next;
-	}
-	errno = 0;
-}
-
 void	wait_and_process_children(t_cmdg *cmdg, t_shell *shell)
 {
 	pid_t	pid;
@@ -74,10 +61,7 @@ void	wait_and_process_children(t_cmdg *cmdg, t_shell *shell)
 					perror_command_not_found(cmd);
 			}
 			if (pid == get_last_pid(shell->lpids))
-			{
 				shell->exit_code = WEXITSTATUS(status);
-				kill_all_children(shell->lpids);
-			}
 		}
 	}
 	free_lpids(shell->lpids);
@@ -105,7 +89,11 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 		if (pid > 0)
 			append_lpid(new_lpid(pid), &(shell->lpids));
 		if (pid == 0)
+		{
+			if (curcmd->next && fds.cur_pipe[0] != -1)
+				close(fds.cur_pipe[0]);
 			exec_cmd(curcmd, shell);
+		}
 		curcmd = curcmd->next;
 	}
 	restore_parent_inout(&fds);
