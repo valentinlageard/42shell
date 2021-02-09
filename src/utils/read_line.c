@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/09 20:52:57 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/09 20:59:42 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int		read_line(int fd, char **line_ptr, t_read *rs)
 			continue ;
 		(rs->i)++;
 	}
-	ft_printf("OUT ?\n");
 	if (mng_read_err(&rs) != 0)
 		return (errno);
 	*line_ptr = rs->line;
