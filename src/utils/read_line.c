@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 17:41:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/07 23:22:25 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/09 20:52:57 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,79 +28,77 @@
 **		- > 0 and *line_ptr is string : filled new line.
 */
 
-void	init_read_line(char *read_buffer, int *chunk_num, int *i, int *read_err)
+void	init_read_line(t_read **rs)
 {
-	*read_buffer = 0;
-	*chunk_num = 1;
-	*i = 0;
-	*read_err = 0;
+	(*rs)->read_buffer = 0;
+	(*rs)->chunk_num = 1;
+	(*rs)->i = 0;
+	(*rs)->read_err = 0;
+	if ((*rs)->line)
+		free((*rs)->line);
+	(*rs)->line = NULL;
 }
 
-int		mng_nl(int i, char read_buffer, char **line)
+int		mng_nl(t_read **rs)
 {
-	if (read_buffer == '\n')
+	if ((*rs)->read_buffer == '\n')
 	{
-		(*line)[i] = '\0';
+		((*rs)->line)[(*rs)->i] = '\0';
 		return (1);
 	}
 	return (0);
 }
 
-int		mng_eof(int i, int read_err, char **line)
+int		mng_eof(t_read **rs)
 {
-	if (read_err == 0 && i == 0)
+	if ((*rs)->read_err == 0 && (*rs)->i == 0)
 	{
-		free(*line);
-		*line = NULL;
+		free((*rs)->line);
+		(*rs)->line = NULL;
 		return (1);
 	}
 	return (0);
 }
 
-int		realloc_new_chunk(int i, int *chunk_num, char **line)
+int		realloc_new_chunk(t_read **rs)
 {
-	size_t	new_size;
-	size_t	old_size;
+	size_t	new_sz;
+	size_t	old_sz;
 
-	if (i > *chunk_num * BUFFER_SIZE - 1)
+	if ((*rs)->i > (*rs)->chunk_num * BUFFER_SIZE - 1)
 	{
-		old_size = BUFFER_SIZE * *chunk_num;
-		(*chunk_num)++;
-		new_size = BUFFER_SIZE * *chunk_num;
-		if (!(*line = (char *)ft_realloc(*line, new_size, old_size)))
+		old_sz = BUFFER_SIZE * (*rs)->chunk_num;
+		((*rs)->chunk_num)++;
+		new_sz = BUFFER_SIZE * (*rs)->chunk_num;
+		if (!((*rs)->line = (char *)ft_realloc((*rs)->line, new_sz, old_sz)))
 		{
-			free(*line);
+			free((*rs)->line);
 			return (errno);
 		}
 	}
 	return (0);
 }
 
-int		read_line(int fd, char **line_ptr)
+int		read_line(int fd, char **line_ptr, t_read *rs)
 {
-	char	*line;
-	char	read_buffer;
-	int		chunk_num;
-	int		i;
-	int		read_err;
-
-	init_read_line(&read_buffer, &chunk_num, &i, &read_err);
-	if (!(line = (char *)malloc(BUFFER_SIZE)))
+	init_read_line(&rs);
+	if (!(rs->line = (char *)malloc(BUFFER_SIZE)))
 		return (errno);
-	while ((read_err = read(fd, &read_buffer, 1)) >= 0)
+	while ((rs->read_err = read(fd, &(rs->read_buffer), 1)) >= 0)
 	{
-		if ((realloc_new_chunk(i, &chunk_num, &line)) != 0)
+		if ((realloc_new_chunk(&rs) != 0))
 			return (errno);
-		if (mng_eof(i, read_err, &line) || mng_nl(i, read_buffer, &line))
+		if (mng_eof(&rs) || mng_nl(&rs))
 			break ;
-		else if (!(read_err == 0 && i != 0))
-			line[i] = read_buffer;
-		if (read_err == 0 && i != 0)
+		else if (!(rs->read_err == 0 && rs->i != 0))
+			(rs->line)[rs->i] = rs->read_buffer;
+		if (rs->read_err == 0 && rs->i != 0)
 			continue ;
-		i++;
+		(rs->i)++;
 	}
-	if (mng_read_err(read_err, &line) != 0)
+	ft_printf("OUT ?\n");
+	if (mng_read_err(&rs) != 0)
 		return (errno);
-	*line_ptr = line;
-	return (i);
+	*line_ptr = rs->line;
+	return (rs->i);
 }

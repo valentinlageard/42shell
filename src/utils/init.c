@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/30 15:05:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/07 23:09:04 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/09 20:26:44 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_shell	*init_shell(char **envp)
 	if (!(shell = (t_shell *)malloc(sizeof(t_shell))))
 		return (NULL);
 	shell->line = NULL;
+	shell->read_state = NULL;
 	shell->is_executing = 0;
 	shell->cltoks = NULL;
 	shell->cmdg = NULL;

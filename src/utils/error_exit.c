@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 16:00:28 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/07 23:09:21 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/09 20:36:05 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exit_shell(u_char status, t_shell *shell)
 {
-	free(shell->line);
+	free_read_state(&(shell->read_state));
 	free_cltoks(&(shell->cltoks));
 	free_cmdg(shell->cmdg);
 	shell->cmdg = NULL;

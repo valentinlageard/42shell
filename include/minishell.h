@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/09 17:52:50 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/09 20:43:17 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,17 @@ typedef struct		s_lpid {
 	struct s_lpid	*next;
 }					t_lpid;
 
+typedef struct		s_read {
+	char			read_buffer;
+	int				chunk_num;
+	int				i;
+	int				read_err;
+	char			*line;
+}					t_read;
+
 typedef struct		s_shell {
 	char			*line;
+	t_read			*read_state;
 	int				is_executing;
 	t_cltok			*cltoks;
 	t_cmdg			*cmdg;
@@ -127,9 +136,13 @@ t_shell				*g_shell;
 t_shell				*init_shell(char **envp);
 void				setup_signal_handling(void);
 void				select_binpath(t_cmd **ncmd, char *cmd_str, t_shell *shell);
-int					mng_read_err(int read_err, char **line);
-int					read_line(int fd, char **line_ptr);
 int					prompt(void);
+void				init_read_line(t_read **rs);
+void				reinit_read_state(t_read **rs);
+t_read				*new_read_state(void);
+void				free_read_state(t_read **read_state);
+int					mng_read_err(t_read **rs);
+int					read_line(int fd, char **line_ptr, t_read *rs);
 t_cltok				*parse_cltoks(char *line);
 t_cmdg				*parse_cmdg(t_tok *ltok, t_shell *shell);
 void				slice_append_tok(char *line, t_si *si, int type,
