@@ -32,12 +32,11 @@ SRC			=	src/minishell.c \
 				src/utils/env2.c \
 				src/utils/error_exit.c \
 				src/utils/init.c \
-				src/utils/inr.c \
-				src/utils/outr.c \
 				src/utils/prompt.c \
 				src/utils/signal_handling.c \
 				src/utils/read_line.c \
 				src/utils/read_line2.c \
+				src/utils/redirections.c \
 				src/utils/var.c
 
 OBJS		=	$(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/10 18:03:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/11 00:17:13 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,16 @@ typedef struct		s_cmd {
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef struct		s_inr {
+typedef struct		s_red {
 	char			*path;
-	struct s_inr	*next;
-}					t_inr;
-
-typedef struct		s_outr {
-	char			*path;
+	int				is_out;
 	int				is_append;
-	struct s_outr	*next;
-}					t_outr;
+	struct s_red	*next;
+}					t_red;
 
 typedef struct		s_cmdg {
 	t_cmd			*cmds;
-	t_inr			*in_redirs;
-	t_outr			*out_redirs;
+	t_red			*redirs;
 }					t_cmdg;
 
 typedef struct		s_pstate {
@@ -177,8 +172,7 @@ void				restore_parent_inout(t_fds *fds);
 void				set_pipe(t_fds *fds);
 void				restore_cur_in(int fd, t_fds *fds);
 void				restore_cur_out(int fd, t_fds *fds);
-int					select_first(t_cmdg *cmdg, t_fds *fds);
-int					select_last(t_cmdg *cmdg, t_fds *fds);
+int					select_redirections(t_cmdg *cmdg, t_fds *fds);
 void				update_inout(t_cmd *cmd, t_fds *fds);
 void				error_close_fds(t_fds *fds);
 t_lpid				*new_lpid(pid_t pid);
@@ -205,14 +199,10 @@ int					builtin_pwd(t_shell *shell);
 int					builtin_echo(t_cmd *cmd);
 int					builtin_exit(t_cmd *cmd, t_shell *shell);
 int					builtin_cd(t_cmd *cmd, t_shell *shell);
-t_inr				*new_inr(char *path);
-void				append_inr(t_inr *in_redir, t_inr **in_redirs);
-void				free_inrs(t_inr *inrs);
-void				print_inrs(t_inr *inrs);
-t_outr				*new_outr(char *path, int is_append);
-void				append_outr(t_outr *out_redir, t_outr **out_redirs);
-void				free_outrs(t_outr *outrs);
-void				print_outrs(t_outr *outrs);
+t_red				*new_red(char *path, int is_out, int is_append);
+void				append_red(t_red *redir, t_red **redirs);
+void				free_reds(t_red *reds);
+void				print_reds(t_red *reds);
 t_tok				*new_tok(char *str, t_tok_type type);
 void				free_tok(t_tok **tok);
 int					append_tok(t_tok *tok, t_tok **ltok);

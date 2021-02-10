@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/06 16:35:34 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:37:32 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/11 00:20:53 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,32 @@ int	handle_pipe(t_pstate *ps)
 
 int	handle_input_redirection(t_pstate *ps)
 {
-	t_inr	*new_in_redir;
+	t_red	*new_in_redir;
 
 	if (!(ps->curcmdg))
 		ps->curcmdg = new_cmdg();
-	if (!(new_in_redir = new_inr(ps->tmp->str)))
+	if (!(new_in_redir = new_red(ps->tmp->str, 0, 0)))
 		return (0);
-	append_inr(new_in_redir, &(ps->curcmdg->in_redirs));
+	append_red(new_in_redir, &(ps->curcmdg->redirs));
 	return (1);
 }
 
 int	handle_output_redirection(t_pstate *ps)
 {
-	t_outr	*new_out_redir;
+	t_red	*new_out_redir;
 
 	if (!(ps->curcmdg))
 		ps->curcmdg = new_cmdg();
 	if (ps->tmp->type == outr)
 	{
-		if (!(new_out_redir = new_outr(ps->tmp->str, 0)))
+		if (!(new_out_redir = new_red(ps->tmp->str, 1, 0)))
 			return (0);
 	}
 	else
 	{
-		if (!(new_out_redir = new_outr(ps->tmp->str, 1)))
+		if (!(new_out_redir = new_red(ps->tmp->str, 1, 1)))
 			return (0);
 	}
-	append_outr(new_out_redir, &(ps->curcmdg->out_redirs));
+	append_red(new_out_redir, &(ps->curcmdg->redirs));
 	return (1);
 }

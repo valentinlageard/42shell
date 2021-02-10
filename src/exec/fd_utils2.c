@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:12 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/09 17:33:39 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/11 00:23:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,55 +33,54 @@ void	predir_error(char *path)
 	pcustom_error("\n");
 }
 
-int		select_first(t_cmdg *cmdg, t_fds *fds)
+int		open_redirs(t_red *redir, t_fds *fds)
 {
-	t_inr	*tmp;
+	int		flags;
 
-	if (cmdg->in_redirs)
+	if (!redir->is_out)
 	{
-		tmp = cmdg->in_redirs;
-		while (tmp)
+		if ((fds->first = open(redir->path, O_RDONLY)) < 0)
 		{
-			if (fds->first >= 0)
-				close(fds->first);
-			if ((fds->first = open(tmp->path, O_RDONLY)) < 0)
-			{
-				predir_error(tmp->path);
-				return (-1);
-			}
-			tmp = tmp->next;
+			predir_error(redir->path);
+			return (-1);
 		}
 	}
 	else
-		fds->first = dup(fds->parent_in);
+	{
+		if (redir->is_append)
+			flags = O_WRONLY | O_CREAT | O_APPEND;
+		else
+			flags = O_WRONLY | O_CREAT | O_TRUNC;
+		if ((fds->last = open(redir->path, flags, S_IRWXU)) < 0)
+		{
+			predir_error(redir->path);
+			return (-1);
+		}
+	}
 	return (0);
 }
 
-int		select_last(t_cmdg *cmdg, t_fds *fds)
+int		select_redirections(t_cmdg *cmdg, t_fds *fds)
 {
-	int		flags;
-	t_outr	*tmp;
+	t_red	*tmp;
 
-	if (cmdg->out_redirs)
+	if (cmdg->redirs)
 	{
-		tmp = cmdg->out_redirs;
+		tmp = cmdg->redirs;
 		while (tmp)
 		{
-			if (fds->last >= 0)
+			if (!tmp->is_out && fds->first >= 0)
+				close(fds->first);
+			if (tmp->is_out && fds->last >= 0)
 				close(fds->last);
-			if (tmp->is_append)
-				flags = O_WRONLY | O_CREAT | O_APPEND;
-			else
-				flags = O_WRONLY | O_CREAT | O_TRUNC;
-			if ((fds->last = open(tmp->path, flags, S_IRWXU)) < 0)
-			{
-				predir_error(tmp->path);
+			if (open_redirs(tmp, fds) < 0)
 				return (-1);
-			}
 			tmp = tmp->next;
 		}
 	}
-	else
+	if (fds->first < 0)
+		fds->first = dup(fds->parent_in);
+	if (fds->last < 0)
 		fds->last = dup(fds->parent_out);
 	return (0);
 }

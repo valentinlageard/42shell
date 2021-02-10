@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/10 14:45:02 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/11 00:21:58 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ int		setup_fds(t_fds *fds, t_cmdg *curcmdg)
 {
 	init_fds(fds);
 	store_parent_inout(fds);
-	if (select_first(curcmdg, fds) < 0)
-		return (-1);
-	if (select_last(curcmdg, fds) < 0)
+	if (select_redirections(curcmdg, fds) < 0)
 		return (-1);
 	fds->cur_in = fds->first;
 	return (0);
@@ -103,7 +101,7 @@ void	exec(t_shell *shell)
 	if (!shell->cmdg)
 		return ;
 	else if (!shell->cmdg->cmds &&
-		(shell->cmdg->in_redirs || shell->cmdg->out_redirs))
+		(shell->cmdg->redirs))
 		exec_cmdg(shell->cmdg, shell);
 	else if (!(cmdg_has_unique_builtin(shell->cmdg)))
 		exec_cmdg(shell->cmdg, shell);
