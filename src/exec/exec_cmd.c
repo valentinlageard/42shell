@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 16:16:30 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:22:56 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:03:07 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		exec_builtin(t_cmd *cmd, t_shell *shell)
 	else if (ft_strncmp(cmd->main, "export", ft_strlen(cmd->main)) == 0)
 		exit_code = builtin_export(cmd, shell);
 	else if (ft_strncmp(cmd->main, "pwd", ft_strlen(cmd->main)) == 0)
-		exit_code = builtin_pwd();
+		exit_code = builtin_pwd(shell);
 	else if (ft_strncmp(cmd->main, "echo", ft_strlen(cmd->main)) == 0)
 		exit_code = builtin_echo(cmd);
 	else if (ft_strncmp(cmd->main, "cd", ft_strlen(cmd->main)) == 0)

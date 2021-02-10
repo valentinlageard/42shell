@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/01 14:47:02 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/10 14:33:00 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 17:20:24 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	handle_signals(int signum)
 		{
 			kill_children(SIGQUIT, g_shell);
 			write(2, "Quit (core dumped)\n", 19);
+			g_shell->exit_code = 128 + SIGQUIT;
 		}
 		else
 			write(2, "\b\b  \b\b", 6);

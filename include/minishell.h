@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 14:50:09 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/10 14:45:11 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:03:00 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ int					is_builtin(char *cmd_str);
 int					builtin_env(t_shell *shell);
 int					builtin_export(t_cmd *cmd, t_shell *shell);
 int					builtin_unset(t_cmd *cmd, t_shell *shell);
-int					builtin_pwd(void);
+int					builtin_pwd(t_shell *shell);
 int					builtin_echo(t_cmd *cmd);
 int					builtin_exit(t_cmd *cmd, t_shell *shell);
 int					builtin_cd(t_cmd *cmd, t_shell *shell);
