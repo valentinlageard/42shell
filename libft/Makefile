@@ -73,7 +73,7 @@ SRC			=	ft_atoi.c \
 
 OBJS		=	$(SRC:.c=.o)
 
-CC			=	gcc $(FLAGS) -I.
+CC			=	clang $(FLAGS) -I.
 
 FLAGS		=	-Wall -Wextra -Werror
 

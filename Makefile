@@ -42,7 +42,7 @@ SRC			=	src/minishell.c \
 OBJS		=	$(SRC:.c=.o)
 
 FLAGS		=	-Wall -Wextra -Werror
-CC			=	gcc $(FLAGS)
+CC			=	clang $(FLAGS)
 
 all:		$(NAME)
 
