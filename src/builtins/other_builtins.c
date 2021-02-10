@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:51:22 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/06 16:22:23 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 19:18:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		builtin_exit(t_cmd *cmd, t_shell *shell)
 
 	args_num = ft_wlen(cmd->args);
 	exit_code = 0;
+	pcustom_error("exit\n");
 	if (args_num == 1)
 		exit_shell(shell->exit_code, shell);
 	if (args_num > 2)

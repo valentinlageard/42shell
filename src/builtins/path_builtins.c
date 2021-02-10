@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/10 18:02:42 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 18:06:10 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int		builtin_pwd(t_shell *shell)
 	char	*path;
 
 	if (!(path = getcwd(NULL, 0)))
+	{
 		ft_printf("\n");
+		return (1);
+	}
 	else
 	{
 		update_pwd(shell);
