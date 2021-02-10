@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 16:03:58 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/09 17:53:23 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 14:45:02 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,7 @@ void	exec_cmdg(t_cmdg *curcmdg, t_shell *shell)
 		if (pid > 0)
 			append_lpid(new_lpid(pid), &(shell->lpids));
 		if (pid == 0)
-		{
-			if (curcmd->next && fds.cur_pipe[0] != -1)
-				close(fds.cur_pipe[0]);
-			exec_cmd(curcmd, shell);
-		}
+			manage_children_fds_and_exec_cmd(curcmd, &fds, shell);
 		curcmd = curcmd->next;
 	}
 	restore_parent_inout(&fds);

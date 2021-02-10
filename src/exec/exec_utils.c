@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 20:32:13 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/03 20:14:35 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 14:51:41 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,15 @@ int		is_prev_cmd_builtin(t_cmd *cmd, t_cmd *cmds)
 		}
 	}
 	return (0);
+}
+
+void	manage_children_fds_and_exec_cmd(t_cmd *cmd, t_fds *fds, t_shell *shell)
+{
+	if (cmd->next && fds->cur_pipe[0] != -1)
+		close(fds->cur_pipe[0]);
+	close(fds->parent_in);
+	close(fds->parent_out);
+	close(fds->first);
+	close(fds->last);
+	exec_cmd(cmd, shell);
 }
