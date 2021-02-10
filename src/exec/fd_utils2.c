@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/29 14:34:12 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/11 00:23:58 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/11 00:42:21 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int		open_redirs(t_red *redir, t_fds *fds)
 			flags = O_WRONLY | O_CREAT | O_APPEND;
 		else
 			flags = O_WRONLY | O_CREAT | O_TRUNC;
-		if ((fds->last = open(redir->path, flags, S_IRWXU)) < 0)
+		if ((fds->last = open(redir->path, flags,
+			S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH)) < 0)
 		{
 			predir_error(redir->path);
 			return (-1);
