@@ -6,7 +6,7 @@
 /*   By: valentin <valentin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/08 16:13:50 by valentin          #+#    #+#             */
-/*   Updated: 2021/02/10 18:06:10 by valentin         ###   ########.fr       */
+/*   Updated: 2021/02/10 19:23:34 by valentin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ int		builtin_cd(t_cmd *cmd, t_shell *shell)
 {
 	char	*path;
 
+	if (cmd->args[1] && ft_strlen(cmd->args[1]) == 0 && !(cmd->args[2]))
+	{
+		update_pwd(shell);
+		return (0);
+	}
 	if ((path = get_cd_path(cmd, shell)))
 	{
 		if (chdir(path) < 0)
